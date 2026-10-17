@@ -35,8 +35,12 @@ This makes NBT Studio the default app for `.nbt` and adds it to "Open with" for 
 
 | File | Size | Notes |
 |---|---|---|
-| `nbt-studio-256.png` | 256×256 | Upstream icon, unchanged copy of `NbtStudio/Resources/nbt_studio_icon_256.png` |
-| `nbt-studio-192.png` | 192×192 | Same 16×16 pixel art scaled ×12 with nearest neighbour. UniGetUI downsizes icons above 192 px, which blurs the 256 px version |
+| `nbt-studio-alt.svg` | vector | Redrawn icon in the spirit of the upstream one: same isometric blue book and palette, new artwork |
+| `nbt-studio-alt-192.png` | 192×192 | PNG render of `nbt-studio-alt.svg`, used for UniGetUI |
+| `nbt-studio-pixel-256.png` | 256×256 | Upstream icon, unchanged copy of `NbtStudio/Resources/nbt_studio_icon_256.png` |
+| `nbt-studio-pixel-192.png` | 192×192 | Upstream 16×16 pixel art scaled ×12 with nearest neighbour. UniGetUI downsizes icons above 192 px, which blurs the 256 px version |
+
+File names follow `<package>-<variant>[-<size>].<ext>`.
 
 Icons belong to their respective authors.
 
