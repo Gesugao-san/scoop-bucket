@@ -17,7 +17,7 @@
     }
   },
   "post_install": [
-    "$templates = Join-Path (Find-BucketDirectory -Name $bucket -Root) \"scripts\\$app\"",
+    "$templates = Join-Path (Find-BucketDirectory -Name $bucket -Root) \"scripts\\$($app.ToLowerInvariant())\"",
     "if (!(Test-Path -LiteralPath $templates -PathType Container)) {",
     "  warn \"Registry templates not found in '$templates', file associations are unavailable.\"",
     "  return",
