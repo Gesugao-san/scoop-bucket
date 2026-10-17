@@ -5,11 +5,22 @@
   "license": "Unknown",
   "notes": [
     "NBT Studio is a framework-dependent build and needs the .NET 6 Desktop Runtime (x64).",
-    "Install it with: winget install Microsoft.DotNet.DesktopRuntime.6",
+    "Check with: dotnet --list-runtimes   (look for Microsoft.WindowsDesktop.App 6.0.x)",
+    "If it is missing, install it in one of these ways (both run Microsoft's installer):",
+    "  scoop bucket add versions",
+    "  scoop install versions/windowsdesktop-runtime-6.0   (needs admin)",
+    "or",
+    "  winget install Microsoft.DotNet.DesktopRuntime.6",
+    "Scoop's suggestion below only sees runtimes installed through Scoop.",
     "",
     "To register file associations (.nbt by default, 'Open with' for other NBT formats), execute:",
     "reg import \"$dir\\install-associations.reg\""
   ],
+  "suggest": {
+    ".NET 6 Desktop Runtime": [
+      "versions/windowsdesktop-runtime-6.0"
+    ]
+  },
   "architecture": {
     "64bit": {
       "url": "https://github.com/tryashtar/nbt-studio/releases/download/v1.15.3/NbtStudio.exe",
