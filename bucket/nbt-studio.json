@@ -1,0 +1,33 @@
+{
+  "version": "1.15.3",
+  "description": "NBT viewer and editor, spiritual successor to NBTExplorer. Java and Bedrock NBT, SNBT, region files.",
+  "homepage": "https://github.com/tryashtar/nbt-studio",
+  "license": "Unknown",
+  "notes": [
+    "NBT Studio is a framework-dependent build and needs the .NET 6 Desktop Runtime (x64).",
+    "Install it with: winget install Microsoft.DotNet.DesktopRuntime.6"
+  ],
+  "architecture": {
+    "64bit": {
+      "url": "https://github.com/tryashtar/nbt-studio/releases/download/v1.15.3/NbtStudio.exe",
+      "hash": "f3204aad72655af4108cd161f329229b63617b4faf81b17860b499e5b9047eb9"
+    }
+  },
+  "bin": "NbtStudio.exe",
+  "shortcuts": [
+    [
+      "NbtStudio.exe",
+      "NBT Studio"
+    ]
+  ],
+  "checkver": {
+    "github": "https://github.com/tryashtar/nbt-studio"
+  },
+  "autoupdate": {
+    "architecture": {
+      "64bit": {
+        "url": "https://github.com/tryashtar/nbt-studio/releases/download/v$version/NbtStudio.exe"
+      }
+    }
+  }
+}
