@@ -5,10 +5,12 @@ Personal [Scoop](https://scoop.sh) bucket by [Gesugao-san](https://github.com/Ge
 ## Usage
 
 ```powershell
-scoop bucket add gesugao https://github.com/Gesugao-san/scoop-bucket
-scoop install gesugao/NBT-Studio
-scoop install gesugao/NBTExplorer
+scoop bucket add gesu https://github.com/Gesugao-san/scoop-bucket
+scoop install gesu/NBT-Studio
+scoop install gesu/NBTExplorer
 ```
+
+`gesu` is only a local name for the bucket; any other name works too.
 
 Works in [UniGetUI](https://github.com/Devolutions/UniGetUI) too: add the bucket in UniGetUI's Scoop settings (or with the command above), then search for the package.
 
