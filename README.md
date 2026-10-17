@@ -7,6 +7,7 @@ Personal [Scoop](https://scoop.sh) bucket by [Gesugao-san](https://github.com/Ge
 ```powershell
 scoop bucket add gesugao https://github.com/Gesugao-san/scoop-bucket
 scoop install gesugao/NBT-Studio
+scoop install gesugao/NBTExplorer
 ```
 
 Works in [UniGetUI](https://github.com/Devolutions/UniGetUI) too: add the bucket in UniGetUI's Scoop settings (or with the command above), then search for the package.
@@ -16,6 +17,7 @@ Works in [UniGetUI](https://github.com/Devolutions/UniGetUI) too: add the bucket
 | Package | Upstream | Notes |
 |---|---|---|
 | [`NBT-Studio`](bucket/NBT-Studio.json) | [tryashtar/nbt-studio](https://github.com/tryashtar/nbt-studio) | Needs the [.NET 6 Desktop Runtime](https://dotnet.microsoft.com/download/dotnet/6.0) x64 (`winget install Microsoft.DotNet.DesktopRuntime.6`). Upstream has no [releases](https://github.com/tryashtar/nbt-studio/releases) since v1.15.3. File associations: [see below](#file-associations). |
+| [`NBTExplorer`](bucket/NBTExplorer.json) | [jaquadro/NBTExplorer](https://github.com/jaquadro/NBTExplorer) | Runs on the .NET Framework 4 that ships with Windows. The bundled `NBTUtil.exe` needs .NET Framework 3.5, so it is not put on `PATH`. Also available in the [games](https://github.com/Calinou/scoop-games) bucket as `nbtexplorer`. |
 
 Manifest names keep the product's capitalisation: UniGetUI builds the display name from the file name with [`FormatAsName`](https://github.com/Devolutions/UniGetUI/blob/b85288414fea52a1283a67599da5558d4818d606/src/UniGetUI.Core.Tools/Tools.cs#L320), which turns dashes into spaces and only upper-cases the first letter of each word (`NBT-Studio` → "NBT Studio", but `nbt-studio` → "Nbt Studio"). Scoop itself is case-insensitive, so `nbt-studio` works in commands too. Folders under `scripts/` are lowercase; they do not affect the display name.
 
