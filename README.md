@@ -27,7 +27,7 @@ Like the [`git` manifest](https://github.com/ScoopInstaller/Main/blob/bcff7c46a4
 reg import "%USERPROFILE%\scoop\apps\NBT-Studio\current\install-associations.reg"
 ```
 
-This makes NBT Studio the default app for `.nbt` and adds it to "Open with" for `.snbt`, `.dat`, `.mca`, `.mcr`, `.mcc`, `.mcstructure` and `.schematic` without changing their defaults. Paths point to `current`, so they survive updates. `scoop uninstall` imports [`uninstall-associations.reg`](scripts/NBT-Studio/uninstall-associations.reg) and removes the entries.
+This makes NBT Studio the default app for `.nbt` and adds it to "Open with" for `.snbt`, `.dat`, `.dat_old`, `.mca`, `.mcr`, `.mcc`, `.mcstructure` and `.schematic` without changing their defaults. Paths point to `current`, so they survive updates. `scoop uninstall` imports [`uninstall-associations.reg`](scripts/NBT-Studio/uninstall-associations.reg) and removes the entries.
 
 ## Icons
 

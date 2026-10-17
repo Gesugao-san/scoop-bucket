@@ -18,6 +18,9 @@ Windows Registry Editor Version 5.00
 [HKEY_CURRENT_USER\Software\Classes\.dat\OpenWithProgIDs]
 "NbtStudio.File"=hex(0):
 
+[HKEY_CURRENT_USER\Software\Classes\.dat_old\OpenWithProgIDs]
+"NbtStudio.File"=hex(0):
+
 [HKEY_CURRENT_USER\Software\Classes\.mca\OpenWithProgIDs]
 "NbtStudio.File"=hex(0):
 
