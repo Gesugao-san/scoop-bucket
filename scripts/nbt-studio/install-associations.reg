@@ -1,0 +1,49 @@
+Windows Registry Editor Version 5.00
+
+; Make NBT Studio the default handler for .nbt files
+
+[HKEY_CURRENT_USER\Software\Classes\.nbt]
+@="NbtStudio.File"
+
+[HKEY_CURRENT_USER\Software\Classes\.nbt\OpenWithProgIDs]
+"NbtStudio.File"=hex(0):
+
+
+; Offer NBT Studio in "Open with" for the other formats it reads,
+; without changing their current default handler
+
+[HKEY_CURRENT_USER\Software\Classes\.snbt\OpenWithProgIDs]
+"NbtStudio.File"=hex(0):
+
+[HKEY_CURRENT_USER\Software\Classes\.dat\OpenWithProgIDs]
+"NbtStudio.File"=hex(0):
+
+[HKEY_CURRENT_USER\Software\Classes\.mca\OpenWithProgIDs]
+"NbtStudio.File"=hex(0):
+
+[HKEY_CURRENT_USER\Software\Classes\.mcr\OpenWithProgIDs]
+"NbtStudio.File"=hex(0):
+
+[HKEY_CURRENT_USER\Software\Classes\.mcc\OpenWithProgIDs]
+"NbtStudio.File"=hex(0):
+
+[HKEY_CURRENT_USER\Software\Classes\.mcstructure\OpenWithProgIDs]
+"NbtStudio.File"=hex(0):
+
+[HKEY_CURRENT_USER\Software\Classes\.schematic\OpenWithProgIDs]
+"NbtStudio.File"=hex(0):
+
+
+; ProgID used by all of the above
+
+[HKEY_CURRENT_USER\Software\Classes\NbtStudio.File]
+@="NBT File"
+
+[HKEY_CURRENT_USER\Software\Classes\NbtStudio.File\DefaultIcon]
+@="{{nbtstudio_dir}}\\NbtStudio.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\NbtStudio.File\shell\open]
+"FriendlyAppName"="NBT Studio"
+
+[HKEY_CURRENT_USER\Software\Classes\NbtStudio.File\shell\open\command]
+@="\"{{nbtstudio_dir}}\\NbtStudio.exe\" \"%1\""

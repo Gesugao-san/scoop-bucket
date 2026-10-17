@@ -1,0 +1,32 @@
+Windows Registry Editor Version 5.00
+
+; Drop the .nbt default only; the extension key itself may hold other apps' data
+
+[HKEY_CURRENT_USER\Software\Classes\.nbt]
+@=-
+
+[HKEY_CURRENT_USER\Software\Classes\.nbt\OpenWithProgIDs]
+"NbtStudio.File"=-
+
+[HKEY_CURRENT_USER\Software\Classes\.snbt\OpenWithProgIDs]
+"NbtStudio.File"=-
+
+[HKEY_CURRENT_USER\Software\Classes\.dat\OpenWithProgIDs]
+"NbtStudio.File"=-
+
+[HKEY_CURRENT_USER\Software\Classes\.mca\OpenWithProgIDs]
+"NbtStudio.File"=-
+
+[HKEY_CURRENT_USER\Software\Classes\.mcr\OpenWithProgIDs]
+"NbtStudio.File"=-
+
+[HKEY_CURRENT_USER\Software\Classes\.mcc\OpenWithProgIDs]
+"NbtStudio.File"=-
+
+[HKEY_CURRENT_USER\Software\Classes\.mcstructure\OpenWithProgIDs]
+"NbtStudio.File"=-
+
+[HKEY_CURRENT_USER\Software\Classes\.schematic\OpenWithProgIDs]
+"NbtStudio.File"=-
+
+[-HKEY_CURRENT_USER\Software\Classes\NbtStudio.File]

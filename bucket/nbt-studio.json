@@ -5,7 +5,10 @@
   "license": "Unknown",
   "notes": [
     "NBT Studio is a framework-dependent build and needs the .NET 6 Desktop Runtime (x64).",
-    "Install it with: winget install Microsoft.DotNet.DesktopRuntime.6"
+    "Install it with: winget install Microsoft.DotNet.DesktopRuntime.6",
+    "",
+    "To register file associations (.nbt by default, 'Open with' for other NBT formats), execute:",
+    "reg import \"$dir\\install-associations.reg\""
   ],
   "architecture": {
     "64bit": {
@@ -13,6 +16,19 @@
       "hash": "f3204aad72655af4108cd161f329229b63617b4faf81b17860b499e5b9047eb9"
     }
   },
+  "post_install": [
+    "$templates = Join-Path (Find-BucketDirectory -Name $bucket -Root) \"scripts\\$app\"",
+    "if (!(Test-Path -LiteralPath $templates -PathType Container)) {",
+    "  warn \"Registry templates not found in '$templates', file associations are unavailable.\"",
+    "  return",
+    "}",
+    "$app_dir = $dir -replace '\\\\', '\\\\'",
+    "Get-ChildItem -Path $templates -Filter '*.reg' -File | ForEach-Object {",
+    "  $content = Get-Content -Path $_.FullName -Encoding utf8",
+    "  if ($global) { $content = $content -replace 'HKEY_CURRENT_USER', 'HKEY_LOCAL_MACHINE' }",
+    "  $content -replace '{{nbtstudio_dir}}', $app_dir | Set-Content -Path \"$dir\\$($_.Name)\" -Encoding unicode",
+    "}"
+  ],
   "bin": "NbtStudio.exe",
   "shortcuts": [
     [
@@ -20,6 +36,13 @@
       "NBT Studio"
     ]
   ],
+  "uninstaller": {
+    "script": [
+      "if ($cmd -eq 'uninstall') {",
+      "  reg import \"$dir\\uninstall-associations.reg\" *> $null",
+      "}"
+    ]
+  },
   "checkver": {
     "github": "https://github.com/tryashtar/nbt-studio"
   },
