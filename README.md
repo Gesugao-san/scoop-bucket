@@ -27,4 +27,15 @@ reg import "%USERPROFILE%\scoop\apps\nbt-studio\current\install-associations.reg
 
 This makes NBT Studio the default app for `.nbt` and adds it to "Open with" for `.snbt`, `.dat`, `.mca`, `.mcr`, `.mcc`, `.mcstructure` and `.schematic` without changing their defaults. Paths point to `current`, so they survive updates. `scoop uninstall` removes the entries.
 
-Manifests only point to upstream release files; nothing is redistributed here.
+## Icons
+
+`icons/` holds package icons for UniGetUI's icon database:
+
+| File | Size | Notes |
+|---|---|---|
+| `nbt-studio-256.png` | 256×256 | Upstream icon, unchanged copy of `NbtStudio/Resources/nbt_studio_icon_256.png` |
+| `nbt-studio-192.png` | 192×192 | Same 16×16 pixel art scaled ×12 with nearest neighbour. UniGetUI downsizes icons above 192 px, which blurs the 256 px version |
+
+Icons belong to their respective authors.
+
+Manifests only point to upstream release files; nothing else is redistributed here.
