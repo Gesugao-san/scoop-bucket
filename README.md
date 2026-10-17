@@ -53,6 +53,19 @@ Checked against UniGetUI's source at commit [`b852884`](https://github.com/Devol
 - **Lookup key:** [`GenerateIconId`](https://github.com/Devolutions/UniGetUI/blob/b85288414fea52a1283a67599da5558d4818d606/src/UniGetUI.PackageEngine.PackageManagerClasses/Packages/Package.cs#L451) lower-cases the package ID and turns `_ . space / ,` into dashes, so the icon is found under `nbt-studio` whatever the case of the manifest name.
 - **Adding an icon:** the old Google Sheet is closed; icons now go in through pull requests to [`screenshot-database-v2.json`](https://github.com/Devolutions/UniGetUI/blob/main/WebBasedData/screenshot-database-v2.json) (see the [file's history](https://github.com/Devolutions/UniGetUI/commits/main/WebBasedData/screenshot-database-v2.json) for examples).
 
+## Screenshots
+
+[`screenshots/`](screenshots) holds screenshots for UniGetUI's package details page (the `images` list in the [icon database](https://github.com/Devolutions/UniGetUI/blob/main/WebBasedData/screenshot-database-v2.json)). Taken by Gesugao-san on Windows 11, NBT Studio v1.15.3, a sample world:
+
+| File | Shows |
+|---|---|
+| [`nbt-studio-1.png`](screenshots/nbt-studio-1.png) | `level.dat` tag tree |
+| [`nbt-studio-2.png`](screenshots/nbt-studio-2.png) | Find dialog |
+| [`nbt-studio-3.png`](screenshots/nbt-studio-3.png) | Edit menu: Edit Value, Edit as SNBT, undo history |
+| [`nbt-studio-4.png`](screenshots/nbt-studio-4.png) | File menu: new region file, import from clipboard |
+| [`nbt-studio-5.png`](screenshots/nbt-studio-5.png) | Icon set picker |
+| [`nbt-studio-6.png`](screenshots/nbt-studio-6.png) | About and update check dialogs |
+
 Icons belong to their respective authors.
 
 Manifests only point to upstream release files; nothing else is redistributed here.
