@@ -55,8 +55,14 @@ This makes NBT Studio the default app for `.nbt` and adds it to "Open with" for 
 | [`nbt-studio-alt.png`](icons/nbt-studio-alt.png) | 192×192 | PNG render of `nbt-studio-alt.svg`, used for UniGetUI |
 | [`nbt-studio-256.png`](icons/nbt-studio-256.png) | 256×256 | Upstream icon, unchanged copy of [`nbt_studio_icon_256.png`](https://github.com/tryashtar/nbt-studio/blob/master/NbtStudio/Resources/nbt_studio_icon_256.png) |
 | [`nbt-studio-192.png`](icons/nbt-studio-192.png) | 192×192 | Upstream [16×16 pixel art](https://github.com/tryashtar/nbt-studio/blob/master/NbtStudio/Resources/nbt_studio_icon_16.png) scaled ×12 with nearest neighbour, so it stays crisp in UniGetUI |
+| [`iloader-192.png`](icons/iloader-192.png) | 192×192 | Upstream icon, [`icon.png`](https://github.com/nab138/iloader/blob/902597564315442f00ab299dcc758ee0e13b8fa8/src-tauri/icons/icon.png) scaled down from 512×512. iloader's branding is not MIT: its [branding notice](https://github.com/nab138/iloader/blob/902597564315442f00ab299dcc758ee0e13b8fa8/LICENSE-BRANDING) allows use with a link to [iloader.app](https://iloader.app) and without implying endorsement. This bucket is not affiliated with iloader. |
+| [`freesm-launcher-192.png`](icons/freesm-launcher-192.png) | 192×192 | Upstream logo, [`org.freesmlauncher.FreesmLauncher.svg`](https://github.com/FreesmTeam/FreesmLauncher/blob/660a9e4c64daeb414a3db8f17c046dc2552e28af/program_info/org.freesmlauncher.FreesmLauncher.svg) rendered at 192×192. Licensed [CC BY-SA 4.0](https://github.com/FreesmTeam/FreesmLauncher/blob/660a9e4c64daeb414a3db8f17c046dc2552e28af/program_info/LICENSE) by the Freesm Launcher authors; this render is under the same license. |
+| [`apple-mobile-drivers-installer-alt.svg`](icons/apple-mobile-drivers-installer-alt.svg) | vector | Original icon (upstream has none): a phone with a download arrow and a USB cable. No Apple logo or other trademark. |
+| [`apple-mobile-drivers-installer-alt.png`](icons/apple-mobile-drivers-installer-alt.png) | 192×192 | PNG render of `apple-mobile-drivers-installer-alt.svg`, used for UniGetUI |
 
 File names: `<package>[-<variant>][-<size>].<ext>`. Upstream-based icons carry their size; `alt` is the redrawn one.
+
+Icons already in UniGetUI's database, so nothing is hosted here for them: `nbt-explorer`, `privoxy`, `nettime` and `samsung-magician`. `Radmin-VPN` has none yet.
 
 ### Icon size in UniGetUI
 
