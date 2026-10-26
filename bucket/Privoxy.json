@@ -1,0 +1,38 @@
+{
+  "version": "4.1.0",
+  "description": "Non-caching web proxy with advanced filtering: removes ads and trackers, rewrites pages and HTTP headers, controls access.",
+  "homepage": "https://www.privoxy.org",
+  "license": "GPL-2.0-or-later",
+  "notes": [
+    "Privoxy listens on 127.0.0.1:8118. Point the browser or the system proxy there,",
+    "then open http://config.privoxy.org/ to check that it works.",
+    "",
+    "config.txt, trust.txt, user.action and user.filter are kept in $persist_dir and survive updates.",
+    "Since 4.1.0 the default config logs only fatal errors, and remote toggling",
+    "and editing actions from the web interface are off; see the 'debug' and",
+    "'enable-*' sections of config.txt to change that."
+  ],
+  "url": "https://downloads.sourceforge.net/project/ijbswa/Win32/4.1.0/privoxy_setup_4.1.0.exe#/dl.7z",
+  "hash": "88bc92e3d01f437f231b079a6137540fca8dbc1964020be1d8631f3c5e18cda8",
+  "pre_install": "Remove-Item \"$dir\\`$*\", \"$dir\\privoxy_uninstall.exe\" -Force -Recurse -ErrorAction SilentlyContinue",
+  "bin": "privoxy.exe",
+  "shortcuts": [
+    [
+      "privoxy.exe",
+      "Privoxy"
+    ]
+  ],
+  "persist": [
+    "config.txt",
+    "trust.txt",
+    "user.action",
+    "user.filter"
+  ],
+  "checkver": {
+    "sourceforge": "ijbswa/Win32",
+    "regex": "(?<folder>[^/]+)/privoxy_setup_([\\d.]+)\\.exe"
+  },
+  "autoupdate": {
+    "url": "https://downloads.sourceforge.net/project/ijbswa/Win32/$matchFolder/privoxy_setup_$version.exe#/dl.7z"
+  }
+}
