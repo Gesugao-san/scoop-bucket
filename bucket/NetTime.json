@@ -4,7 +4,7 @@
   "homepage": "https://www.timesynctool.com",
   "license": {
     "identifier": "LicenseRef-NetTime",
-    "url": "https://github.com/Gesugao-san/scoop-bucket/blob/main/licenses/NetTime.txt"
+    "url": "https://github.com/Gesugao-san/scoop-bucket/blob/HEAD/licenses/NetTime.txt"
   },
   "notes": [
     "NetTime runs as the Windows service NetTimeSvc, created from $dir\\NetTimeService.exe.",

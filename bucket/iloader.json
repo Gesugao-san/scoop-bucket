@@ -2,7 +2,10 @@
   "version": "2.4.0",
   "description": "Install SideStore, LiveContainer or any IPA on an iPhone/iPad from the PC and manage pairing files.",
   "homepage": "https://iloader.app",
-  "license": "MIT",
+  "license": {
+    "identifier": "MIT",
+    "url": "https://github.com/nab138/iloader/blob/HEAD/LICENSE"
+  },
   "notes": [
     "iloader talks to the device through Apple's usbmuxd, which comes with iTunes or the Apple Devices app.",
     "Install one of them first, otherwise the iPhone/iPad will not be found:",

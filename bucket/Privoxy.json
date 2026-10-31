@@ -2,7 +2,10 @@
   "version": "4.1.0",
   "description": "Non-caching web proxy with advanced filtering: removes ads and trackers, rewrites pages and HTTP headers, controls access.",
   "homepage": "https://www.privoxy.org",
-  "license": "GPL-2.0-or-later",
+  "license": {
+    "identifier": "GPL-2.0-or-later",
+    "url": "https://www.gnu.org/licenses/old-licenses/gpl-2.0.html"
+  },
   "notes": [
     "Privoxy listens on 127.0.0.1:8118. Point the browser or the system proxy there,",
     "then open http://config.privoxy.org/ to check that it works.",

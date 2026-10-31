@@ -2,7 +2,10 @@
   "version": "2.8.0",
   "description": "Graphical NBT editor for Minecraft: level.dat, player data, region files, schematics.",
   "homepage": "https://github.com/jaquadro/NBTExplorer",
-  "license": "MIT",
+  "license": {
+    "identifier": "MIT",
+    "url": "https://github.com/jaquadro/NBTExplorer/blob/HEAD/LICENSE.txt"
+  },
   "notes": [
     "NBTUtil (command-line tool) needs .NET Framework 3.5, which Windows 10/11 do not enable by default.",
     "On its first run Windows offers to download the feature itself. Or enable it beforehand (needs admin):",

@@ -2,7 +2,10 @@
   "version": "2024.03.29",
   "description": "Installs Apple's USB and Mobile Device Ethernet (tethering) drivers from the Microsoft Update Catalog, plus Apple Mobile Device Support from iTunes.",
   "homepage": "https://github.com/NelloKudo/Apple-Mobile-Drivers-Installer",
-  "license": "GPL-3.0-only",
+  "license": {
+    "identifier": "GPL-3.0-only",
+    "url": "https://github.com/NelloKudo/Apple-Mobile-Drivers-Installer/blob/HEAD/LICENSE.md"
+  },
   "notes": [
     "This installs only the script. To install the drivers, run it from an elevated (administrator) PowerShell:",
     "  AppleDrivInstaller",
