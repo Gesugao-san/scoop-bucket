@@ -7,8 +7,13 @@
     "url": "https://www.radmin-vpn.com/eula/"
   },
   "notes": [
-    "Not portable: this runs the official installer, which adds a network adapter driver and a service.",
+    "Not portable: this runs the official installer into Program Files. It adds the network adapter",
+    "driver RvNetMP60, the service 'Radmin VPN Control Service' (RvControlSvc) and a firewall exception.",
     "Install, update and uninstall from an elevated (admin) shell.",
+    "",
+    "The installer also adds Radmin Viewer 3 (Start menu), a desktop shortcut, and starts the Radmin VPN",
+    "window minimized at every logon (HKLM Run key 'RadminVPN'). Turn autostart off in Task Manager if unwanted.",
+    "",
     "Updates install over the existing copy, so networks and settings are kept.",
     "Only 'scoop uninstall Radmin-VPN' removes Radmin VPN from the system."
   ],
