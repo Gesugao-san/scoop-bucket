@@ -53,7 +53,13 @@
     "checkver": {
         "script": [
             "# The download URL has no version; use the date Daybreak published the file.",
-            "$response = Invoke-WebRequest -Method Head -Uri 'https://launch.daybreakgames.com/installer/PS2_setup.exe' -UseBasicParsing",
+            "# Some networks drop part of the connections to this CDN, so retry with a fresh connection each time.",
+            "$uri = 'https://launch.daybreakgames.com/installer/PS2_setup.exe'",
+            "$response = $null",
+            "foreach ($attempt in 1..5) {",
+            "  try { $response = Invoke-WebRequest -Method Head -Uri $uri -UseBasicParsing -DisableKeepAlive -TimeoutSec 30; break }",
+            "  catch { if ($attempt -eq 5) { throw }; Start-Sleep -Seconds 2 }",
+            "}",
             "$published = [DateTimeOffset]::ParseExact(\"$($response.Headers['Last-Modified'])\", 'r', [Globalization.CultureInfo]::InvariantCulture)",
             "$published.UtcDateTime.ToString('yyyy.MM.dd', [Globalization.CultureInfo]::InvariantCulture)"
         ],
