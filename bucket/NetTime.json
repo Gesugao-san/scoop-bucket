@@ -7,8 +7,9 @@
     "url": "https://github.com/Gesugao-san/scoop-bucket/blob/HEAD/licenses/NetTime.txt"
   },
   "notes": [
-    "NetTime runs as the Windows service NetTimeSvc, created from $dir\\NetTimeService.exe.",
-    "Installing, updating and uninstalling need an elevated (admin) shell.",
+    "NetTime runs as the Windows service NetTimeSvc (as SYSTEM), created from $dir\\NetTimeService.exe.",
+    "Install it globally from an elevated (admin) shell: scoop install -g NetTime. Updates and uninstall need admin too.",
+    "Only Administrators and SYSTEM can change the files in the app folder, so other programs cannot replace the service.",
     "",
     "The tray icon (NetTime.exe) is optional and does not start by itself; to run it at logon,",
     "copy the Start menu shortcut 'NetTime' into shell:startup.",
@@ -21,15 +22,26 @@
   "innosetup": true,
   "pre_install": [
     "if (!(is_admin)) { error 'NetTime installs a Windows service: run this from an elevated shell.'; break }",
+    "# The service runs as SYSTEM, so its files must live where only admins can change them.",
+    "if (!$global) { error \"NetTime runs as a SYSTEM service; install it globally so non-admin programs cannot replace its files: scoop install -g $app\"; break }",
     "$svc = Get-CimInstance Win32_Service -Filter \"Name='NetTimeSvc'\" -ErrorAction SilentlyContinue",
-    "if ($svc -and ($svc.PathName -notlike '*\\apps\\NetTime\\*')) {",
-    "  error \"NetTimeSvc already exists outside Scoop ($($svc.PathName)). Uninstall the regular NetTime first.\"",
+    "if ($svc -and ($svc.PathName -notlike \"*$(appsdir $true)\\NetTime\\*\")) {",
+    "  error \"NetTimeSvc already exists ($($svc.PathName)). Remove that copy first: 'scoop uninstall NetTime' for a per-user Scoop install, or uninstall the regular NetTime.\"",
     "  break",
     "}"
   ],
   "post_install": [
-    "if (!(Get-Service NetTimeSvc -ErrorAction SilentlyContinue)) {",
-    "  New-Service -Name NetTimeSvc -BinaryPathName \"`\"$dir\\NetTimeService.exe`\"\" -DisplayName 'NetTime Service' -StartupType Automatic | Out-Null",
+    "# Only Administrators and SYSTEM may change the app folder; Users can read and run. SIDs work on localized Windows too.",
+    "# Set on the app root so every future version folder inherits it from the moment it is created.",
+    "$appRoot = Split-Path $original_dir",
+    "icacls \"$appRoot\" /inheritance:r /grant:r '*S-1-5-32-544:(OI)(CI)F' '*S-1-5-18:(OI)(CI)F' '*S-1-5-32-545:(OI)(CI)RX' /Q | Out-Null",
+    "if ($LASTEXITCODE -ne 0) { warn \"Could not restrict permissions on $appRoot (icacls exit code $LASTEXITCODE).\" }",
+    "$binPath = \"`\"$dir\\NetTimeService.exe`\"\"",
+    "$svc = Get-CimInstance Win32_Service -Filter \"Name='NetTimeSvc'\" -ErrorAction SilentlyContinue",
+    "if ($svc) {",
+    "  Invoke-CimMethod -InputObject $svc -MethodName Change -Arguments @{ PathName = $binPath } | Out-Null",
+    "} else {",
+    "  New-Service -Name NetTimeSvc -BinaryPathName $binPath -DisplayName 'NetTime Service' -StartupType Automatic | Out-Null",
     "}",
     "Start-Service NetTimeSvc"
   ],
