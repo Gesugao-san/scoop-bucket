@@ -1,5 +1,7 @@
 # scoop-bucket
 
+[![CI](https://github.com/Gesugao-san/scoop-bucket/actions/workflows/ci.yml/badge.svg)](https://github.com/Gesugao-san/scoop-bucket/actions/workflows/ci.yml) [![Excavator](https://github.com/Gesugao-san/scoop-bucket/actions/workflows/excavator.yml/badge.svg)](https://github.com/Gesugao-san/scoop-bucket/actions/workflows/excavator.yml)
+
 Personal [Scoop](https://scoop.sh) bucket by [Gesugao-san](https://github.com/Gesugao-san).
 
 ## Usage
@@ -38,6 +40,38 @@ Works in [UniGetUI](https://github.com/Devolutions/UniGetUI) too: add the bucket
 Non-portable packages (`NetTime`, `Radmin-VPN`, `Samsung-Magician`) check before installing whether the program is already installed on the system without Scoop, and stop instead of silently taking it over (a later `scoop uninstall` would remove that copy too). `scoop update` is not affected. For `Radmin-VPN` and `Samsung-Magician`, whose installers can install over an existing copy, run `$env:GESU_ALLOW_EXISTING = '1'` in the same shell to let Scoop take over; the variable stays set until you close the shell or run `Remove-Item Env:GESU_ALLOW_EXISTING`. `NetTime` has no such override: its regular installer registers its own `NetTimeSvc`, which a Scoop copy cannot share.
 
 Manifest names keep the product's capitalisation: UniGetUI builds the display name from the file name with [`FormatAsName`](https://github.com/Devolutions/UniGetUI/blob/b85288414fea52a1283a67599da5558d4818d606/src/UniGetUI.Core.Tools/Tools.cs#L320), which turns dashes into spaces and only upper-cases the first letter of each word (`NBT-Studio` → "NBT Studio", but `nbt-studio` → "Nbt Studio"). Scoop itself is case-insensitive, so `nbt-studio` works in commands too. Folders under `scripts/` are lowercase; they do not affect the display name.
+
+## Automation
+
+GitHub Actions from Scoop's [BucketTemplate](https://github.com/ScoopInstaller/BucketTemplate), using [ScoopInstaller/GithubActions](https://github.com/ScoopInstaller/GithubActions):
+
+| Workflow | Runs | Does |
+|---|---|---|
+| [`excavator.yml`](.github/workflows/excavator.yml) | every 4 hours, or by hand ([see below](#running-workflows-by-hand)) | Runs `checkver` with autoupdate on every manifest and pushes new versions with their hashes straight to `main`, as `github-actions[bot]` |
+| [`ci.yml`](.github/workflows/ci.yml) | every push and PR | Scoop's Pester tests in Windows PowerShell and PowerShell 7: manifest schema and file style |
+| [`issues.yml`](.github/workflows/issues.yml) | new issues | Checks reports such as `app@1.2.3: hash check failed` and fixes the hash if it really changed |
+| [`pull_request.yml`](.github/workflows/pull_request.yml) | new PRs, `/verify` comments | Checks the changed manifests and posts the results |
+
+Notes:
+
+- The tests run on `bucket/` only ([`Scoop-Bucket.Tests.ps1`](Scoop-Bucket.Tests.ps1)): Scoop's style tests read every file as text and would fail on the PNGs in `icons/` and `screenshots/`.
+- Manifests use Scoop's own format (4-space JSON) because Excavator rewrites a manifest with Scoop's formatter whenever it updates it. Run `.\bin\formatjson.ps1` after editing by hand.
+- `.gitattributes` gives text files CRLF in working copies, which the tests require; the repository itself stores LF.
+- GitHub turns off scheduled workflows in public repositories after 60 days without activity; re-enable Excavator on the Actions tab if that happens.
+- [`bin/`](bin) holds the usual helper wrappers (`checkver.ps1`, `checkurls.ps1`, `checkhashes.ps1`, `formatjson.ps1`, `missing-checkver.ps1`, `auto-pr.ps1`, `test.ps1`) for running Scoop's maintainer scripts against this bucket locally.
+
+### Running workflows by hand
+
+Excavator and CI can be started from the [Actions tab](https://github.com/Gesugao-san/scoop-bucket/actions) (pick the workflow, then **Run workflow**) or with the [GitHub CLI](https://cli.github.com/):
+
+```powershell
+gh workflow run excavator.yml -R Gesugao-san/scoop-bucket
+gh workflow run excavator.yml -R Gesugao-san/scoop-bucket -f force=NetTime,Privoxy
+gh workflow run ci.yml -R Gesugao-san/scoop-bucket
+gh run watch -R Gesugao-san/scoop-bucket
+```
+
+`force` lists manifests that Excavator re-downloads and re-hashes even when the version is unchanged, for when upstream replaces a file without a new version number. The issue and PR handlers have no manual run: they need the issue or PR that triggered them.
 
 ## Licenses
 

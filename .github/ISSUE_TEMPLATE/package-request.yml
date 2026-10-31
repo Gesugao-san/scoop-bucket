@@ -1,0 +1,50 @@
+name: 📦 Package Request
+description: Ask for a package to be added to this bucket.
+title: "[Request]: "
+labels: ["package-request"]
+body:
+- type: checkboxes
+  attributes:
+    label: Prerequisites
+    options:
+    - label: I have searched all issues/PRs to ensure it has not already been reported or fixed.
+      required: true
+- type: checkboxes
+  attributes:
+    label: Criteria
+    description: This is a personal bucket; a package fits it when
+    options:
+    - label: It is not in Scoop's Main, Extras, Nonportable or Versions buckets, or the package there is broken or outdated.
+      required: true
+    - label: It has an official download from the author or vendor, not a mirror or repack.
+      required: true
+    - label: It runs on Windows.
+      required: true
+- type: input
+  attributes:
+    label: Name
+    description: Name of the package
+  validations:
+    required: true
+- type: input
+  attributes:
+    label: Description
+    description: Clear and concise details of what it is
+  validations:
+    required: true
+- type: input
+  attributes:
+    label: Homepage
+    description: URI of the package's homepage
+  validations:
+    required: true
+- type: input
+  attributes:
+    label: Download Link(s)
+    description: URI(s) of the package's download(s)
+  validations:
+    required: true
+- type: textarea
+  attributes:
+    label: Notes
+    description: Anything that matters for packaging, e.g. installer type, services or drivers it adds, where it keeps settings.

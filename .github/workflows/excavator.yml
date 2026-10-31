@@ -1,0 +1,31 @@
+name: Excavator
+
+on:
+  # Manual run: Actions tab > Excavator > Run workflow, or `gh workflow run excavator.yml`
+  workflow_dispatch:
+    inputs:
+      force:
+        description: 'Manifests to re-download and re-hash even if the version did not change (comma-separated, e.g. "NetTime,Privoxy"). Leave empty for a normal run.'
+        required: false
+        default: ''
+        type: string
+  schedule:
+    # run every 4 hours
+    - cron: '20 */4 * * *'
+
+permissions:
+  contents: write
+
+jobs:
+  excavate:
+    name: Excavate
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Excavate
+        uses: ScoopInstaller/GithubActions@5bceeda181721d9d10a18fdcc3ddca6f33467ae6 # v3.0.0
+        env:
+          SKIP_UPDATED: 1
+          # Empty on scheduled runs, so nothing is forced then
+          SPECIAL_SNOWFLAKES: ${{ inputs.force }}
