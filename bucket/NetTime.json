@@ -2,7 +2,10 @@
   "version": "3.14",
   "description": "SNTP client that keeps the Windows clock in sync, cross-checks large adjustments with a second server and can act as a time server.",
   "homepage": "https://www.timesynctool.com",
-  "license": "BSD-2-Clause",
+  "license": {
+    "identifier": "LicenseRef-NetTime",
+    "url": "https://github.com/Gesugao-san/scoop-bucket/blob/main/licenses/NetTime.txt"
+  },
   "notes": [
     "NetTime runs as the Windows service NetTimeSvc, created from $dir\\NetTimeService.exe.",
     "Installing, updating and uninstalling need an elevated (admin) shell.",

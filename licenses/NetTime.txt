@@ -1,0 +1,36 @@
+NetTime license notice
+======================
+
+NetTime ships no separate license file. The notice below is the header of its
+source files (nettime.dpr, NetTimeService.dpr, About.pas, NetTimeClient.pas and
+the other NetTime units), copied verbatim from the official source archive:
+
+  File:    NetTimeSource-314.zip (NetTime 3.14)
+  From:    https://sourceforge.net/projects/nettime/files/
+  SHA-256: 4c477d9394bb6d6ea531314fcc58ca36f2c02e50963b516090018418fb71898e
+
+--------------------------------------------------------------------------------
+
+NetTime is copyrighted by Graham Mainwaring. Permission is hereby
+granted to use, modify, redistribute and create derivative works
+provided this attribution is not removed. I also request that if you
+make any useful changes, please e-mail the diffs to graham@mhn.org
+so that I can include them in an 'official' release.
+
+Modifications Copyright 2011 - Mark Griffiths
+
+--------------------------------------------------------------------------------
+
+Notes:
+
+- The About box of NetTime 3.14 reads "Original Program Copyright (c) 1997,
+  2000 Graham Mainwaring" and "Modifications Copyright (c) 2011, 2012 Mark
+  Griffiths".
+- This text matches no license on the SPDX License List, so the Scoop manifest
+  uses the SPDX custom identifier LicenseRef-NetTime. SourceForge lists the
+  project under the generic "BSD License" category, and some package catalogs
+  call it BSD-2-Clause or BSD-3-Clause, but no BSD license text appears in the
+  source archive.
+- WSocket.pas, WSockBuf.pas and HTTPProt.pas in the same archive come from
+  Francois Piette's Internet Component Suite and carry their own license; this
+  notice does not cover them.
