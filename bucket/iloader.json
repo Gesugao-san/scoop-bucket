@@ -1,43 +1,43 @@
 {
-  "version": "2.4.0",
-  "description": "Install SideStore, LiveContainer or any IPA on an iPhone/iPad from the PC and manage pairing files.",
-  "homepage": "https://iloader.app",
-  "license": {
-    "identifier": "MIT",
-    "url": "https://github.com/nab138/iloader/blob/HEAD/LICENSE"
-  },
-  "notes": [
-    "iloader talks to the device through Apple's usbmuxd, which comes with iTunes or the Apple Devices app.",
-    "Install one of them first, otherwise the iPhone/iPad will not be found:",
-    "  winget install 9NP83LWLPZ9K   (Apple Devices, Microsoft Store)",
-    "",
-    "Decline the update offered inside iloader: its installer would put a second copy outside Scoop.",
-    "Update with 'scoop update iloader' instead.",
-    "",
-    "Settings and logs live in %APPDATA%\\me.nabdev.iloader and are kept on uninstall."
-  ],
-  "architecture": {
-    "64bit": {
-      "url": "https://github.com/nab138/iloader/releases/download/v2.4.0/iloader-windows-x64.exe#/dl.7z",
-      "hash": "80d98edbea33402f9b2b3bfe564de9658648063ed34b66881ce9b4cd6b242e78"
-    }
-  },
-  "pre_install": "Remove-Item \"$dir\\`$*\" -Force -Recurse",
-  "bin": "iloader.exe",
-  "shortcuts": [
-    [
-      "iloader.exe",
-      "iloader"
-    ]
-  ],
-  "checkver": {
-    "github": "https://github.com/nab138/iloader"
-  },
-  "autoupdate": {
+    "version": "2.4.0",
+    "description": "Install SideStore, LiveContainer or any IPA on an iPhone/iPad from the PC and manage pairing files.",
+    "homepage": "https://iloader.app",
+    "license": {
+        "identifier": "MIT",
+        "url": "https://github.com/nab138/iloader/blob/HEAD/LICENSE"
+    },
+    "notes": [
+        "iloader talks to the device through Apple's usbmuxd, which comes with iTunes or the Apple Devices app.",
+        "Install one of them first, otherwise the iPhone/iPad will not be found:",
+        "  winget install 9NP83LWLPZ9K   (Apple Devices, Microsoft Store)",
+        "",
+        "Decline the update offered inside iloader: its installer would put a second copy outside Scoop.",
+        "Update with 'scoop update iloader' instead.",
+        "",
+        "Settings and logs live in %APPDATA%\\me.nabdev.iloader and are kept on uninstall."
+    ],
     "architecture": {
-      "64bit": {
-        "url": "https://github.com/nab138/iloader/releases/download/v$version/iloader-windows-x64.exe#/dl.7z"
-      }
+        "64bit": {
+            "url": "https://github.com/nab138/iloader/releases/download/v2.4.0/iloader-windows-x64.exe#/dl.7z",
+            "hash": "80d98edbea33402f9b2b3bfe564de9658648063ed34b66881ce9b4cd6b242e78"
+        }
+    },
+    "pre_install": "Remove-Item \"$dir\\`$*\" -Force -Recurse",
+    "bin": "iloader.exe",
+    "shortcuts": [
+        [
+            "iloader.exe",
+            "iloader"
+        ]
+    ],
+    "checkver": {
+        "github": "https://github.com/nab138/iloader"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/nab138/iloader/releases/download/v$version/iloader-windows-x64.exe#/dl.7z"
+            }
+        }
     }
-  }
 }

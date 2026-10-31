@@ -1,63 +1,63 @@
 {
-  "version": "2.1.4951.1",
-  "description": "Free VPN for building a virtual LAN: play LAN games and reach your computers over the internet.",
-  "homepage": "https://www.radmin-vpn.com",
-  "license": {
-    "identifier": "Freeware",
-    "url": "https://www.radmin-vpn.com/eula/"
-  },
-  "notes": [
-    "Not portable: this runs the official installer into Program Files. It adds the network adapter",
-    "driver RvNetMP60, the service 'Radmin VPN Control Service' (RvControlSvc) and a firewall exception.",
-    "Install, update and uninstall from an elevated (admin) shell.",
-    "",
-    "The installer also adds Radmin Viewer 3 (Start menu), a desktop shortcut, and starts the Radmin VPN",
-    "window minimized at every logon (HKLM Run key 'RadminVPN'). Turn autostart off in Task Manager if unwanted.",
-    "",
-    "Updates install over the existing copy, so networks and settings are kept.",
-    "Only 'scoop uninstall Radmin-VPN' removes Radmin VPN from the system.",
-    "",
-    "A fresh install stops if Radmin VPN is already installed without Scoop. To let Scoop take over that copy,",
-    "run $env:GESU_ALLOW_EXISTING = '1' in the same shell and install again."
-  ],
-  "url": "https://download.radmin-vpn.com/download/files/Radmin_VPN_2.1.4951.1.exe#/setup.exe",
-  "hash": "e16711e2e3e59f6603f51f437197215b1914a3d8316e1f633260178b959921f7",
-  "pre_install": [
-    "if (!(is_admin)) { error \"$app installs a driver and a service: run this from an elevated shell.\"; break }",
-    "# A fresh 'scoop install' must not silently take over a copy installed without Scoop; 'scoop update' is not affected.",
-    "$roots = 'HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall', 'HKLM:\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall'",
-    "$existing = Get-ChildItem $roots -ErrorAction SilentlyContinue | Get-ItemProperty -ErrorAction SilentlyContinue | Where-Object { $_.DisplayName -like 'Radmin VPN*' -and $_.PSChildName -match '^\\{[0-9A-Fa-f-]{36}\\}$' } | Select-Object -First 1",
-    "if (($cmd -eq 'install') -and $existing -and ($env:GESU_ALLOW_EXISTING -ne '1')) {",
-    "  error \"$($existing.DisplayName) ($($existing.DisplayVersion)) is already installed on this system. Uninstall it first, or run `$env:GESU_ALLOW_EXISTING = '1' and install again to let Scoop install over it and manage it from now on.\"",
-    "  break",
-    "}"
-  ],
-  "installer": {
-    "script": [
-      "Start-Process \"$dir\\setup.exe\" -ArgumentList @('/VERYSILENT', '/SUPPRESSMSGBOXES', '/NORESTART') -Wait | Out-Null",
-      "Remove-Item \"$dir\\setup.exe\" -Force"
-    ]
-  },
-  "uninstaller": {
-    "script": [
-      "if (!(is_admin)) { error \"$app runs a driver and a service: run this from an elevated shell.\"; break }",
-      "# On update the new installer upgrades in place; only a real uninstall removes the app.",
-      "if ($cmd -eq 'uninstall') {",
-      "  $roots = 'HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall', 'HKLM:\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall'",
-      "  $entry = Get-ChildItem $roots -ErrorAction SilentlyContinue | Get-ItemProperty | Where-Object { $_.DisplayName -like 'Radmin VPN*' -and $_.PSChildName -match '^\\{[0-9A-Fa-f-]{36}\\}$' } | Select-Object -First 1",
-      "  if ($entry) {",
-      "    Start-Process msiexec.exe -ArgumentList @('/x', $entry.PSChildName, '/qn', '/norestart') -Wait",
-      "  } else {",
-      "    warn 'Radmin VPN was not found among installed programs; nothing to remove.'",
-      "  }",
-      "}"
-    ]
-  },
-  "checkver": {
-    "url": "https://www.radmin-vpn.com/",
-    "regex": "Radmin_VPN_([\\d.]+)\\.exe"
-  },
-  "autoupdate": {
-    "url": "https://download.radmin-vpn.com/download/files/Radmin_VPN_$version.exe#/setup.exe"
-  }
+    "version": "2.1.4951.1",
+    "description": "Free VPN for building a virtual LAN: play LAN games and reach your computers over the internet.",
+    "homepage": "https://www.radmin-vpn.com",
+    "license": {
+        "identifier": "Freeware",
+        "url": "https://www.radmin-vpn.com/eula/"
+    },
+    "notes": [
+        "Not portable: this runs the official installer into Program Files. It adds the network adapter",
+        "driver RvNetMP60, the service 'Radmin VPN Control Service' (RvControlSvc) and a firewall exception.",
+        "Install, update and uninstall from an elevated (admin) shell.",
+        "",
+        "The installer also adds Radmin Viewer 3 (Start menu), a desktop shortcut, and starts the Radmin VPN",
+        "window minimized at every logon (HKLM Run key 'RadminVPN'). Turn autostart off in Task Manager if unwanted.",
+        "",
+        "Updates install over the existing copy, so networks and settings are kept.",
+        "Only 'scoop uninstall Radmin-VPN' removes Radmin VPN from the system.",
+        "",
+        "A fresh install stops if Radmin VPN is already installed without Scoop. To let Scoop take over that copy,",
+        "run $env:GESU_ALLOW_EXISTING = '1' in the same shell and install again."
+    ],
+    "url": "https://download.radmin-vpn.com/download/files/Radmin_VPN_2.1.4951.1.exe#/setup.exe",
+    "hash": "e16711e2e3e59f6603f51f437197215b1914a3d8316e1f633260178b959921f7",
+    "pre_install": [
+        "if (!(is_admin)) { error \"$app installs a driver and a service: run this from an elevated shell.\"; break }",
+        "# A fresh 'scoop install' must not silently take over a copy installed without Scoop; 'scoop update' is not affected.",
+        "$roots = 'HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall', 'HKLM:\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall'",
+        "$existing = Get-ChildItem $roots -ErrorAction SilentlyContinue | Get-ItemProperty -ErrorAction SilentlyContinue | Where-Object { $_.DisplayName -like 'Radmin VPN*' -and $_.PSChildName -match '^\\{[0-9A-Fa-f-]{36}\\}$' } | Select-Object -First 1",
+        "if (($cmd -eq 'install') -and $existing -and ($env:GESU_ALLOW_EXISTING -ne '1')) {",
+        "  error \"$($existing.DisplayName) ($($existing.DisplayVersion)) is already installed on this system. Uninstall it first, or run `$env:GESU_ALLOW_EXISTING = '1' and install again to let Scoop install over it and manage it from now on.\"",
+        "  break",
+        "}"
+    ],
+    "installer": {
+        "script": [
+            "Start-Process \"$dir\\setup.exe\" -ArgumentList @('/VERYSILENT', '/SUPPRESSMSGBOXES', '/NORESTART') -Wait | Out-Null",
+            "Remove-Item \"$dir\\setup.exe\" -Force"
+        ]
+    },
+    "uninstaller": {
+        "script": [
+            "if (!(is_admin)) { error \"$app runs a driver and a service: run this from an elevated shell.\"; break }",
+            "# On update the new installer upgrades in place; only a real uninstall removes the app.",
+            "if ($cmd -eq 'uninstall') {",
+            "  $roots = 'HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall', 'HKLM:\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall'",
+            "  $entry = Get-ChildItem $roots -ErrorAction SilentlyContinue | Get-ItemProperty | Where-Object { $_.DisplayName -like 'Radmin VPN*' -and $_.PSChildName -match '^\\{[0-9A-Fa-f-]{36}\\}$' } | Select-Object -First 1",
+            "  if ($entry) {",
+            "    Start-Process msiexec.exe -ArgumentList @('/x', $entry.PSChildName, '/qn', '/norestart') -Wait",
+            "  } else {",
+            "    warn 'Radmin VPN was not found among installed programs; nothing to remove.'",
+            "  }",
+            "}"
+        ]
+    },
+    "checkver": {
+        "url": "https://www.radmin-vpn.com/",
+        "regex": "Radmin_VPN_([\\d.]+)\\.exe"
+    },
+    "autoupdate": {
+        "url": "https://download.radmin-vpn.com/download/files/Radmin_VPN_$version.exe#/setup.exe"
+    }
 }

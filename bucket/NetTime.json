@@ -1,79 +1,77 @@
 {
-  "version": "3.14",
-  "description": "SNTP client that keeps the Windows clock in sync, cross-checks large adjustments with a second server and can act as a time server.",
-  "homepage": "https://www.timesynctool.com",
-  "license": {
-    "identifier": "LicenseRef-NetTime",
-    "url": "https://github.com/Gesugao-san/scoop-bucket/blob/HEAD/licenses/NetTime.txt"
-  },
-  "notes": [
-    "NetTime runs as the Windows service NetTimeSvc (as SYSTEM), created from $dir\\NetTimeService.exe.",
-    "Install it globally from an elevated (admin) shell: scoop install -g NetTime. Updates and uninstall need admin too.",
-    "Only Administrators and SYSTEM can change the files in the app folder, so other programs cannot replace the service.",
-    "Install stops if the regular NetTime (from its own installer) is present; uninstall that one first.",
-    "Before 'scoop update -g NetTime', stop it: Stop-Service NetTimeSvc (and close the tray icon).",
-    "Scoop checks for running processes before any manifest script can do that; the update starts the service again.",
-    "",
-    "The tray icon (NetTime.exe) is optional and does not start by itself; to run it at logon,",
-    "copy the Start menu shortcut 'NetTime' into shell:startup.",
-    "",
-    "Settings live in HKLM\\Software\\Wow6432Node\\Subjective Software\\NetTime and are kept on uninstall.",
-    "To serve time to other machines, disable the Windows Time service (w32time) first."
-  ],
-  "url": "https://www.timesynctool.com/NetTimeSetup-314.exe",
-  "hash": "5e3a5cd4e7ce99c8a5701cbe50344cd0516bc9984681de56f15abde414d9dbde",
-  "innosetup": true,
-  "pre_install": [
-    "if (!(is_admin)) { error 'NetTime installs a Windows service: run this from an elevated shell.'; break }",
-    "# The service runs as SYSTEM, so its files must live where only admins can change them.",
-    "if (!$global) { error \"NetTime runs as a SYSTEM service; install it globally so non-admin programs cannot replace its files: scoop install -g $app\"; break }",
-    "# The regular NetTime installer (registered as NetTime_is1) cannot share the service with this copy.",
-    "$roots = 'HKLM:\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall', 'HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall', 'HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall'",
-    "$existing = $roots | ForEach-Object { Get-ItemProperty \"$_\\NetTime_is1\" -ErrorAction SilentlyContinue } | Select-Object -First 1",
-    "if ($existing) { error \"$($existing.DisplayName) is already installed on this system without Scoop. Uninstall it first (Settings > Apps), then install again.\"; break }",
-    "$svc = Get-CimInstance Win32_Service -Filter \"Name='NetTimeSvc'\" -ErrorAction SilentlyContinue",
-    "if ($svc -and ($svc.PathName -notlike \"*$(appsdir $true)\\NetTime\\*\")) {",
-    "  error \"NetTimeSvc already exists ($($svc.PathName)). Remove that copy first: 'scoop uninstall NetTime' for a per-user Scoop install, or uninstall the regular NetTime.\"",
-    "  break",
-    "}"
-  ],
-  "post_install": [
-    "# Only Administrators and SYSTEM may change the app folder; Users can read and run. SIDs work on localized Windows too.",
-    "# Set on the app root so every future version folder inherits it from the moment it is created.",
-    "$appRoot = Split-Path $original_dir",
-    "icacls \"$appRoot\" /inheritance:r /grant:r '*S-1-5-32-544:(OI)(CI)F' '*S-1-5-18:(OI)(CI)F' '*S-1-5-32-545:(OI)(CI)RX' /Q | Out-Null",
-    "if ($LASTEXITCODE -ne 0) { warn \"Could not restrict permissions on $appRoot (icacls exit code $LASTEXITCODE).\" }",
-    "$binPath = \"`\"$dir\\NetTimeService.exe`\"\"",
-    "$svc = Get-CimInstance Win32_Service -Filter \"Name='NetTimeSvc'\" -ErrorAction SilentlyContinue",
-    "if ($svc) {",
-    "  Invoke-CimMethod -InputObject $svc -MethodName Change -Arguments @{ PathName = $binPath } | Out-Null",
-    "} else {",
-    "  New-Service -Name NetTimeSvc -BinaryPathName $binPath -DisplayName 'NetTime Service' -StartupType Automatic | Out-Null",
-    "}",
-    "Start-Service NetTimeSvc"
-  ],
-  "pre_uninstall": [
-    "if (!(is_admin)) { error 'NetTime runs as a Windows service: run this from an elevated shell.'; break }",
-    "# Scoop refuses to uninstall while a process runs from the app folder; pre_uninstall runs before that check.",
-    "Stop-Process -Name NetTime -Force -ErrorAction SilentlyContinue",
-    "Stop-Service NetTimeSvc -Force -ErrorAction SilentlyContinue"
-  ],
-  "uninstaller": {
-    "script": [
-      "if ($cmd -eq 'uninstall') { sc.exe delete NetTimeSvc | Out-Null }"
-    ]
-  },
-  "shortcuts": [
-    [
-      "NetTime.exe",
-      "NetTime"
-    ]
-  ],
-  "checkver": {
-    "url": "https://www.timesynctool.com/",
-    "regex": "Version ([\\d.]+) - Current Stable Version"
-  },
-  "autoupdate": {
-    "url": "https://www.timesynctool.com/NetTimeSetup-$cleanVersion.exe"
-  }
+    "version": "3.14",
+    "description": "SNTP client that keeps the Windows clock in sync, cross-checks large adjustments with a second server and can act as a time server.",
+    "homepage": "https://www.timesynctool.com",
+    "license": {
+        "identifier": "LicenseRef-NetTime",
+        "url": "https://github.com/Gesugao-san/scoop-bucket/blob/HEAD/licenses/NetTime.txt"
+    },
+    "notes": [
+        "NetTime runs as the Windows service NetTimeSvc (as SYSTEM), created from $dir\\NetTimeService.exe.",
+        "Install it globally from an elevated (admin) shell: scoop install -g NetTime. Updates and uninstall need admin too.",
+        "Only Administrators and SYSTEM can change the files in the app folder, so other programs cannot replace the service.",
+        "Install stops if the regular NetTime (from its own installer) is present; uninstall that one first.",
+        "Before 'scoop update -g NetTime', stop it: Stop-Service NetTimeSvc (and close the tray icon).",
+        "Scoop checks for running processes before any manifest script can do that; the update starts the service again.",
+        "",
+        "The tray icon (NetTime.exe) is optional and does not start by itself; to run it at logon,",
+        "copy the Start menu shortcut 'NetTime' into shell:startup.",
+        "",
+        "Settings live in HKLM\\Software\\Wow6432Node\\Subjective Software\\NetTime and are kept on uninstall.",
+        "To serve time to other machines, disable the Windows Time service (w32time) first."
+    ],
+    "url": "https://www.timesynctool.com/NetTimeSetup-314.exe",
+    "hash": "5e3a5cd4e7ce99c8a5701cbe50344cd0516bc9984681de56f15abde414d9dbde",
+    "innosetup": true,
+    "pre_install": [
+        "if (!(is_admin)) { error 'NetTime installs a Windows service: run this from an elevated shell.'; break }",
+        "# The service runs as SYSTEM, so its files must live where only admins can change them.",
+        "if (!$global) { error \"NetTime runs as a SYSTEM service; install it globally so non-admin programs cannot replace its files: scoop install -g $app\"; break }",
+        "# The regular NetTime installer (registered as NetTime_is1) cannot share the service with this copy.",
+        "$roots = 'HKLM:\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall', 'HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall', 'HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall'",
+        "$existing = $roots | ForEach-Object { Get-ItemProperty \"$_\\NetTime_is1\" -ErrorAction SilentlyContinue } | Select-Object -First 1",
+        "if ($existing) { error \"$($existing.DisplayName) is already installed on this system without Scoop. Uninstall it first (Settings > Apps), then install again.\"; break }",
+        "$svc = Get-CimInstance Win32_Service -Filter \"Name='NetTimeSvc'\" -ErrorAction SilentlyContinue",
+        "if ($svc -and ($svc.PathName -notlike \"*$(appsdir $true)\\NetTime\\*\")) {",
+        "  error \"NetTimeSvc already exists ($($svc.PathName)). Remove that copy first: 'scoop uninstall NetTime' for a per-user Scoop install, or uninstall the regular NetTime.\"",
+        "  break",
+        "}"
+    ],
+    "post_install": [
+        "# Only Administrators and SYSTEM may change the app folder; Users can read and run. SIDs work on localized Windows too.",
+        "# Set on the app root so every future version folder inherits it from the moment it is created.",
+        "$appRoot = Split-Path $original_dir",
+        "icacls \"$appRoot\" /inheritance:r /grant:r '*S-1-5-32-544:(OI)(CI)F' '*S-1-5-18:(OI)(CI)F' '*S-1-5-32-545:(OI)(CI)RX' /Q | Out-Null",
+        "if ($LASTEXITCODE -ne 0) { warn \"Could not restrict permissions on $appRoot (icacls exit code $LASTEXITCODE).\" }",
+        "$binPath = \"`\"$dir\\NetTimeService.exe`\"\"",
+        "$svc = Get-CimInstance Win32_Service -Filter \"Name='NetTimeSvc'\" -ErrorAction SilentlyContinue",
+        "if ($svc) {",
+        "  Invoke-CimMethod -InputObject $svc -MethodName Change -Arguments @{ PathName = $binPath } | Out-Null",
+        "} else {",
+        "  New-Service -Name NetTimeSvc -BinaryPathName $binPath -DisplayName 'NetTime Service' -StartupType Automatic | Out-Null",
+        "}",
+        "Start-Service NetTimeSvc"
+    ],
+    "pre_uninstall": [
+        "if (!(is_admin)) { error 'NetTime runs as a Windows service: run this from an elevated shell.'; break }",
+        "# Scoop refuses to uninstall while a process runs from the app folder; pre_uninstall runs before that check.",
+        "Stop-Process -Name NetTime -Force -ErrorAction SilentlyContinue",
+        "Stop-Service NetTimeSvc -Force -ErrorAction SilentlyContinue"
+    ],
+    "uninstaller": {
+        "script": "if ($cmd -eq 'uninstall') { sc.exe delete NetTimeSvc | Out-Null }"
+    },
+    "shortcuts": [
+        [
+            "NetTime.exe",
+            "NetTime"
+        ]
+    ],
+    "checkver": {
+        "url": "https://www.timesynctool.com/",
+        "regex": "Version ([\\d.]+) - Current Stable Version"
+    },
+    "autoupdate": {
+        "url": "https://www.timesynctool.com/NetTimeSetup-$cleanVersion.exe"
+    }
 }
