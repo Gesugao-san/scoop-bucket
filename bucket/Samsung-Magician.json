@@ -12,13 +12,25 @@
     "'SamsungMagician' that starts Magician at logon, and may switch the Windows power plan.",
     "",
     "Magician can update itself; prefer 'scoop update Samsung-Magician' so Scoop knows the installed version.",
-    "Only 'scoop uninstall Samsung-Magician' removes Magician from the system."
+    "Only 'scoop uninstall Samsung-Magician' removes Magician from the system.",
+    "",
+    "A fresh install stops if Samsung Magician is already installed without Scoop. To let Scoop take over that copy,",
+    "run $env:GESU_ALLOW_EXISTING = '1' in the same shell and install again."
   ],
   "url": "https://downloadcenter.samsung.com/content/SW/202609/20260915101727932/Samsung_Magician_Installer_Official_9.0.2.500.exe#/setup.exe",
   "hash": "645cc9f19e411645cc3d8c862359b8a41c8cc53c7b1c1d262c25caed67f46624",
+  "pre_install": [
+    "if (!(is_admin)) { error \"$app installs a driver and a service: run this from an elevated shell.\"; break }",
+    "# A fresh 'scoop install' must not silently take over a copy installed without Scoop; 'scoop update' is not affected.",
+    "$roots = 'HKLM:\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall', 'HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall'",
+    "$existing = $roots | ForEach-Object { Get-ItemProperty \"$_\\{29AE3F9F-7158-4ca7-B1ED-28A73ECDB215}_is1\" -ErrorAction SilentlyContinue } | Select-Object -First 1",
+    "if (($cmd -eq 'install') -and $existing -and ($env:GESU_ALLOW_EXISTING -ne '1')) {",
+    "  error \"$($existing.DisplayName) ($($existing.DisplayVersion)) is already installed on this system. Uninstall it first, or run `$env:GESU_ALLOW_EXISTING = '1' and install again to let Scoop install over it and manage it from now on.\"",
+    "  break",
+    "}"
+  ],
   "installer": {
     "script": [
-      "if (!(is_admin)) { error \"$app installs a driver and a service: run this from an elevated shell.\"; break }",
       "Write-Host 'Samsung Magician does not allow silent installation: finish the setup wizard that opens now.' -ForegroundColor Yellow",
       "$setup = Start-Process \"$dir\\setup.exe\" -ArgumentList '/SP-' -Wait -PassThru",
       "if ($setup.ExitCode -ne 0) { error \"Samsung Magician setup exited with code $($setup.ExitCode) (2 or 5: cancelled).\"; break }",
