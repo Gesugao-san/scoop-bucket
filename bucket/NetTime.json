@@ -11,6 +11,8 @@
     "Install it globally from an elevated (admin) shell: scoop install -g NetTime. Updates and uninstall need admin too.",
     "Only Administrators and SYSTEM can change the files in the app folder, so other programs cannot replace the service.",
     "Install stops if the regular NetTime (from its own installer) is present; uninstall that one first.",
+    "Before 'scoop update -g NetTime', stop it: Stop-Service NetTimeSvc (and close the tray icon).",
+    "Scoop checks for running processes before any manifest script can do that; the update starts the service again.",
     "",
     "The tray icon (NetTime.exe) is optional and does not start by itself; to run it at logon,",
     "copy the Start menu shortcut 'NetTime' into shell:startup.",
@@ -50,11 +52,14 @@
     "}",
     "Start-Service NetTimeSvc"
   ],
+  "pre_uninstall": [
+    "if (!(is_admin)) { error 'NetTime runs as a Windows service: run this from an elevated shell.'; break }",
+    "# Scoop refuses to uninstall while a process runs from the app folder; pre_uninstall runs before that check.",
+    "Stop-Process -Name NetTime -Force -ErrorAction SilentlyContinue",
+    "Stop-Service NetTimeSvc -Force -ErrorAction SilentlyContinue"
+  ],
   "uninstaller": {
     "script": [
-      "if (!(is_admin)) { error 'NetTime runs as a Windows service: run this from an elevated shell.'; break }",
-      "Stop-Process -Name NetTime -Force -ErrorAction SilentlyContinue",
-      "Stop-Service NetTimeSvc -Force -ErrorAction SilentlyContinue",
       "if ($cmd -eq 'uninstall') { sc.exe delete NetTimeSvc | Out-Null }"
     ]
   },
