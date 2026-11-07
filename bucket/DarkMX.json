@@ -7,6 +7,7 @@
         "DarkMX runs its own Tor client and does not need a separate Tor install.",
         "Tor Browser is only needed to open .onion sites, including the one DarkMX can host for you.",
         "",
+        "Not portable: DarkMX rewrites its config files, which would break Scoop's persist.",
         "Settings live in %APPDATA%\\darkmx, survive updates and are kept on uninstall.",
         "The upstream zip starts in standalone mode (config next to the exe); the manifest removes",
         "darkmx_standalone_mode.txt, because Scoop puts every version in a new folder."

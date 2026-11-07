@@ -7,6 +7,7 @@
         "url": "https://tixati.com/tixati_eula.txt"
     },
     "notes": [
+        "Not portable: Tixati rewrites its .dat files, which would break Scoop's persist.",
         "Settings, the transfer list and channels live in %APPDATA%\\tixati, survive updates and are kept on uninstall.",
         "If Tixati offers a new version, update with 'scoop update Tixati' instead of running its installer."
     ],

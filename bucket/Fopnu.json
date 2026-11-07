@@ -7,6 +7,7 @@
         "url": "https://github.com/Gesugao-san/scoop-bucket/blob/HEAD/licenses/Fopnu.txt"
     },
     "notes": [
+        "Not portable: Fopnu rewrites its .dat files, which would break Scoop's persist.",
         "Settings, the library and transfers live in %APPDATA%\\fopnu, survive updates and are kept on uninstall.",
         "If Fopnu offers a new version, update with 'scoop update Fopnu' instead of running its installer."
     ],
