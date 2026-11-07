@@ -1,0 +1,10 @@
+{
+    "TrueConf": [
+        {
+            "name": "trueconf.ru",
+            "description": "TrueConf's Russian download server (OKB Progress, Moscow): same files, hashes and signatures as trueconf.com",
+            "64bit": "https://download.trueconf.ru/download/client/windows/trueconf_client_x64.msi",
+            "32bit": "https://download.trueconf.ru/download/client/windows/trueconf_client_x86.msi"
+        }
+    ]
+}
