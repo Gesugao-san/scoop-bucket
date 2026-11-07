@@ -1,0 +1,37 @@
+{
+    "version": "17.1.10",
+    "description": "Stability check and stress test tool: CPU, memory, GPU, VRAM, power supply and storage tests, benchmarks and hardware monitoring.",
+    "homepage": "https://www.ocbase.com/occt-personal-use",
+    "license": {
+        "identifier": "Proprietary",
+        "url": "https://www.ocbase.com/eula"
+    },
+    "notes": [
+        "OCCT Personal is free for personal use only; using it at work needs a paid edition (see ocbase.com).",
+        "Runs as administrator: Windows shows a UAC prompt on every start.",
+        "On start it unpacks its test programs (about 400 MB) into a temporary folder.",
+        "",
+        "Do not accept OCCT's own update offer: it would replace OCCT.exe inside the Scoop version folder.",
+        "Turn off 'Check for updates' in OCCT's settings and update with 'scoop update OCCT' instead."
+    ],
+    "url": "https://www.ocbase.com/download/edition:Personal/version:17.1.10/os:Windows#/OCCT.exe",
+    "hash": "64f403fb690afa724b3bf31f439f8a29c81c34b4d3496a63456a9ab224e9599b",
+    "bin": "OCCT.exe",
+    "shortcuts": [
+        [
+            "OCCT.exe",
+            "OCCT"
+        ]
+    ],
+    "checkver": {
+        "url": "https://www.ocbase.com/download-personal",
+        "regex": "Download OCCT Personal v(?:<!-- -->)?([\\d.]+)"
+    },
+    "autoupdate": {
+        "url": "https://www.ocbase.com/download/edition:Personal/version:$version/os:Windows#/OCCT.exe",
+        "hash": {
+            "url": "https://www.ocbase.com/download-personal",
+            "regex": "\"versionStr\":\"$version\"\\},\"edition\":\"Personal\",\"checksum\":\"$sha256\""
+        }
+    }
+}
