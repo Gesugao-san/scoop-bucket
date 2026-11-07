@@ -14,7 +14,8 @@
         "Settings and the shared library (*.dat) live in the WinMX folder chosen in the wizard.",
         "Scoop links that folder as 'Winmx' inside its app folder and adds a WinMX shortcut to 'Scoop Apps';",
         "the setup's own desktop, Start menu and Quick Launch shortcuts are optional in the wizard.",
-        "Only 'scoop uninstall WinMX' removes WinMX from the system; it opens WinMX's own uninstaller.",
+        "Only 'scoop uninstall WinMX' removes WinMX from the system; it opens WinMX's own uninstaller,",
+        "which deletes every file in the WinMX folder, settings and the shared library list included. Back up the *.dat files first if you need them.",
         "",
         "A fresh install stops if WinMX Community Patch is already installed without Scoop. To let Scoop take over",
         "that copy, run $env:GESU_ALLOW_EXISTING = '1' in the same shell and install again."
@@ -57,7 +58,10 @@
             "$entry = $roots | ForEach-Object { Get-ItemProperty \"$_\\Winmx Community 1\" -ErrorAction SilentlyContinue } | Select-Object -First 1",
             "if (!$entry) { warn 'WinMX Community Patch was not found among installed programs; nothing to remove.'; return }",
             "Write-Host 'Finish the WinMX uninstaller that opens now.' -ForegroundColor Yellow",
-            "Start-Process $entry.UninstallString.Trim('\"') -Wait"
+            "$installDir = Split-Path $entry.UninstallString.Trim('\"')",
+            "Start-Process $entry.UninstallString.Trim('\"') -Wait",
+            "# The uninstaller empties the folder but leaves the folder itself.",
+            "if ((Test-Path $installDir) -and !(Get-ChildItem $installDir -Force)) { Remove-Item $installDir -Force }"
         ]
     },
     "shortcuts": [
