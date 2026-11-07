@@ -1,0 +1,50 @@
+{
+    "version": "1.42",
+    "description": "Anonymous P2P file sharing and chat over Tor hidden services, with a built-in Tor client; can host your own .onion site.",
+    "homepage": "https://darkmx.app",
+    "license": "Freeware",
+    "notes": [
+        "DarkMX runs its own Tor client and does not need a separate Tor install.",
+        "Tor Browser is only needed to open .onion sites, including the one DarkMX can host for you.",
+        "",
+        "Settings live in %APPDATA%\\darkmx, survive updates and are kept on uninstall.",
+        "The upstream zip starts in standalone mode (config next to the exe); the manifest removes",
+        "darkmx_standalone_mode.txt, because Scoop puts every version in a new folder."
+    ],
+    "suggest": {
+        "Tor Browser": "extras/tor-browser"
+    },
+    "architecture": {
+        "64bit": {
+            "url": "https://download.darkmx.app/darkmx-1.42-win64.zip",
+            "hash": "7771c877bab6c9f981fdaba1c558bbfee79011672d63b7b66230cc9e94e104ba"
+        },
+        "32bit": {
+            "url": "https://download.darkmx.app/darkmx-1.42-win32.zip",
+            "hash": "9babeb509903e3501663131e3bfcf4d184edc16eb3a78a06bb101a23b486350b"
+        }
+    },
+    "extract_dir": "DarkMX",
+    "pre_install": "Remove-Item \"$dir\\darkmx_standalone_mode.txt\" -Force -ErrorAction SilentlyContinue",
+    "bin": "darkmx.exe",
+    "shortcuts": [
+        [
+            "darkmx.exe",
+            "DarkMX"
+        ]
+    ],
+    "checkver": {
+        "url": "https://darkmx.app/",
+        "regex": "darkmx-([\\d.]+)-win64\\.zip"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://download.darkmx.app/darkmx-$version-win64.zip"
+            },
+            "32bit": {
+                "url": "https://download.darkmx.app/darkmx-$version-win32.zip"
+            }
+        }
+    }
+}

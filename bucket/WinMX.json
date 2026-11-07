@@ -1,0 +1,51 @@
+{
+    "version": "3.54b4",
+    "description": "Classic P2P file sharing and chat client (Frontcode, 2005) for the WinMX Peer Network, with the WinMX Community Patch 1.0 that reconnects it.",
+    "homepage": "https://patch.winmxconex.com",
+    "license": "Freeware",
+    "notes": [
+        "Not portable and not silent: this runs the community setup (WinMX 3.54 Beta 4 + Community Patch 1.0)",
+        "in its own wizard; finish it yourself. Install and uninstall from an elevated (admin) shell.",
+        "",
+        "WinMX is abandoned since 2005; the network is kept alive by its users. The patch replaces",
+        "OLEDLG.DLL in the WinMX folder so that WinMX connects to the community caches instead of the old",
+        "Frontcode servers. Antivirus programs may flag that DLL for the same reason.",
+        "",
+        "Settings and the shared library (*.dat) live in the WinMX folder chosen in the wizard.",
+        "Only 'scoop uninstall WinMX' removes WinMX from the system; it opens WinMX's own uninstaller.",
+        "",
+        "A fresh install stops if WinMX Community Patch is already installed without Scoop. To let Scoop take over",
+        "that copy, run $env:GESU_ALLOW_EXISTING = '1' in the same shell and install again."
+    ],
+    "url": "https://download.winmxconex.com/Winmx%203.54.exe#/setup.exe",
+    "hash": "2618c275205e82a1afcc05dd8c3a696e24254e3197b924f02f7fec892e138cef",
+    "pre_install": [
+        "if (!(is_admin)) { error \"$app setup writes to Program Files and HKLM: run this from an elevated shell.\"; break }",
+        "# A fresh 'scoop install' must not silently take over a copy installed without Scoop.",
+        "$roots = 'HKLM:\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall', 'HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall'",
+        "$existing = $roots | ForEach-Object { Get-ItemProperty \"$_\\Winmx Community 1\" -ErrorAction SilentlyContinue } | Select-Object -First 1",
+        "if (($cmd -eq 'install') -and $existing -and ($env:GESU_ALLOW_EXISTING -ne '1')) {",
+        "  error \"$($existing.DisplayName) is already installed on this system. Uninstall it first, or run `$env:GESU_ALLOW_EXISTING = '1' and install again to let Scoop install over it and manage it from now on.\"",
+        "  break",
+        "}"
+    ],
+    "installer": {
+        "script": [
+            "Write-Host 'Finish the WinMX setup wizard that opens now.' -ForegroundColor Yellow",
+            "$setup = Start-Process \"$dir\\setup.exe\" -Wait -PassThru",
+            "if ($setup.ExitCode -ne 0) { error \"WinMX setup exited with code $($setup.ExitCode).\"; break }",
+            "Remove-Item \"$dir\\setup.exe\" -Force"
+        ]
+    },
+    "uninstaller": {
+        "script": [
+            "if (!(is_admin)) { error \"$app was installed into Program Files and HKLM: run this from an elevated shell.\"; break }",
+            "if ($cmd -ne 'uninstall') { return }",
+            "$roots = 'HKLM:\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall', 'HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall'",
+            "$entry = $roots | ForEach-Object { Get-ItemProperty \"$_\\Winmx Community 1\" -ErrorAction SilentlyContinue } | Select-Object -First 1",
+            "if (!$entry) { warn 'WinMX Community Patch was not found among installed programs; nothing to remove.'; return }",
+            "Write-Host 'Finish the WinMX uninstaller that opens now.' -ForegroundColor Yellow",
+            "Start-Process $entry.UninstallString.Trim('\"') -Wait"
+        ]
+    }
+}

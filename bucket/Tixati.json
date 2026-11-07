@@ -1,0 +1,45 @@
+{
+    "version": "3.44",
+    "description": "BitTorrent client with DHT, magnet links, encrypted chat channels, RSS feeds, I2P support and detailed peer and bandwidth views.",
+    "homepage": "https://tixati.com",
+    "license": {
+        "identifier": "Freeware",
+        "url": "https://tixati.com/tixati_eula.txt"
+    },
+    "notes": [
+        "Settings, the transfer list and channels live in %APPDATA%\\tixati, survive updates and are kept on uninstall.",
+        "If Tixati offers a new version, update with 'scoop update Tixati' instead of running its installer."
+    ],
+    "architecture": {
+        "64bit": {
+            "url": "https://download.tixati.com/tixati-3.44-1.win64-standalone.zip",
+            "hash": "161686f70282d8a6f50d13b16352f99de6d525702628afef64c5bf9285cc2f77"
+        },
+        "32bit": {
+            "url": "https://download.tixati.com/tixati-3.44-1.win32-standalone.zip",
+            "hash": "e475df25da2f7f151467417164476388814f01ca99511ecf3d4ebdb45aa05aac"
+        }
+    },
+    "extract_dir": "Tixati",
+    "bin": "tixati.exe",
+    "shortcuts": [
+        [
+            "tixati.exe",
+            "Tixati"
+        ]
+    ],
+    "checkver": {
+        "url": "https://tixati.com/windows",
+        "regex": "tixati-([\\d.]+)-(?<build>\\d+)\\.win64-standalone"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://download.tixati.com/tixati-$version-$matchBuild.win64-standalone.zip"
+            },
+            "32bit": {
+                "url": "https://download.tixati.com/tixati-$version-$matchBuild.win32-standalone.zip"
+            }
+        }
+    }
+}
