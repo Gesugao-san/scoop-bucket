@@ -7,7 +7,7 @@
         "Steam does the work: 'scoop install' opens Steam's install dialog (pick the library there) and the download",
         "continues in Steam after Scoop finishes; 'scoop uninstall' asks Steam to remove the game, and Steam asks you to confirm.",
         "Steam updates the game itself, so this package has no versions to update.",
-        "The 'PlanetSide-2' command starts the game through Steam (steam://rungameid/218230).",
+        "The 'PlanetSide-2' command and the 'PlanetSide 2' shortcut in Scoop Apps start the game through Steam (steam://rungameid/218230).",
         "",
         "If PlanetSide 2 is already in your Steam library and installed, Scoop just starts keeping track of it.",
         "Stops if the standalone copy (Daybreak LaunchPad, package PlanetSide-2-LaunchPad) is installed: one copy of the game is enough."
@@ -38,5 +38,11 @@
             "Write-Host 'Steam asks you to confirm removing PlanetSide 2; the game files are deleted only after you confirm.' -ForegroundColor Yellow"
         ]
     },
-    "bin": "PlanetSide-2.cmd"
+    "bin": "PlanetSide-2.cmd",
+    "shortcuts": [
+        [
+            "PlanetSide-2.cmd",
+            "PlanetSide 2"
+        ]
+    ]
 }
