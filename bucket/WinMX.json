@@ -12,6 +12,8 @@
         "Frontcode servers. Antivirus programs may flag that DLL for the same reason.",
         "",
         "Settings and the shared library (*.dat) live in the WinMX folder chosen in the wizard.",
+        "Scoop links that folder as 'Winmx' inside its app folder and adds a WinMX shortcut to 'Scoop Apps';",
+        "the setup's own desktop, Start menu and Quick Launch shortcuts are optional in the wizard.",
         "Only 'scoop uninstall WinMX' removes WinMX from the system; it opens WinMX's own uninstaller.",
         "",
         "A fresh install stops if WinMX Community Patch is already installed without Scoop. To let Scoop take over",
@@ -34,12 +36,22 @@
             "Write-Host 'Finish the WinMX setup wizard that opens now.' -ForegroundColor Yellow",
             "$setup = Start-Process \"$dir\\setup.exe\" -Wait -PassThru",
             "if ($setup.ExitCode -ne 0) { error \"WinMX setup exited with code $($setup.ExitCode).\"; break }",
-            "Remove-Item \"$dir\\setup.exe\" -Force"
+            "Remove-Item \"$dir\\setup.exe\" -Force",
+            "# The wizard lets the user pick any folder: find it through the uninstall entry and link it into $dir,",
+            "# so that 'shortcuts' (which Scoop resolves inside $dir) can point at WinMX.exe.",
+            "$roots = 'HKLM:\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall', 'HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall'",
+            "$entry = $roots | ForEach-Object { Get-ItemProperty \"$_\\Winmx Community 1\" -ErrorAction SilentlyContinue } | Select-Object -First 1",
+            "if (!$entry) { warn 'WinMX Community Patch was not found among installed programs; no Scoop shortcut was made.'; return }",
+            "$installDir = Split-Path $entry.UninstallString.Trim('\"')",
+            "if (!(Test-Path \"$installDir\\WinMX.exe\")) { warn \"WinMX.exe was not found in $installDir; no Scoop shortcut was made.\"; return }",
+            "New-Item -ItemType Junction -Path \"$dir\\Winmx\" -Target $installDir | Out-Null"
         ]
     },
     "uninstaller": {
         "script": [
             "if (!(is_admin)) { error \"$app was installed into Program Files and HKLM: run this from an elevated shell.\"; break }",
+            "# Remove only the junction, never what it points to, before Scoop deletes $dir.",
+            "if (Test-Path \"$dir\\Winmx\") { [System.IO.Directory]::Delete(\"$dir\\Winmx\") }",
             "if ($cmd -ne 'uninstall') { return }",
             "$roots = 'HKLM:\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall', 'HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall'",
             "$entry = $roots | ForEach-Object { Get-ItemProperty \"$_\\Winmx Community 1\" -ErrorAction SilentlyContinue } | Select-Object -First 1",
@@ -47,5 +59,11 @@
             "Write-Host 'Finish the WinMX uninstaller that opens now.' -ForegroundColor Yellow",
             "Start-Process $entry.UninstallString.Trim('\"') -Wait"
         ]
-    }
+    },
+    "shortcuts": [
+        [
+            "Winmx\\WinMX.exe",
+            "WinMX"
+        ]
+    ]
 }
