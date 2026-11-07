@@ -11,6 +11,7 @@
         "The installer adds the SamsungMagicianSVC service, the magdrv kernel driver, a scheduled task",
         "'SamsungMagician' that starts Magician at logon, and may switch the Windows power plan.",
         "",
+        "Scoop links the install folder as 'SamsungMagician' inside its app folder and adds a Samsung Magician shortcut to 'Scoop Apps'.",
         "Magician can update itself; prefer 'scoop update Samsung-Magician' so Scoop knows the installed version.",
         "Only 'scoop uninstall Samsung-Magician' removes Magician from the system.",
         "",
@@ -34,12 +35,21 @@
             "Write-Host 'Samsung Magician does not allow silent installation: finish the setup wizard that opens now.' -ForegroundColor Yellow",
             "$setup = Start-Process \"$dir\\setup.exe\" -ArgumentList '/SP-' -Wait -PassThru",
             "if ($setup.ExitCode -ne 0) { error \"Samsung Magician setup exited with code $($setup.ExitCode) (2 or 5: cancelled).\"; break }",
-            "Remove-Item \"$dir\\setup.exe\" -Force"
+            "Remove-Item \"$dir\\setup.exe\" -Force",
+            "# Inno Setup records the folder as InstallLocation in its uninstall entry.",
+            "$roots = 'HKLM:\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall', 'HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall'",
+            "$entry = $roots | ForEach-Object { Get-ItemProperty \"$_\\{29AE3F9F-7158-4ca7-B1ED-28A73ECDB215}_is1\" -ErrorAction SilentlyContinue } | Select-Object -First 1",
+            "$installDir = $entry.InstallLocation",
+            "# Link the install folder into $dir, so that 'shortcuts' (which Scoop resolves inside $dir) can point at it.",
+            "if (!$installDir -or !(Test-Path \"$installDir\\SamsungMagician.exe\")) { warn \"SamsungMagician.exe was not found in the Samsung Magician install folder ($installDir); no Scoop shortcut was made.\"; return }",
+            "New-Item -ItemType Junction -Path \"$dir\\SamsungMagician\" -Target $installDir.TrimEnd('\\') | Out-Null"
         ]
     },
     "uninstaller": {
         "script": [
             "if (!(is_admin)) { error \"$app runs a driver and a service: run this from an elevated shell.\"; break }",
+            "# Remove only the junction to the install folder, never what it points to, before Scoop deletes $dir.",
+            "if (Test-Path \"$dir\\SamsungMagician\") { [System.IO.Directory]::Delete(\"$dir\\SamsungMagician\") }",
             "# On update the new installer upgrades in place; only a real uninstall removes the app.",
             "if ($cmd -ne 'uninstall') { return }",
             "$id = '{29AE3F9F-7158-4ca7-B1ED-28A73ECDB215}_is1'",
@@ -55,5 +65,11 @@
     },
     "autoupdate": {
         "url": "https://downloadcenter.samsung.com/content/$matchPath/Samsung_Magician_Installer_Official_$version.exe#/setup.exe"
-    }
+    },
+    "shortcuts": [
+        [
+            "SamsungMagician\\SamsungMagician.exe",
+            "Samsung Magician"
+        ]
+    ]
 }

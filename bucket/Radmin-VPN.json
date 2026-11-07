@@ -14,6 +14,7 @@
         "The installer also adds Radmin Viewer 3 (Start menu), a desktop shortcut, and starts the Radmin VPN",
         "window minimized at every logon (HKLM Run key 'RadminVPN'). Turn autostart off in Task Manager if unwanted.",
         "",
+        "Scoop links the install folder as 'RadminVPN' inside its app folder and adds a Radmin VPN shortcut to 'Scoop Apps'.",
         "Updates install over the existing copy, so networks and settings are kept.",
         "Only 'scoop uninstall Radmin-VPN' removes Radmin VPN from the system.",
         "",
@@ -35,12 +36,21 @@
     "installer": {
         "script": [
             "Start-Process \"$dir\\setup.exe\" -ArgumentList @('/VERYSILENT', '/SUPPRESSMSGBOXES', '/NORESTART') -Wait | Out-Null",
-            "Remove-Item \"$dir\\setup.exe\" -Force"
+            "Remove-Item \"$dir\\setup.exe\" -Force",
+            "# The MSI records its folder as InstallLocation (ARPINSTALLLOCATION).",
+            "$roots = 'HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall', 'HKLM:\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall'",
+            "$entry = Get-ChildItem $roots -ErrorAction SilentlyContinue | Get-ItemProperty -ErrorAction SilentlyContinue | Where-Object { $_.DisplayName -like 'Radmin VPN*' -and $_.PSChildName -match '^\\{[0-9A-Fa-f-]{36}\\}$' } | Select-Object -First 1",
+            "$installDir = $entry.InstallLocation",
+            "# Link the install folder into $dir, so that 'shortcuts' (which Scoop resolves inside $dir) can point at it.",
+            "if (!$installDir -or !(Test-Path \"$installDir\\RvRvpnGui.exe\")) { warn \"RvRvpnGui.exe was not found in the Radmin VPN install folder ($installDir); no Scoop shortcut was made.\"; return }",
+            "New-Item -ItemType Junction -Path \"$dir\\RadminVPN\" -Target $installDir.TrimEnd('\\') | Out-Null"
         ]
     },
     "uninstaller": {
         "script": [
             "if (!(is_admin)) { error \"$app runs a driver and a service: run this from an elevated shell.\"; break }",
+            "# Remove only the junction to the install folder, never what it points to, before Scoop deletes $dir.",
+            "if (Test-Path \"$dir\\RadminVPN\") { [System.IO.Directory]::Delete(\"$dir\\RadminVPN\") }",
             "# On update the new installer upgrades in place; only a real uninstall removes the app.",
             "if ($cmd -eq 'uninstall') {",
             "  $roots = 'HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall', 'HKLM:\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall'",
@@ -59,5 +69,12 @@
     },
     "autoupdate": {
         "url": "https://download.radmin-vpn.com/download/files/Radmin_VPN_$version.exe#/setup.exe"
-    }
+    },
+    "shortcuts": [
+        [
+            "RadminVPN\\RvRvpnGui.exe",
+            "Radmin VPN",
+            "/show"
+        ]
+    ]
 }
