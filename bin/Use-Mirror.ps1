@@ -12,8 +12,9 @@
   and only then moves it into the cache. A mirror can therefore only supply the exact file the manifest
   describes; Scoop checks the hash again when it installs.
 
-  Known mirrors are listed in mirrors.json next to bin/ (see that file for the format), so they can be
-  picked by number or name instead of typing the URL.
+  Known mirrors are listed in mirrors.psd1 next to bin/ (see that file for the format), so they can be
+  picked by number or name instead of typing the URL. It is read with Import-PowerShellDataFile, which
+  accepts data only, so the file cannot run code.
 
   Scoop's lib/ is dot-sourced, so the cache file name, cache folder and default architecture always match
   the installed Scoop version. If a Scoop update renames those functions, this script stops with an error
@@ -24,8 +25,8 @@
 
 .PARAMETER Mirror
   Which mirror to use:
-    mirror1, mirror2, ...   the app's mirrors in mirrors.json, by position
-    <name>                  a mirror's 'name' in mirrors.json, e.g. trueconf.ru
+    mirror1, mirror2, ...   the app's mirrors in mirrors.psd1, by position
+    <name>                  a mirror's 'name' in mirrors.psd1, e.g. trueconf.ru
     https://...             any URL of the same file
   Leave it out to list the app's mirrors.
 
@@ -68,7 +69,7 @@ $ErrorActionPreference = 'Stop'
 # Windows PowerShell's progress bar slows Invoke-WebRequest down a lot on large files.
 $ProgressPreference = 'SilentlyContinue'
 
-$mirrorsFile = Join-Path (Split-Path $PSScriptRoot) 'mirrors.json'
+$mirrorsFile = Join-Path (Split-Path $PSScriptRoot) 'mirrors.psd1'
 
 # Hash prefixes Scoop accepts in manifests, mapped to Get-FileHash algorithm names; no prefix means SHA256.
 $hashAlgorithms = @{
@@ -95,15 +96,15 @@ function Split-ManifestHash([string] $Hash) {
 
 <#
 .SYNOPSIS
-  Returns the app's mirror entries from mirrors.json, or an empty list.
+  Returns the app's mirror entries from mirrors.psd1, or an empty list.
 .OUTPUTS
-  System.Object[] of entries with 'name', 'description' and one URL (or URL array) per architecture.
+  System.Object[] of hashtables with 'name', 'description' and one URL (or URL array) per architecture.
 #>
 function Get-AppMirrors([string] $AppName) {
   if (!(Test-Path $mirrorsFile)) { return @() }
-  $all = Get-Content $mirrorsFile -Raw | ConvertFrom-Json
-  # Property lookup on a PSCustomObject ignores case, like Scoop's app names.
-  $entries = $all.$AppName
+  $all = Import-PowerShellDataFile -Path $mirrorsFile
+  # Hashtable keys ignore case, like Scoop's app names.
+  $entries = $all[$AppName]
   if (!$entries) { return @() }
   return @($entries)
 }
@@ -118,12 +119,12 @@ function Find-AppMirror([object[]] $Entries, [string] $Key) {
   if ($Key -match '^mirror(?<n>\d+)$') {
     $position = [int] $Matches.n
     if ($position -lt 1 -or $position -gt $Entries.Count) {
-      throw "There is no ${Key}: '$appName' has $($Entries.Count) mirror(s) in mirrors.json."
+      throw "There is no ${Key}: '$appName' has $($Entries.Count) mirror(s) in mirrors.psd1."
     }
     return $Entries[$position - 1]
   }
   $byName = $Entries | Where-Object { $_.name -eq $Key } | Select-Object -First 1
-  if (!$byName) { throw "'$appName' has no mirror named '$Key' in mirrors.json. Run without a mirror to list them." }
+  if (!$byName) { throw "'$appName' has no mirror named '$Key' in mirrors.psd1. Run without a mirror to list them." }
   return $byName
 }
 
@@ -151,11 +152,12 @@ foreach ($lib in 'core', 'buckets', 'json', 'versions', 'manifest') {
 $appName, $manifest, $bucket, $null = Get-Manifest $App
 if (!$manifest) { throw "Couldn't find a manifest for '$App'. Run 'scoop update' and check the name." }
 if (!$Architecture) { $Architecture = Get-DefaultArchitecture }
-$mirrors = Get-AppMirrors $appName
+# @() keeps a single mirror a one-item list: PowerShell unrolls arrays returned from functions.
+$mirrors = @(Get-AppMirrors $appName)
 
 if (!$Mirror) {
   if ($mirrors.Count -eq 0) {
-    Write-Host "No mirrors for '$appName' in mirrors.json. Pass a URL instead."
+    Write-Host "No mirrors for '$appName' in mirrors.psd1. Pass a URL instead."
     return
   }
   Write-Host "Mirrors for '$appName':"
@@ -167,7 +169,7 @@ if (!$Mirror) {
 
 $mirrorUrl = $Mirror
 if ($Mirror -notmatch '^https?://') {
-  if ($mirrors.Count -eq 0) { throw "No mirrors for '$appName' in mirrors.json. Pass a URL instead." }
+  if ($mirrors.Count -eq 0) { throw "No mirrors for '$appName' in mirrors.psd1. Pass a URL instead." }
   $entry = Find-AppMirror $mirrors $Mirror
   $mirrorUrl = Get-MirrorUrl $entry $Architecture $Index $manifest.version
 }
