@@ -30,10 +30,31 @@
         "# A fresh 'scoop install' must not silently take over a copy installed without Scoop.",
         "$roots = 'HKLM:\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall', 'HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall'",
         "$existing = $roots | ForEach-Object { Get-ItemProperty \"$_\\Winmx Community 1\" -ErrorAction SilentlyContinue } | Select-Object -First 1",
+        "# A fresh install stops if the app is running or its data files are in use (scripts/common/Test-AppBusy.ps1).",
+        "# Updates are checked in pre_uninstall, which Scoop runs before it removes the old version.",
+        "if ($cmd -eq 'install') {",
+        "  $installDir = if ($existing) { Split-Path $existing.UninstallString.Trim('\"') }",
+        "  $busyCheck = Join-Path (Find-BucketDirectory -Name $bucket -Root) 'scripts\\common\\Test-AppBusy.ps1'",
+        "  if (!(Test-Path -LiteralPath $busyCheck)) { error \"Cannot check whether $app is in use: '$busyCheck' is missing.\"; break }",
+        "  $busy = @(& $busyCheck -ProcessName 'WinMX' -Path $installDir)",
+        "  if ($busy) { error \"$app is in use. Close it (and anything holding its files open) and try again:`n  $($busy -join \"`n  \")\"; break }",
+        "}",
         "if (($cmd -eq 'install') -and $existing -and ($env:GESU_ALLOW_EXISTING -ne '1')) {",
         "  error \"$($existing.DisplayName) is already installed on this system. Uninstall it first, or run `$env:GESU_ALLOW_EXISTING = '1' and install again to let Scoop install over it and manage it from now on.\"",
         "  break",
         "}"
+    ],
+    "pre_uninstall": [
+        "# 'scoop update' and 'scoop uninstall' stop here, before anything is removed, if the app is running",
+        "# or its data files are in use (scripts/common/Test-AppBusy.ps1).",
+        "$roots = 'HKLM:\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall', 'HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall'",
+        "$entry = $roots | ForEach-Object { Get-ItemProperty \"$_\\Winmx Community 1\" -ErrorAction SilentlyContinue } | Select-Object -First 1",
+        "$installDir = if ($entry) { Split-Path $entry.UninstallString.Trim('\"') }",
+        "$busyCheck = Join-Path (Find-BucketDirectory -Name $bucket -Root) 'scripts\\common\\Test-AppBusy.ps1'",
+        "# Without the helper (e.g. the bucket was removed) only warn: uninstalling must stay possible.",
+        "if (!(Test-Path -LiteralPath $busyCheck)) { warn \"Cannot check whether $app is in use: '$busyCheck' is missing.\"; return }",
+        "$busy = @(& $busyCheck -ProcessName 'WinMX' -Path $installDir)",
+        "if ($busy) { error \"$app is in use. Close it (and anything holding its files open) and try again:`n  $($busy -join \"`n  \")\"; break }"
     ],
     "installer": {
         "script": [
