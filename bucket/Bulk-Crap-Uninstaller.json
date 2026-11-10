@@ -1,0 +1,70 @@
+{
+    "version": "6.3.0",
+    "description": "Bulk program uninstaller: removes many programs at once, Store apps, Steam games and Windows updates, finds leftovers and orphaned apps.",
+    "homepage": "https://www.bcuninstaller.com",
+    "license": {
+        "identifier": "Apache-2.0",
+        "url": "https://github.com/BCUninstaller/Bulk-Crap-Uninstaller/blob/HEAD/Licence.txt"
+    },
+    "notes": [
+        "Runs as administrator: Windows shows a UAC prompt on every start.",
+        "Needs Windows 10 or newer (64-bit or ARM64); .NET 8 is bundled.",
+        "",
+        "Settings (BCUninstaller.settings), notes on programs (CustomNotes.xml) and the default uninstall list (Default.bcul)",
+        "are kept in $persist_dir and survive updates.",
+        "",
+        "Do not use 'Uninstall BCUninstaller' from its Help menu; use 'scoop uninstall Bulk-Crap-Uninstaller'.",
+        "Its update check only opens the release page; update with 'scoop update Bulk-Crap-Uninstaller'."
+    ],
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/BCUninstaller/Bulk-Crap-Uninstaller/releases/download/v6.3/BCUninstaller_6.3.0_portable.7z",
+            "hash": "1ab75c8fdb88cfc8c05012ef21136f35e7c477bb58b7f69d7d3b4495179c5dc3",
+            "extract_dir": "win-x64"
+        },
+        "arm64": {
+            "url": "https://github.com/BCUninstaller/Bulk-Crap-Uninstaller/releases/download/v6.3/BCUninstaller_6.3.0_portable.7z",
+            "hash": "1ab75c8fdb88cfc8c05012ef21136f35e7c477bb58b7f69d7d3b4495179c5dc3",
+            "extract_dir": "win-arm64"
+        }
+    },
+    "pre_install": [
+        "# BCU deletes its settings file and writes a new one when it cannot read it or when 'Reset settings' is used,",
+        "# so a hardlink from 'persist' would break. The files are copied in here and back out in pre_uninstall,",
+        "# which also runs on update.",
+        "'BCUninstaller.settings', 'CustomNotes.xml', 'Default.bcul' | ForEach-Object {",
+        "  if (Test-Path \"$persist_dir\\$_\") { Copy-Item \"$persist_dir\\$_\" \"$dir\\$_\" -Force }",
+        "}"
+    ],
+    "bin": [
+        "BCUninstaller.exe",
+        "BCU-console.exe"
+    ],
+    "shortcuts": [
+        [
+            "BCUninstaller.exe",
+            "Bulk Crap Uninstaller"
+        ]
+    ],
+    "pre_uninstall": [
+        "New-Item -ItemType Directory -Path $persist_dir -Force | Out-Null",
+        "'BCUninstaller.settings', 'CustomNotes.xml', 'Default.bcul' | ForEach-Object {",
+        "  if (Test-Path \"$dir\\$_\") { Copy-Item \"$dir\\$_\" \"$persist_dir\\$_\" -Force }",
+        "}"
+    ],
+    "checkver": {
+        "url": "https://api.github.com/repos/BCUninstaller/Bulk-Crap-Uninstaller/releases/latest",
+        "jsonpath": "$.assets[*].browser_download_url",
+        "regex": "download/v(?<tag>[\\d.]+)/BCUninstaller_([\\d.]+)_portable\\.7z"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/BCUninstaller/Bulk-Crap-Uninstaller/releases/download/v$matchTag/BCUninstaller_$version_portable.7z"
+            },
+            "arm64": {
+                "url": "https://github.com/BCUninstaller/Bulk-Crap-Uninstaller/releases/download/v$matchTag/BCUninstaller_$version_portable.7z"
+            }
+        }
+    }
+}
