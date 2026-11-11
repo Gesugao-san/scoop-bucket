@@ -62,9 +62,20 @@ Run from a cloud workspace outside Russia, through an HTTPS-inspecting proxy, on
 - **Redirects**: `curl -s -o /dev/null -w '%{http_code}|%{redirect_url}'`, one hop at a time, without following redirects.
 - **Files**: downloaded with curl, hashed with `sha256sum`, signatures checked with `gpg --verify <file>.asc <file>` against `https://tixati.com/tixati.key`.
 
+### Refreshing
+
+[`bin/update-host-notes.py`](../../bin/update-host-notes.py) repeats all of the above and rewrites both JSON files in place. It needs Python 3 (standard library only) and, for the signatures, `gpg` on PATH (`scoop install gpg`); without `gpg` the signatures are skipped.
+
+```sh
+python bin/update-host-notes.py                    # hosts.json and downloads.json
+python bin/update-host-notes.py --skip-downloads   # hosts.json only, no ~400 MB of downloads
+```
+
+It keeps the hand-written parts (`domains`, each host's `role`) and lists any new name from crt.sh so a role can be added. It exits with 1 when a signature is bad, a file no longer matches its manifest, or a Fopnu mirror serves different bytes. Run from Russia, it shows what is blocked or filtered on the way, compared with these results from outside.
+
 ## Limits
 
-- The proxy re-signs every certificate, so the real certificates were not seen. It does reject invalid upstream certificates ("self-signed certificate" on `winmxworld.com` and `www.winmxconex.com`), so a host that answered over HTTPS had a valid certificate at that moment. In `hosts.json` such a failed request shows as status `0`.
+- The proxy re-signs every certificate, so the real certificates were not seen. It does reject invalid upstream certificates ("self-signed certificate" on `winmxworld.com` and `www.winmxconex.com`), so a host that answered over HTTPS had a valid certificate at that moment. In `hosts.json` a request without any HTTP response (no connection or an invalid certificate) shows as status `0`.
 - crt.sh can lag: for some names that work fine (`*.winmxconex.com`, `forum`, `help` and `update-check.supersimpleserver.com`) the latest certificate it lists has already expired. Treat `ct.latest_not_after` as a lower bound, not as the live certificate.
 - The GPG key comes from the same site as the files. A good signature proves the files are intact and signed by that key, not who owns the key.
 - Results from Russia can differ: a host that works here may be blocked or filtered there.

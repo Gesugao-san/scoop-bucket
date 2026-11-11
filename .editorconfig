@@ -12,5 +12,9 @@ indent_style = space
 insert_final_newline = true
 trim_trailing_whitespace = true
 
-[*.{ps1,psm1,psd1,yml,yaml}]
+[*.{ps1,psm1,psd1,yml,yaml,py}]
 indent_size = 2
+
+# LF, so that the shebang also works on Linux (see .gitattributes).
+[*.py]
+end_of_line = lf

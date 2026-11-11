@@ -1565,7 +1565,7 @@
                     "count": 3
                 }
             ],
-            "note": "Status 0: the agent proxy reported \"self-signed certificate\", i.e. no valid HTTPS for this name."
+            "note": "Status 0: no HTTPS response (connection failed or the certificate is not valid)."
         },
         {
             "host": "archive.winmxworld.com",
@@ -1635,7 +1635,7 @@
                     "count": 3
                 }
             ],
-            "note": "Status 0: the agent proxy reported \"self-signed certificate\", i.e. no valid HTTPS for this name."
+            "note": "Status 0: no HTTPS response (connection failed or the certificate is not valid)."
         },
         {
             "host": "www.winmxworld.com",
