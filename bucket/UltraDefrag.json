@@ -57,7 +57,7 @@
     ],
     "checkver": {
         "sourceforge": "ultradefrag/stable-release",
-        "regex": "stable-release/([\\d.]+)/ultradefrag-portable-[\\d.]+\\.bin\\.amd64\\.zip"
+        "regex": "([\\d.]+)/ultradefrag-portable-[\\d.]+\\.bin\\.amd64\\.zip"
     },
     "autoupdate": {
         "architecture": {
