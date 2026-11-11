@@ -1,0 +1,150 @@
+{
+    "description": "Release files checked by downloading them: size, SHA-256 and the GPG signature (<file>.asc next to each file).",
+    "checked": "2026-11-11",
+    "signing_key": {
+        "owner": "Tixati Software Inc. (KH) <support@tixati.com>",
+        "fingerprint": "9DEA5E350F9D285E46D3B7E3CE737F191AF5DCFB",
+        "url": "https://tixati.com/tixati.key",
+        "note": "Key fetched from the same site as the files: proves integrity, not who owns the key. tixati.com/tixati.key first answers 301, so download it with curl -L."
+    },
+    "files": [
+        {
+            "url": "https://download.tixati.com/tixati-3.44-1.win64-standalone.zip",
+            "size": 24893595,
+            "sha256": "161686f70282d8a6f50d13b16352f99de6d525702628afef64c5bf9285cc2f77",
+            "gpg": "good",
+            "manifest": "bucket/Tixati.json"
+        },
+        {
+            "url": "https://download.tixati.com/tixati-3.44-1.win32-standalone.zip",
+            "size": 25330276,
+            "sha256": "e475df25da2f7f151467417164476388814f01ca99511ecf3d4ebdb45aa05aac",
+            "gpg": "good",
+            "manifest": "bucket/Tixati.json"
+        },
+        {
+            "url": "https://download.tixati.com/tixati-3.44-1.x86_64.manualinstall.tar.gz",
+            "size": 34723582,
+            "sha256": "3b060019a48eb7a9b7bd01460accebc4079e1a3105ea77ec66ccd7bc95f8911f",
+            "gpg": "good"
+        },
+        {
+            "url": "https://download.darkmx.app/darkmx-1.42-win64.zip",
+            "size": 15219354,
+            "sha256": "7771c877bab6c9f981fdaba1c558bbfee79011672d63b7b66230cc9e94e104ba",
+            "gpg": "good",
+            "manifest": "bucket/DarkMX.json"
+        },
+        {
+            "url": "https://download.darkmx.app/darkmx-1.42-win32.zip",
+            "size": 15471695,
+            "sha256": "9babeb509903e3501663131e3bfcf4d184edc16eb3a78a06bb101a23b486350b",
+            "gpg": "good",
+            "manifest": "bucket/DarkMX.json"
+        },
+        {
+            "url": "https://download2.fopnu.com/download/fopnu-1.68-1.win64-install.exe",
+            "size": 14269680,
+            "sha256": "0bdfe08456266779b487096eeb12715c7037bb6ad11408f187c8a386c62311ca",
+            "gpg": "good",
+            "manifest": "bucket/Fopnu.json",
+            "identical_on": [
+                "https://download1.fopnu.com/download/fopnu-1.68-1.win64-install.exe",
+                "https://download2.fopnu.com/download/fopnu-1.68-1.win64-install.exe",
+                "https://download3.fopnu.com/download/fopnu-1.68-1.win64-install.exe",
+                "https://download4.fopnu.com/download/fopnu-1.68-1.win64-install.exe",
+                "https://download5.fopnu.com/download/fopnu-1.68-1.win64-install.exe",
+                "https://download6.fopnu.com/download/fopnu-1.68-1.win64-install.exe"
+            ]
+        },
+        {
+            "url": "https://download2.fopnu.com/download/fopnu-1.68-1.win32-install.exe",
+            "size": 14105840,
+            "sha256": "794bcd7177f105c3cbd07a344246dea6e8128a9d1cb1c644e59bccca85f87e86",
+            "gpg": "good",
+            "manifest": "bucket/Fopnu.json",
+            "identical_on": [
+                "https://download1.fopnu.com/download/fopnu-1.68-1.win32-install.exe",
+                "https://download2.fopnu.com/download/fopnu-1.68-1.win32-install.exe",
+                "https://download3.fopnu.com/download/fopnu-1.68-1.win32-install.exe",
+                "https://download4.fopnu.com/download/fopnu-1.68-1.win32-install.exe",
+                "https://download5.fopnu.com/download/fopnu-1.68-1.win32-install.exe",
+                "https://download6.fopnu.com/download/fopnu-1.68-1.win32-install.exe"
+            ]
+        },
+        {
+            "url": "https://download.supersimpleserver.com/supersimpleserver-1.25-1-win-64.zip",
+            "size": 16523898,
+            "sha256": "17e845826e2e5c8067138794a4b8e7fc1cdd2f9f9db29dd262ea9dc737f4e20e",
+            "gpg": "good"
+        },
+        {
+            "url": "https://download.supersimpleserver.com/supersimpleserver-1.25-1-win-32.zip",
+            "size": 16649671,
+            "sha256": "8363d75ca93ce4d2727f02d471af5f2971eb363ebf1df5d0b6821da91eb74a37",
+            "gpg": "good"
+        },
+        {
+            "url": "https://download.supersimpleserver.com/supersimpleserver-1.25-1-linux-gtk-64.tar.gz",
+            "size": 19443123,
+            "sha256": "7c4367ee2379bff7a70ea3f1be5639bdb76957cdbcd942435351c1d10bf97a52",
+            "gpg": "good"
+        },
+        {
+            "url": "https://download.supersimpleserver.com/supersimpleserver-1.25-1-linux-gtk-32.tar.gz",
+            "size": 19585591,
+            "sha256": "932f9ceb8baeac46c2ee91ac530bbf17fd7b7b6bb62ad2df8e33a7acdb97cf87",
+            "gpg": "good"
+        },
+        {
+            "url": "https://download.supersimpleserver.com/supersimpleserver-1.25-1-linux-cli-64.tar.gz",
+            "size": 15238115,
+            "sha256": "f71e2afe9453c2a88b57f2eca70ddbed5351c4c9b2ed94aad636a4897cbf2f68",
+            "gpg": "good"
+        },
+        {
+            "url": "https://download.supersimpleserver.com/supersimpleserver-1.25-1-linux-cli-32.tar.gz",
+            "size": 15327982,
+            "sha256": "30f56184338b8280b6a8b90f775278be335c6f4be9e7a582765700e9e99d575d",
+            "gpg": "good"
+        },
+        {
+            "url": "https://download.winmxconex.com/Winmx%203.54.exe",
+            "size": 1327781,
+            "sha256": "2618c275205e82a1afcc05dd8c3a696e24254e3197b924f02f7fec892e138cef",
+            "manifest": "bucket/WinMX.json",
+            "md5": "d25121c3bb19568b1cbd94920e43872b",
+            "md5_matches_patch_page": true,
+            "http_fallback": "http:// redirects (308) to https://archive.winmxworld.com/Winmx%203.54.exe, which answers 410 Gone"
+        }
+    ],
+    "listed_not_downloaded": {
+        "note": "Present on the server (HEAD 200, Content-Length), not hashed.",
+        "files": [
+            {
+                "url": "https://download.tixati.com/tixati_3.44-1_amd64.deb",
+                "size": 18319436
+            },
+            {
+                "url": "https://download.tixati.com/tixati-3.44-1.x86_64.rpm",
+                "size": 19715441
+            },
+            {
+                "url": "https://download.tixati.com/tixati-3.44-1.i686.manualinstall.tar.gz",
+                "size": 36131431
+            },
+            {
+                "url": "https://download.tixati.com/tixati-3.44-1.portable.zip",
+                "size": 120134462
+            },
+            {
+                "url": "https://download.tixati.com/tixati-3.44-1.portable.tar.gz",
+                "size": 120141402
+            },
+            {
+                "url": "https://download.tixati.com/tixati-3.44-1.portable.tar.bz2",
+                "size": 100549650
+            }
+        ]
+    }
+}

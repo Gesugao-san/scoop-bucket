@@ -140,6 +140,12 @@ Excavator runs it as a separate job, *Check TLS*, every 4 hours: the table goes 
 .\bin\Test-Tls.ps1 TrueConf, Radmin-VPN | Format-List  # these apps only, all details
 ```
 
+## Notes
+
+Research behind some manifests, kept as data where it fits:
+
+- [`notes/tixati-software/`](notes/tixati-software/README.md): hosts, redirects and checked release files of Tixati Software (`Tixati`, `Fopnu`, `DarkMX`, Super Simple Server) and of the WinMX community (`WinMX`).
+
 ## Licenses
 
 Manifests give the license as an [SPDX](https://spdx.org/licenses/) identifier with a link to the license text, which UniGetUI shows next to the name. Links to GitHub use `blob/HEAD/`, so they follow the upstream default branch even if it is renamed. `NBT-Studio` stays `Unknown`: upstream has no license file.

@@ -1,0 +1,1676 @@
+{
+    "description": "Hostnames of Tixati Software (tixati.com, fopnu.com, darkmx.app, supersimpleserver.com) and of the WinMX community (winmxconex.com, winmxworld.com): DNS, certificate transparency names and redirects. See README.md for how it was collected.",
+    "surveyed": "2026-11-11",
+    "fields": {
+        "ct.listed": "name appears in crt.sh certificate transparency logs",
+        "ct.latest_not_after": "latest expiry seen in crt.sh; crt.sh can lag behind renewals, see README.md",
+        "dns_a": "A records via dns.google, or \"NXDOMAIN\"",
+        "http_root": "redirect chain for http://<host>/, one request per hop",
+        "https_root": "responses to https://<host>/ with counts; hosts with two A records were sampled 12 times, others 3 times",
+        "https_unknown_path": "responses to https://<host>/zz/test.zip?q=1, shows whether a redirect keeps the path"
+    },
+    "domains": [
+        {
+            "sld": "tixati.com",
+            "operator": "Tixati Software Inc.",
+            "ips": [
+                "91.219.238.244",
+                "91.219.237.221"
+            ],
+            "canonical": "tixati.com",
+            "http_to_https": 301,
+            "www": "301 to apex, keeps the path"
+        },
+        {
+            "sld": "fopnu.com",
+            "operator": "Tixati Software Inc.",
+            "ips": [
+                "91.219.238.244",
+                "91.219.237.221"
+            ],
+            "canonical": null,
+            "http_to_https": 302,
+            "www": "apex and www both answer 200; download hosts redirect to www"
+        },
+        {
+            "sld": "darkmx.app",
+            "operator": "Tixati Software Inc.",
+            "ips": [
+                "91.219.238.244"
+            ],
+            "canonical": "darkmx.app",
+            "http_to_https": 302,
+            "www": "302 to apex, keeps the path"
+        },
+        {
+            "sld": "supersimpleserver.com",
+            "operator": "Tixati Software Inc.",
+            "ips": [
+                "91.219.238.244"
+            ],
+            "canonical": "supersimpleserver.com",
+            "http_to_https": 302,
+            "www": "302 to apex root, drops the path"
+        },
+        {
+            "sld": "winmxconex.com",
+            "operator": "WinMX community",
+            "ips": [
+                "84.19.186.186"
+            ],
+            "canonical": null,
+            "http_to_https": null,
+            "www": "every HTTP request 308 to https://archive.winmxworld.com, path kept; the apex has no A record"
+        },
+        {
+            "sld": "winmxworld.com",
+            "operator": "WinMX community (WinMXWorld)",
+            "ips": [
+                "84.19.186.186"
+            ],
+            "canonical": "www.winmxworld.com",
+            "http_to_https": 308,
+            "www": "apex HTTP 301 to www; apex HTTPS has no valid certificate"
+        }
+    ],
+    "hosts": [
+        {
+            "host": "darkmx.app",
+            "role": "DarkMX website (canonical)",
+            "sld": "darkmx.app",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2026-12-13"
+            },
+            "dns_a": [
+                "91.219.238.244"
+            ],
+            "http_root": [
+                {
+                    "url": "http://darkmx.app/",
+                    "status": 302,
+                    "location": "https://darkmx.app/"
+                },
+                {
+                    "url": "https://darkmx.app/",
+                    "status": 200
+                }
+            ],
+            "https_root": [
+                {
+                    "response": "200",
+                    "count": 3
+                }
+            ],
+            "https_unknown_path": [
+                {
+                    "response": "404",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "host": "download.darkmx.app",
+            "role": "DarkMX downloads",
+            "sld": "darkmx.app",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2026-11-14"
+            },
+            "dns_a": [
+                "91.219.238.244"
+            ],
+            "http_root": [
+                {
+                    "url": "http://download.darkmx.app/",
+                    "status": 302,
+                    "location": "https://download.darkmx.app/"
+                },
+                {
+                    "url": "https://download.darkmx.app/",
+                    "status": 200
+                }
+            ],
+            "https_root": [
+                {
+                    "response": "200",
+                    "count": 3
+                }
+            ],
+            "https_unknown_path": [
+                {
+                    "response": "404",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "host": "www.darkmx.app",
+            "role": "alias of darkmx.app",
+            "sld": "darkmx.app",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2026-11-14"
+            },
+            "dns_a": [
+                "91.219.238.244"
+            ],
+            "http_root": [
+                {
+                    "url": "http://www.darkmx.app/",
+                    "status": 302,
+                    "location": "https://darkmx.app/"
+                },
+                {
+                    "url": "https://darkmx.app/",
+                    "status": 200
+                }
+            ],
+            "https_root": [
+                {
+                    "response": "302 https://darkmx.app/",
+                    "count": 3
+                }
+            ],
+            "https_unknown_path": [
+                {
+                    "response": "302 https://darkmx.app/zz/test.zip?q=1",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "host": "download.fopnu.com",
+            "role": "does not exist (not in CT, no DNS)",
+            "sld": "fopnu.com",
+            "ct": {
+                "listed": false
+            },
+            "dns_a": "NXDOMAIN"
+        },
+        {
+            "host": "download1.fopnu.com",
+            "role": "Fopnu download mirror (files under /download/)",
+            "sld": "fopnu.com",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2026-11-14"
+            },
+            "dns_a": [
+                "91.219.237.221",
+                "91.219.238.244"
+            ],
+            "http_root": [
+                {
+                    "url": "http://download1.fopnu.com/",
+                    "status": 302,
+                    "location": "https://download1.fopnu.com/"
+                },
+                {
+                    "url": "https://download1.fopnu.com/",
+                    "status": 200
+                }
+            ],
+            "https_root": [
+                {
+                    "response": "200",
+                    "count": 7
+                },
+                {
+                    "response": "302 https://www.fopnu.com/",
+                    "count": 5
+                }
+            ],
+            "https_unknown_path": [
+                {
+                    "response": "302 https://www.fopnu.com/zz/test.zip?q=1",
+                    "count": 8
+                },
+                {
+                    "response": "404",
+                    "count": 4
+                }
+            ]
+        },
+        {
+            "host": "download2.fopnu.com",
+            "role": "Fopnu download mirror (files under /download/)",
+            "sld": "fopnu.com",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2026-11-14"
+            },
+            "dns_a": [
+                "91.219.237.221",
+                "91.219.238.244"
+            ],
+            "http_root": [
+                {
+                    "url": "http://download2.fopnu.com/",
+                    "status": 302,
+                    "location": "https://download2.fopnu.com/"
+                },
+                {
+                    "url": "https://download2.fopnu.com/",
+                    "status": 200
+                }
+            ],
+            "https_root": [
+                {
+                    "response": "200",
+                    "count": 9
+                },
+                {
+                    "response": "302 https://www.fopnu.com/",
+                    "count": 3
+                }
+            ],
+            "https_unknown_path": [
+                {
+                    "response": "404",
+                    "count": 7
+                },
+                {
+                    "response": "302 https://www.fopnu.com/zz/test.zip?q=1",
+                    "count": 5
+                }
+            ]
+        },
+        {
+            "host": "download3.fopnu.com",
+            "role": "Fopnu download mirror (files under /download/)",
+            "sld": "fopnu.com",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2026-11-14"
+            },
+            "dns_a": [
+                "91.219.237.221",
+                "91.219.238.244"
+            ],
+            "http_root": [
+                {
+                    "url": "http://download3.fopnu.com/",
+                    "status": 302,
+                    "location": "https://download3.fopnu.com/"
+                },
+                {
+                    "url": "https://download3.fopnu.com/",
+                    "status": 200
+                }
+            ],
+            "https_root": [
+                {
+                    "response": "200",
+                    "count": 8
+                },
+                {
+                    "response": "302 https://www.fopnu.com/",
+                    "count": 4
+                }
+            ],
+            "https_unknown_path": [
+                {
+                    "response": "404",
+                    "count": 9
+                },
+                {
+                    "response": "302 https://www.fopnu.com/zz/test.zip?q=1",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "host": "download4.fopnu.com",
+            "role": "Fopnu download mirror (files under /download/)",
+            "sld": "fopnu.com",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2026-11-14"
+            },
+            "dns_a": [
+                "91.219.238.244"
+            ],
+            "http_root": [
+                {
+                    "url": "http://download4.fopnu.com/",
+                    "status": 302,
+                    "location": "https://download4.fopnu.com/"
+                },
+                {
+                    "url": "https://download4.fopnu.com/",
+                    "status": 200
+                }
+            ],
+            "https_root": [
+                {
+                    "response": "200",
+                    "count": 3
+                }
+            ],
+            "https_unknown_path": [
+                {
+                    "response": "404",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "host": "download5.fopnu.com",
+            "role": "Fopnu download mirror (files under /download/)",
+            "sld": "fopnu.com",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2026-11-14"
+            },
+            "dns_a": [
+                "91.219.238.244"
+            ],
+            "http_root": [
+                {
+                    "url": "http://download5.fopnu.com/",
+                    "status": 302,
+                    "location": "https://download5.fopnu.com/"
+                },
+                {
+                    "url": "https://download5.fopnu.com/",
+                    "status": 200
+                }
+            ],
+            "https_root": [
+                {
+                    "response": "200",
+                    "count": 3
+                }
+            ],
+            "https_unknown_path": [
+                {
+                    "response": "404",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "host": "download6.fopnu.com",
+            "role": "Fopnu download mirror (files under /download/)",
+            "sld": "fopnu.com",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2026-11-14"
+            },
+            "dns_a": [
+                "91.219.238.244"
+            ],
+            "http_root": [
+                {
+                    "url": "http://download6.fopnu.com/",
+                    "status": 302,
+                    "location": "https://download6.fopnu.com/"
+                },
+                {
+                    "url": "https://download6.fopnu.com/",
+                    "status": 200
+                }
+            ],
+            "https_root": [
+                {
+                    "response": "200",
+                    "count": 3
+                }
+            ],
+            "https_unknown_path": [
+                {
+                    "response": "404",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "host": "errortracker.fopnu.com",
+            "role": "crash report endpoint, / redirects to /?history (403)",
+            "sld": "fopnu.com",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2026-12-02"
+            },
+            "dns_a": [
+                "91.219.238.244"
+            ],
+            "http_root": [
+                {
+                    "url": "http://errortracker.fopnu.com/",
+                    "status": 302,
+                    "location": "http://errortracker.fopnu.com/?history"
+                },
+                {
+                    "url": "http://errortracker.fopnu.com/?history",
+                    "status": 403
+                }
+            ],
+            "https_root": [
+                {
+                    "response": "302 https://errortracker.fopnu.com/?history",
+                    "count": 3
+                }
+            ],
+            "https_unknown_path": [
+                {
+                    "response": "404",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "host": "fopnu.com",
+            "role": "Fopnu website (apex and www both serve it, no canonical)",
+            "sld": "fopnu.com",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2026-11-14"
+            },
+            "dns_a": [
+                "91.219.238.244"
+            ],
+            "http_root": [
+                {
+                    "url": "http://fopnu.com/",
+                    "status": 302,
+                    "location": "https://fopnu.com/"
+                },
+                {
+                    "url": "https://fopnu.com/",
+                    "status": 200
+                }
+            ],
+            "https_root": [
+                {
+                    "response": "200",
+                    "count": 3
+                }
+            ],
+            "https_unknown_path": [
+                {
+                    "response": "404",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "host": "forum.fopnu.com",
+            "role": "forum",
+            "sld": "fopnu.com",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2026-12-01"
+            },
+            "dns_a": [
+                "91.219.238.244"
+            ],
+            "http_root": [
+                {
+                    "url": "http://forum.fopnu.com/",
+                    "status": 302,
+                    "location": "https://forum.fopnu.com/"
+                },
+                {
+                    "url": "https://forum.fopnu.com/",
+                    "status": 200
+                }
+            ],
+            "https_root": [
+                {
+                    "response": "200",
+                    "count": 3
+                }
+            ],
+            "https_unknown_path": [
+                {
+                    "response": "404",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "host": "online-help.fopnu.com",
+            "role": "alias of support.fopnu.com (drops the path)",
+            "sld": "fopnu.com",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2026-12-02"
+            },
+            "dns_a": [
+                "91.219.238.244"
+            ],
+            "http_root": [
+                {
+                    "url": "http://online-help.fopnu.com/",
+                    "status": 302,
+                    "location": "https://online-help.fopnu.com/"
+                },
+                {
+                    "url": "https://online-help.fopnu.com/",
+                    "status": 302,
+                    "location": "https://support.fopnu.com/"
+                },
+                {
+                    "url": "https://support.fopnu.com/",
+                    "status": 200
+                }
+            ],
+            "https_root": [
+                {
+                    "response": "302 https://support.fopnu.com/",
+                    "count": 3
+                }
+            ],
+            "https_unknown_path": [
+                {
+                    "response": "302 https://support.fopnu.com/",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "host": "support.fopnu.com",
+            "role": "support site",
+            "sld": "fopnu.com",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2026-12-02"
+            },
+            "dns_a": [
+                "91.219.238.244"
+            ],
+            "http_root": [
+                {
+                    "url": "http://support.fopnu.com/",
+                    "status": 302,
+                    "location": "https://support.fopnu.com/"
+                },
+                {
+                    "url": "https://support.fopnu.com/",
+                    "status": 200
+                }
+            ],
+            "https_root": [
+                {
+                    "response": "200",
+                    "count": 3
+                }
+            ],
+            "https_unknown_path": [
+                {
+                    "response": "404",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "host": "testforum.fopnu.com",
+            "role": "gone (certificate expired 2019-05-12, no DNS)",
+            "sld": "fopnu.com",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2019-05-12"
+            },
+            "dns_a": "NXDOMAIN"
+        },
+        {
+            "host": "testing.fopnu.com",
+            "role": "test site",
+            "sld": "fopnu.com",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2026-10-16"
+            },
+            "dns_a": [
+                "91.219.238.244"
+            ],
+            "http_root": [
+                {
+                    "url": "http://testing.fopnu.com/",
+                    "status": 302,
+                    "location": "https://testing.fopnu.com/"
+                },
+                {
+                    "url": "https://testing.fopnu.com/",
+                    "status": 200
+                }
+            ],
+            "https_root": [
+                {
+                    "response": "200",
+                    "count": 3
+                }
+            ],
+            "https_unknown_path": [
+                {
+                    "response": "404",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "host": "testsupport.fopnu.com",
+            "role": "gone (certificate expired 2019-05-12, no DNS)",
+            "sld": "fopnu.com",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2019-05-12"
+            },
+            "dns_a": "NXDOMAIN"
+        },
+        {
+            "host": "update-check.fopnu.com",
+            "role": "in-app update check pages",
+            "sld": "fopnu.com",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2026-11-14"
+            },
+            "dns_a": [
+                "91.219.238.244"
+            ],
+            "http_root": [
+                {
+                    "url": "http://update-check.fopnu.com/",
+                    "status": 302,
+                    "location": "https://update-check.fopnu.com/"
+                },
+                {
+                    "url": "https://update-check.fopnu.com/",
+                    "status": 200
+                }
+            ],
+            "https_root": [
+                {
+                    "response": "200",
+                    "count": 3
+                }
+            ],
+            "https_unknown_path": [
+                {
+                    "response": "404",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "host": "www.fopnu.com",
+            "role": "Fopnu website, target of download*.fopnu.com redirects",
+            "sld": "fopnu.com",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2026-11-14"
+            },
+            "dns_a": [
+                "91.219.238.244"
+            ],
+            "http_root": [
+                {
+                    "url": "http://www.fopnu.com/",
+                    "status": 302,
+                    "location": "https://www.fopnu.com/"
+                },
+                {
+                    "url": "https://www.fopnu.com/",
+                    "status": 200
+                }
+            ],
+            "https_root": [
+                {
+                    "response": "200",
+                    "count": 3
+                }
+            ],
+            "https_unknown_path": [
+                {
+                    "response": "404",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "host": "download.supersimpleserver.com",
+            "role": "Super Simple Server downloads (directory listing off, 403 on /)",
+            "sld": "supersimpleserver.com",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2026-11-14"
+            },
+            "dns_a": [
+                "91.219.238.244"
+            ],
+            "http_root": [
+                {
+                    "url": "http://download.supersimpleserver.com/",
+                    "status": 302,
+                    "location": "https://download.supersimpleserver.com/"
+                },
+                {
+                    "url": "https://download.supersimpleserver.com/",
+                    "status": 403
+                }
+            ],
+            "https_root": [
+                {
+                    "response": "403",
+                    "count": 3
+                }
+            ],
+            "https_unknown_path": [
+                {
+                    "response": "404",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "host": "forum.supersimpleserver.com",
+            "role": "forum",
+            "sld": "supersimpleserver.com",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2026-11-01"
+            },
+            "dns_a": [
+                "91.219.238.244"
+            ],
+            "http_root": [
+                {
+                    "url": "http://forum.supersimpleserver.com/",
+                    "status": 302,
+                    "location": "https://forum.supersimpleserver.com/"
+                },
+                {
+                    "url": "https://forum.supersimpleserver.com/",
+                    "status": 200
+                }
+            ],
+            "https_root": [
+                {
+                    "response": "200",
+                    "count": 3
+                }
+            ],
+            "https_unknown_path": [
+                {
+                    "response": "404",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "host": "help.supersimpleserver.com",
+            "role": "help site",
+            "sld": "supersimpleserver.com",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2026-10-30"
+            },
+            "dns_a": [
+                "91.219.238.244"
+            ],
+            "http_root": [
+                {
+                    "url": "http://help.supersimpleserver.com/",
+                    "status": 302,
+                    "location": "https://help.supersimpleserver.com/"
+                },
+                {
+                    "url": "https://help.supersimpleserver.com/",
+                    "status": 200
+                }
+            ],
+            "https_root": [
+                {
+                    "response": "200",
+                    "count": 3
+                }
+            ],
+            "https_unknown_path": [
+                {
+                    "response": "404",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "host": "supersimpleserver.com",
+            "role": "Super Simple Server website (canonical)",
+            "sld": "supersimpleserver.com",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2026-12-28"
+            },
+            "dns_a": [
+                "91.219.238.244"
+            ],
+            "http_root": [
+                {
+                    "url": "http://supersimpleserver.com/",
+                    "status": 302,
+                    "location": "https://supersimpleserver.com/"
+                },
+                {
+                    "url": "https://supersimpleserver.com/",
+                    "status": 200
+                }
+            ],
+            "https_root": [
+                {
+                    "response": "200",
+                    "count": 3
+                }
+            ],
+            "https_unknown_path": [
+                {
+                    "response": "404",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "host": "update-check.supersimpleserver.com",
+            "role": "in-app update check pages",
+            "sld": "supersimpleserver.com",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2026-11-01"
+            },
+            "dns_a": [
+                "91.219.238.244"
+            ],
+            "http_root": [
+                {
+                    "url": "http://update-check.supersimpleserver.com/",
+                    "status": 302,
+                    "location": "https://update-check.supersimpleserver.com/"
+                },
+                {
+                    "url": "https://update-check.supersimpleserver.com/",
+                    "status": 200
+                }
+            ],
+            "https_root": [
+                {
+                    "response": "200",
+                    "count": 3
+                }
+            ],
+            "https_unknown_path": [
+                {
+                    "response": "404",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "host": "www.supersimpleserver.com",
+            "role": "alias of supersimpleserver.com (drops the path)",
+            "sld": "supersimpleserver.com",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2026-11-01"
+            },
+            "dns_a": [
+                "91.219.238.244"
+            ],
+            "http_root": [
+                {
+                    "url": "http://www.supersimpleserver.com/",
+                    "status": 302,
+                    "location": "https://www.supersimpleserver.com/"
+                },
+                {
+                    "url": "https://www.supersimpleserver.com/",
+                    "status": 302,
+                    "location": "https://supersimpleserver.com/"
+                },
+                {
+                    "url": "https://supersimpleserver.com/",
+                    "status": 200
+                }
+            ],
+            "https_root": [
+                {
+                    "response": "302 https://supersimpleserver.com/",
+                    "count": 3
+                }
+            ],
+            "https_unknown_path": [
+                {
+                    "response": "302 https://supersimpleserver.com/",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "host": "download.tixati.com",
+            "role": "Tixati downloads (the only live file host)",
+            "sld": "tixati.com",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2026-11-14"
+            },
+            "dns_a": [
+                "91.219.237.221",
+                "91.219.238.244"
+            ],
+            "http_root": [
+                {
+                    "url": "http://download.tixati.com/",
+                    "status": 301,
+                    "location": "https://download.tixati.com/"
+                },
+                {
+                    "url": "https://download.tixati.com/",
+                    "status": 200
+                }
+            ],
+            "https_root": [
+                {
+                    "response": "200",
+                    "count": 12
+                }
+            ],
+            "https_unknown_path": [
+                {
+                    "response": "404",
+                    "count": 12
+                }
+            ]
+        },
+        {
+            "host": "download1.tixati.com",
+            "role": "legacy download host, every path redirects to the home page",
+            "sld": "tixati.com",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2026-11-14"
+            },
+            "dns_a": [
+                "91.219.237.221",
+                "91.219.238.244"
+            ],
+            "http_root": [
+                {
+                    "url": "http://download1.tixati.com/",
+                    "status": 301,
+                    "location": "https://download1.tixati.com/"
+                },
+                {
+                    "url": "https://download1.tixati.com/",
+                    "status": 302,
+                    "location": "https://tixati.com/"
+                },
+                {
+                    "url": "https://tixati.com/",
+                    "status": 200
+                }
+            ],
+            "https_root": [
+                {
+                    "response": "302 https://tixati.com/",
+                    "count": 12
+                }
+            ],
+            "https_unknown_path": [
+                {
+                    "response": "302 https://tixati.com/",
+                    "count": 12
+                }
+            ]
+        },
+        {
+            "host": "download2.tixati.com",
+            "role": "legacy download host, every path redirects to the home page",
+            "sld": "tixati.com",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2026-11-14"
+            },
+            "dns_a": [
+                "91.219.237.221",
+                "91.219.238.244"
+            ],
+            "http_root": [
+                {
+                    "url": "http://download2.tixati.com/",
+                    "status": 301,
+                    "location": "https://download2.tixati.com/"
+                },
+                {
+                    "url": "https://download2.tixati.com/",
+                    "status": 302,
+                    "location": "https://tixati.com/"
+                },
+                {
+                    "url": "https://tixati.com/",
+                    "status": 200
+                }
+            ],
+            "https_root": [
+                {
+                    "response": "302 https://tixati.com/",
+                    "count": 12
+                }
+            ],
+            "https_unknown_path": [
+                {
+                    "response": "302 https://tixati.com/",
+                    "count": 12
+                }
+            ]
+        },
+        {
+            "host": "download3.tixati.com",
+            "role": "legacy download host, every path redirects to the home page",
+            "sld": "tixati.com",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2026-11-14"
+            },
+            "dns_a": [
+                "91.219.237.221"
+            ],
+            "http_root": [
+                {
+                    "url": "http://download3.tixati.com/",
+                    "status": 301,
+                    "location": "https://download3.tixati.com/"
+                },
+                {
+                    "url": "https://download3.tixati.com/",
+                    "status": 302,
+                    "location": "https://tixati.com/"
+                },
+                {
+                    "url": "https://tixati.com/",
+                    "status": 200
+                }
+            ],
+            "https_root": [
+                {
+                    "response": "302 https://tixati.com/",
+                    "count": 3
+                }
+            ],
+            "https_unknown_path": [
+                {
+                    "response": "302 https://tixati.com/",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "host": "download4.tixati.com",
+            "role": "gone (certificate expired 2025-01-19, no DNS)",
+            "sld": "tixati.com",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2025-01-19"
+            },
+            "dns_a": "NXDOMAIN"
+        },
+        {
+            "host": "download5.tixati.com",
+            "role": "gone (certificate expired 2025-01-19, no DNS)",
+            "sld": "tixati.com",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2025-01-19"
+            },
+            "dns_a": "NXDOMAIN"
+        },
+        {
+            "host": "download6.tixati.com",
+            "role": "gone (certificate expired 2025-01-19, no DNS)",
+            "sld": "tixati.com",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2025-01-19"
+            },
+            "dns_a": "NXDOMAIN"
+        },
+        {
+            "host": "errortracker.tixati.com",
+            "role": "crash report endpoint, / redirects to /?history (403)",
+            "sld": "tixati.com",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2026-12-02"
+            },
+            "dns_a": [
+                "91.219.238.244"
+            ],
+            "http_root": [
+                {
+                    "url": "http://errortracker.tixati.com/",
+                    "status": 302,
+                    "location": "http://errortracker.tixati.com/?history"
+                },
+                {
+                    "url": "http://errortracker.tixati.com/?history",
+                    "status": 403
+                }
+            ],
+            "https_root": [
+                {
+                    "response": "302 https://errortracker.tixati.com/?history",
+                    "count": 3
+                }
+            ],
+            "https_unknown_path": [
+                {
+                    "response": "404",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "host": "forum.tixati.com",
+            "role": "forum",
+            "sld": "tixati.com",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2026-12-01"
+            },
+            "dns_a": [
+                "91.219.238.244"
+            ],
+            "http_root": [
+                {
+                    "url": "http://forum.tixati.com/",
+                    "status": 302,
+                    "location": "https://forum.tixati.com/"
+                },
+                {
+                    "url": "https://forum.tixati.com/",
+                    "status": 200
+                }
+            ],
+            "https_root": [
+                {
+                    "response": "200",
+                    "count": 3
+                }
+            ],
+            "https_unknown_path": [
+                {
+                    "response": "404",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "host": "online-help.tixati.com",
+            "role": "alias of support.tixati.com (drops the path)",
+            "sld": "tixati.com",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2026-12-02"
+            },
+            "dns_a": [
+                "91.219.238.244"
+            ],
+            "http_root": [
+                {
+                    "url": "http://online-help.tixati.com/",
+                    "status": 302,
+                    "location": "https://online-help.tixati.com/"
+                },
+                {
+                    "url": "https://online-help.tixati.com/",
+                    "status": 302,
+                    "location": "https://support.tixati.com/"
+                },
+                {
+                    "url": "https://support.tixati.com/",
+                    "status": 200
+                }
+            ],
+            "https_root": [
+                {
+                    "response": "302 https://support.tixati.com/",
+                    "count": 3
+                }
+            ],
+            "https_unknown_path": [
+                {
+                    "response": "302 https://support.tixati.com/",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "host": "support.tixati.com",
+            "role": "support site",
+            "sld": "tixati.com",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2026-12-01"
+            },
+            "dns_a": [
+                "91.219.238.244"
+            ],
+            "http_root": [
+                {
+                    "url": "http://support.tixati.com/",
+                    "status": 302,
+                    "location": "https://support.tixati.com/"
+                },
+                {
+                    "url": "https://support.tixati.com/",
+                    "status": 200
+                }
+            ],
+            "https_root": [
+                {
+                    "response": "200",
+                    "count": 3
+                }
+            ],
+            "https_unknown_path": [
+                {
+                    "response": "404",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "host": "testforum.tixati.com",
+            "role": "gone (certificate expired 2019-05-12, no DNS)",
+            "sld": "tixati.com",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2019-05-12"
+            },
+            "dns_a": "NXDOMAIN"
+        },
+        {
+            "host": "testing.tixati.com",
+            "role": "test site",
+            "sld": "tixati.com",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2026-10-16"
+            },
+            "dns_a": [
+                "91.219.238.244"
+            ],
+            "http_root": [
+                {
+                    "url": "http://testing.tixati.com/",
+                    "status": 302,
+                    "location": "https://testing.tixati.com/"
+                },
+                {
+                    "url": "https://testing.tixati.com/",
+                    "status": 200
+                }
+            ],
+            "https_root": [
+                {
+                    "response": "200",
+                    "count": 3
+                }
+            ],
+            "https_unknown_path": [
+                {
+                    "response": "404",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "host": "testsupport.tixati.com",
+            "role": "gone (certificate expired 2019-05-12, no DNS)",
+            "sld": "tixati.com",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2019-05-12"
+            },
+            "dns_a": "NXDOMAIN"
+        },
+        {
+            "host": "tixati.com",
+            "role": "Tixati website (canonical)",
+            "sld": "tixati.com",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2026-11-14"
+            },
+            "dns_a": [
+                "91.219.238.244"
+            ],
+            "http_root": [
+                {
+                    "url": "http://tixati.com/",
+                    "status": 301,
+                    "location": "https://tixati.com/"
+                },
+                {
+                    "url": "https://tixati.com/",
+                    "status": 200
+                }
+            ],
+            "https_root": [
+                {
+                    "response": "200",
+                    "count": 3
+                }
+            ],
+            "https_unknown_path": [
+                {
+                    "response": "404",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "host": "update-check.tixati.com",
+            "role": "in-app update check pages",
+            "sld": "tixati.com",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2026-11-14"
+            },
+            "dns_a": [
+                "91.219.238.244"
+            ],
+            "http_root": [
+                {
+                    "url": "http://update-check.tixati.com/",
+                    "status": 301,
+                    "location": "https://update-check.tixati.com/"
+                },
+                {
+                    "url": "https://update-check.tixati.com/",
+                    "status": 200
+                }
+            ],
+            "https_root": [
+                {
+                    "response": "200",
+                    "count": 3
+                }
+            ],
+            "https_unknown_path": [
+                {
+                    "response": "404",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "host": "www.tixati.com",
+            "role": "alias of tixati.com",
+            "sld": "tixati.com",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2026-11-14"
+            },
+            "dns_a": [
+                "91.219.238.244"
+            ],
+            "http_root": [
+                {
+                    "url": "http://www.tixati.com/",
+                    "status": 301,
+                    "location": "https://www.tixati.com/"
+                },
+                {
+                    "url": "https://www.tixati.com/",
+                    "status": 301,
+                    "location": "https://tixati.com/"
+                },
+                {
+                    "url": "https://tixati.com/",
+                    "status": 200
+                }
+            ],
+            "https_root": [
+                {
+                    "response": "301 https://tixati.com/",
+                    "count": 3
+                }
+            ],
+            "https_unknown_path": [
+                {
+                    "response": "301 https://tixati.com/zz/test.zip?q=1",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "host": "download.winmxconex.com",
+            "role": "WinMX Community Patch setup (used by bucket/WinMX.json)",
+            "sld": "winmxconex.com",
+            "ct": {
+                "listed": false
+            },
+            "dns_a": [
+                "84.19.186.186"
+            ],
+            "http_root": [
+                {
+                    "url": "http://download.winmxconex.com/",
+                    "status": 308,
+                    "location": "https://archive.winmxworld.com/"
+                },
+                {
+                    "url": "https://archive.winmxworld.com/",
+                    "status": 200
+                }
+            ],
+            "https_root": [
+                {
+                    "response": "403",
+                    "count": 3
+                }
+            ],
+            "https_unknown_path": [
+                {
+                    "response": "410",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "host": "mail.winmxconex.com",
+            "role": "gone (no DNS)",
+            "sld": "winmxconex.com",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2020-02-25"
+            },
+            "dns_a": "NXDOMAIN"
+        },
+        {
+            "host": "patch.winmxconex.com",
+            "role": "WinMX Community Patch page with the MD5 sums",
+            "sld": "winmxconex.com",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2020-02-25"
+            },
+            "dns_a": [
+                "84.19.186.186"
+            ],
+            "http_root": [
+                {
+                    "url": "http://patch.winmxconex.com/",
+                    "status": 308,
+                    "location": "https://archive.winmxworld.com/"
+                },
+                {
+                    "url": "https://archive.winmxworld.com/",
+                    "status": 200
+                }
+            ],
+            "https_root": [
+                {
+                    "response": "200",
+                    "count": 3
+                }
+            ],
+            "https_unknown_path": [
+                {
+                    "response": "410",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "host": "winmxconex.com",
+            "role": "no A record, mail only (MX 10 mail.winmxconex.net)",
+            "sld": "winmxconex.com",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2022-09-06"
+            },
+            "dns_a": []
+        },
+        {
+            "host": "www.winmxconex.com",
+            "role": "HTTP redirects to archive.winmxworld.com, HTTPS has no valid certificate",
+            "sld": "winmxconex.com",
+            "ct": {
+                "listed": false
+            },
+            "dns_a": [
+                "84.19.186.186"
+            ],
+            "http_root": [
+                {
+                    "url": "http://www.winmxconex.com/",
+                    "status": 308,
+                    "location": "https://archive.winmxworld.com/"
+                },
+                {
+                    "url": "https://archive.winmxworld.com/",
+                    "status": 200
+                }
+            ],
+            "https_root": [
+                {
+                    "response": "0",
+                    "count": 3
+                }
+            ],
+            "https_unknown_path": [
+                {
+                    "response": "0",
+                    "count": 3
+                }
+            ],
+            "note": "Status 0: the agent proxy reported \"self-signed certificate\", i.e. no valid HTTPS for this name."
+        },
+        {
+            "host": "archive.winmxworld.com",
+            "role": "archive; the setup file is gone there (410)",
+            "sld": "winmxworld.com",
+            "ct": {
+                "listed": false
+            },
+            "dns_a": [
+                "84.19.186.186"
+            ],
+            "http_root": [
+                {
+                    "url": "http://archive.winmxworld.com/",
+                    "status": 308,
+                    "location": "https://archive.winmxworld.com/"
+                },
+                {
+                    "url": "https://archive.winmxworld.com/",
+                    "status": 200
+                }
+            ],
+            "https_root": [
+                {
+                    "response": "200",
+                    "count": 3
+                }
+            ],
+            "https_unknown_path": [
+                {
+                    "response": "410",
+                    "count": 3
+                }
+            ]
+        },
+        {
+            "host": "winmxworld.com",
+            "role": "HTTP redirects to www, HTTPS has no valid certificate",
+            "sld": "winmxworld.com",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2025-04-22"
+            },
+            "dns_a": [
+                "84.19.186.186"
+            ],
+            "http_root": [
+                {
+                    "url": "http://winmxworld.com/",
+                    "status": 301,
+                    "location": "https://www.winmxworld.com/"
+                },
+                {
+                    "url": "https://www.winmxworld.com/",
+                    "status": 200
+                }
+            ],
+            "https_root": [
+                {
+                    "response": "0",
+                    "count": 3
+                }
+            ],
+            "https_unknown_path": [
+                {
+                    "response": "0",
+                    "count": 3
+                }
+            ],
+            "note": "Status 0: the agent proxy reported \"self-signed certificate\", i.e. no valid HTTPS for this name."
+        },
+        {
+            "host": "www.winmxworld.com",
+            "role": "WinMXWorld website",
+            "sld": "winmxworld.com",
+            "ct": {
+                "listed": true,
+                "latest_not_after": "2025-04-22"
+            },
+            "dns_a": [
+                "84.19.186.186"
+            ],
+            "http_root": [
+                {
+                    "url": "http://www.winmxworld.com/",
+                    "status": 308,
+                    "location": "https://www.winmxworld.com/"
+                },
+                {
+                    "url": "https://www.winmxworld.com/",
+                    "status": 200
+                }
+            ],
+            "https_root": [
+                {
+                    "response": "200",
+                    "count": 3
+                }
+            ],
+            "https_unknown_path": [
+                {
+                    "response": "410",
+                    "count": 3
+                }
+            ]
+        }
+    ]
+}
