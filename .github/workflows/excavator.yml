@@ -29,3 +29,21 @@ jobs:
           SKIP_UPDATED: 1
           # Empty on scheduled runs, so nothing is forced then
           SPECIAL_SNOWFLAKES: ${{ inputs.force }}
+
+  tls:
+    # Separate job: runs next to Excavate, and a failed check never blocks version updates.
+    name: Check TLS
+    runs-on: windows-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Check TLS of every host the manifests use
+        shell: pwsh
+        # Results: table in the log and the run summary, errors and warnings as annotations.
+        # The job fails when a host fails, so it shows red on the Actions tab.
+        run: |
+          $results = @(./bin/Test-Tls.ps1)
+          $results | Format-Table -AutoSize -Wrap
+          if ($results.Status -contains 'FAIL') { exit 1 }
