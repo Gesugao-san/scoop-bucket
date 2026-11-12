@@ -6,6 +6,7 @@ Survey of 2026-11-11. It covers the hosts that `bucket/Tixati.json`, `bucket/Fop
 |---|---|
 | [`hosts.json`](hosts.json) | Every hostname found: certificate transparency names, A records, redirect chains for `http://`, `https://` and an unknown path. Also a per-domain summary (`domains`). |
 | [`downloads.json`](downloads.json) | Release files that were downloaded and checked: size, SHA-256, GPG signature, mirrors that serve the same bytes. |
+| [`family-tree.md`](family-tree.md) | Family tree of Tixati and its relatives (Napster, OpenNap, WinMX, Fopnu, DarkMX), layered by protocols, networks and developers. |
 
 The JSON files are outside `bucket/`, so Scoop's manifest tests and the pull request handler (which only looks at `bucket/*.json`) do not check them.
 
