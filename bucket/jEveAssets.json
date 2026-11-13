@@ -1,0 +1,81 @@
+{
+    "version": "8.2.2",
+    "description": "Out-of-game asset manager for EVE Online: assets, wealth tracking, market orders, transactions, industry jobs and stockpiles across characters and corporations.",
+    "homepage": "https://eve.nikr.net/jeveasset",
+    "license": {
+        "identifier": "GPL-2.0-or-later",
+        "url": "https://github.com/GoldenGnu/jeveassets/blob/HEAD/license.txt"
+    },
+    "notes": [
+        "jEveAssets needs Java 8 or newer, 64-bit, with javaw on the PATH.",
+        "With Scoop: scoop bucket add java; scoop install java/temurin-jre",
+        "",
+        "Accounts, profiles and history live in %USERPROFILE%\\.jeveassets, outside the Scoop folder:",
+        "they survive updates and are kept on uninstall.",
+        "",
+        "Package manager mode is on, so jEveAssets does not update itself; use 'scoop update jEveAssets'.",
+        "Static data (items, locations) comes with each release; upstream also publishes data-only updates",
+        "between releases, and those reach you with the next release.",
+        "",
+        "The shortcut starts jmemory.jar, which runs jEveAssets with the heap size from jmemory.properties",
+        "(xmx=1g by default). The file is persisted: edit it there to give jEveAssets more memory.",
+        "",
+        "When adding an account, choose the localhost login: the other option sends the login code",
+        "through eve.nikr.net.",
+        "On the first start Windows Firewall may ask about Java: jEveAssets opens port 2222 on all",
+        "interfaces only to detect a second copy of itself. Blocking it is safe."
+    ],
+    "suggest": {
+        "JRE": "java/temurin-jre"
+    },
+    "url": "https://github.com/GoldenGnu/jeveassets/releases/download/jeveassets-8.2.2/jeveassets-8.2.2.zip",
+    "hash": "62cb1a6fe1a3aa085c0fbb8c9d9728868cd822f100536192fa6a0427a46d874d",
+    "extract_dir": "jEveAssets",
+    "pre_install": [
+        "# jEveAssets answers on 127.0.0.1:2222 while it runs (its single-instance check). It runs in javaw.exe",
+        "# from the Java folder, which Scoop's own 'is it running' check does not see.",
+        "if ($cmd -eq 'install') {",
+        "  $probe = New-Object System.Net.Sockets.TcpClient",
+        "  $running = try { $probe.Connect('127.0.0.1', 2222); $true } catch { $false } finally { $probe.Dispose() }",
+        "  if ($running) { error \"$app seems to be running (something answers on 127.0.0.1:2222). Close it and try again.\"; break }",
+        "}",
+        "",
+        "# Package manager mode: no self-update and no update prompts; Scoop delivers new versions.",
+        "Set-Content \"$dir\\packagemanager.properties\" @('maintainers=gesu Scoop bucket (github.com/Gesugao-san/scoop-bucket)', 'notifyUpdates=false') -Encoding Ascii",
+        "",
+        "# Heap size for jmemory.jar. Created only once; after that the persisted copy is used.",
+        "if (!(Test-Path \"$persist_dir\\jmemory.properties\")) { Set-Content \"$dir\\jmemory.properties\" 'xmx=1g' -Encoding Ascii }",
+        "",
+        "# The jar runs through javaw, so no console window stays open.",
+        "Set-Content \"$dir\\jEveAssets.cmd\" '@start \"\" javaw -jar \"%~dp0jmemory.jar\" %*' -Encoding Ascii",
+        "",
+        "# The icon exists only as PNGs inside the jar; build the .ico for the shortcut from them.",
+        "$iconTool = Join-Path (Find-BucketDirectory -Name $bucket -Root) 'scripts\\common\\New-IconFromArchive.ps1'",
+        "if (!(Test-Path -LiteralPath $iconTool)) { error \"Cannot build the icon: '$iconTool' is missing.\"; break }",
+        "$images = 32, 64 | ForEach-Object { \"net/nikr/eve/jeveasset/gui/images/misc_assets_$_.png\" }",
+        "& $iconTool -Archive \"$dir\\jeveassets.jar\" -Entry $images -Destination \"$dir\\jEveAssets.ico\" | Out-Null"
+    ],
+    "pre_uninstall": [
+        "# 'scoop update' and 'scoop uninstall' stop here, before anything is removed, while jEveAssets runs.",
+        "$probe = New-Object System.Net.Sockets.TcpClient",
+        "$running = try { $probe.Connect('127.0.0.1', 2222); $true } catch { $false } finally { $probe.Dispose() }",
+        "if ($running) { error \"$app seems to be running (something answers on 127.0.0.1:2222). Close it and try again.\"; break }"
+    ],
+    "bin": "jeveassets.jar",
+    "shortcuts": [
+        [
+            "jEveAssets.cmd",
+            "jEveAssets",
+            "",
+            "jEveAssets.ico"
+        ]
+    ],
+    "persist": "jmemory.properties",
+    "checkver": {
+        "github": "https://github.com/GoldenGnu/jeveassets",
+        "regex": "jeveassets-([\\d.]+)"
+    },
+    "autoupdate": {
+        "url": "https://github.com/GoldenGnu/jeveassets/releases/download/jeveassets-$version/jeveassets-$version.zip"
+    }
+}
