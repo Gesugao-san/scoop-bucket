@@ -1,5 +1,5 @@
 {
-    "version": "17.1.10",
+    "version": "17.1.11",
     "description": "Stability check and stress test tool: CPU, memory, GPU, VRAM, power supply and storage tests, benchmarks and hardware monitoring.",
     "homepage": "https://www.ocbase.com/occt-personal-use",
     "license": {
@@ -15,8 +15,8 @@
         "Do not accept OCCT's own update offer: it would replace OCCT.exe inside the Scoop version folder.",
         "Turn off 'Check for updates' in OCCT's settings and update with 'scoop update OCCT' instead."
     ],
-    "url": "https://www.ocbase.com/download/edition:Personal/version:17.1.10/os:Windows#/OCCT.exe",
-    "hash": "64f403fb690afa724b3bf31f439f8a29c81c34b4d3496a63456a9ab224e9599b",
+    "url": "https://www.ocbase.com/download/edition:Personal/version:17.1.11/os:Windows#/OCCT.exe",
+    "hash": "1b2ab3bb9f982e6ddc8f6d875cba349aae6447a232dcac402a0c8783e822de52",
     "pre_install": [
         "# OCCT keeps its settings in OCCT.config.json next to OCCT.exe. It is copied in here and back out",
         "# in pre_uninstall (which also runs on update) instead of persisted: a hardlink would break if OCCT replaces the file.",
