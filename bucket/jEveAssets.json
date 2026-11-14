@@ -1,5 +1,5 @@
 {
-    "version": "8.2.2",
+    "version": "8.2.3",
     "description": "Out-of-game asset manager for EVE Online: assets, wealth tracking, market orders, transactions, industry jobs and stockpiles across characters and corporations.",
     "homepage": "https://eve.nikr.net/jeveasset",
     "license": {
@@ -28,8 +28,8 @@
     "suggest": {
         "JRE": "java/temurin-jre"
     },
-    "url": "https://github.com/GoldenGnu/jeveassets/releases/download/jeveassets-8.2.2/jeveassets-8.2.2.zip",
-    "hash": "62cb1a6fe1a3aa085c0fbb8c9d9728868cd822f100536192fa6a0427a46d874d",
+    "url": "https://github.com/GoldenGnu/jeveassets/releases/download/jeveassets-8.2.3/jeveassets-8.2.3.zip",
+    "hash": "b4b57715032e9560b926cdec86c9457d803d9db4975ccc1935a5309b28b0a935",
     "extract_dir": "jEveAssets",
     "pre_install": [
         "# jEveAssets answers on 127.0.0.1:2222 while it runs (its single-instance check). It runs in javaw.exe",
