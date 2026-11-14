@@ -1,0 +1,84 @@
+name: EVE-IPH watch
+
+# EVE IPH builds are uploaded by hand, without source and without a signature, so Excavator does not update
+# bucket/EVE-IPH.json (it has no autoupdate). This workflow checks every new build with
+# bin/Test-NetMetadata.ps1 first: a clean build becomes a pull request to review, a red one becomes an issue.
+# Nothing reaches main without a person merging it.
+#
+# Needs Settings > Actions > General > "Allow GitHub Actions to create and approve pull requests".
+# Pull requests opened with the workflow token do not start other workflows (CI); a close-and-reopen does.
+
+on:
+  # Manual run: Actions tab > EVE-IPH watch > Run workflow, or `gh workflow run iph-watch.yml`
+  workflow_dispatch:
+    inputs:
+      commit:
+        description: 'LatestFiles commit to check instead of the newest one (optional)'
+        required: false
+        default: ''
+        type: string
+  schedule:
+    # Half an hour after Excavator, so the two do not race for the same minute.
+    - cron: '50 */4 * * *'
+
+permissions:
+  contents: write
+  pull-requests: write
+  issues: write
+
+concurrency:
+  group: iph-watch
+  cancel-in-progress: false
+
+jobs:
+  watch:
+    name: Check upstream build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Check the newest build
+        id: check
+        shell: pwsh
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+          COMMIT: ${{ inputs.commit }}
+        run: ./scripts/eve-iph/Watch-Upstream.ps1 -Apply -Commit "$env:COMMIT"
+
+      - name: Open a pull request
+        if: steps.check.outputs.status == 'approved'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.check.outputs.version }}
+          REPORT: ${{ steps.check.outputs.report }}
+        run: |
+          branch="eve-iph/$VERSION"
+          if git ls-remote --exit-code --heads origin "$branch" > /dev/null; then
+            echo "Branch $branch already exists; its pull request is waiting for review."
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git switch -c "$branch"
+          git add bucket/EVE-IPH.json scripts/eve-iph/baseline.snapshot
+          git commit -m "EVE-IPH: Update to version $VERSION"
+          git push origin "$branch"
+          gh pr create --base main --head "$branch" --title "EVE-IPH: Update to version $VERSION" --body-file "$REPORT"
+
+      - name: Open an issue
+        if: steps.check.outputs.status == 'blocked'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.check.outputs.version }}
+          REPORT: ${{ steps.check.outputs.report }}
+        run: |
+          title="EVE-IPH $VERSION: metadata check found new capabilities"
+          open=$(gh issue list --state open --search "\"$title\" in:title" --json number --jq 'length')
+          if [ "$open" != "0" ]; then
+            echo "An open issue already reports $VERSION."
+            exit 0
+          fi
+          gh issue create --title "$title" --body-file "$REPORT"
+          echo "::error::EVE-IPH $VERSION was not updated: the metadata check has red findings."
+          exit 1

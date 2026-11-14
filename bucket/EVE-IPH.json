@@ -1,0 +1,66 @@
+{
+    "version": "5.1.9721.41630",
+    "description": "EVE Isk per Hour: industry calculator for EVE Online that finds the most profitable manufacturing, invention, reactions and mining.",
+    "homepage": "https://github.com/EVEIPH/EVE-IPH",
+    "license": "Unknown",
+    "notes": [
+        "Data (database, settings, ESI logins) lives in %APPDATA%\\EVE IPH, outside the Scoop folder: it is",
+        "created on the first install from the files that come with the program, survives updates and is",
+        "kept on uninstall. An existing %APPDATA%\\EVE IPH from the official installer is used as it is.",
+        "",
+        "EVE IPH updates its program files and game database by itself on start (Settings > Application",
+        "Settings > Check for updates on start). Those updates come straight from upstream, without the",
+        "bucket's metadata check; turning the option off also stops database updates.",
+        "",
+        "This bucket updates the package only after a metadata check of the new build",
+        "(bin/Test-NetMetadata.ps1, workflow iph-watch.yml), through a pull request."
+    ],
+    "url": [
+        "https://raw.githubusercontent.com/EVEIPH/LatestFiles/3beef353d88754a15220b83aa102e515ed936be3/EVEIPH%20Binaries.zip",
+        "https://raw.githubusercontent.com/EVEIPH/LatestFiles/3beef353d88754a15220b83aa102e515ed936be3/EVE%20Isk%20per%20Hour.exe#/eve-iph-latest.exe",
+        "https://raw.githubusercontent.com/EVEIPH/LatestFiles/3beef353d88754a15220b83aa102e515ed936be3/LatestVersionIPH.xml#/eve-iph-latest.xml"
+    ],
+    "hash": [
+        "c87a0d96bc7cad30d1ef8af4f41935ce681f58b40b9653bac50076edbeb15f27",
+        "d34e939b8deddd4350aba7b42030e891fc65b27a93b6b5efdf3f041a0ca949d5",
+        "3d177d247e46988449f6005736bba9f850bf581bbe7386eda2a064940ce28fac"
+    ],
+    "pre_install": [
+        "# Upstream's zip often lags behind its main program; the newer exe and its file list go on top.",
+        "Move-Item -Force \"$dir\\eve-iph-latest.exe\" \"$dir\\EVE Isk per Hour.exe\"",
+        "Move-Item -Force \"$dir\\eve-iph-latest.xml\" \"$dir\\LatestVersionIPH.xml\"",
+        "",
+        "# Without a database next to the exe, EVE IPH runs as if installed: database, settings and its updater",
+        "# live in %APPDATA%\\EVE IPH. Seed that folder once; never overwrite it, it holds the user's data and",
+        "# the file list that EVE IPH compares with upstream to update its own database.",
+        "$data = Join-Path $env:APPDATA 'EVE IPH'",
+        "if (!(Test-Path -LiteralPath \"$data\\EVEIPH DB.sqlite\")) {",
+        "  New-Item -ItemType Directory -Force -Path $data | Out-Null",
+        "  # The updater runs from that folder and migrates the database, so it needs the SQLite libraries next to it.",
+        "  $seed = 'EVEIPH DB.sqlite', 'LatestVersionIPH.xml', 'FirstProgramLoad', 'EVEIPH Updater.exe', 'EVEIPH Updater.exe.manifest', 'System.Data.SQLite.dll', 'SQLite.Interop.dll'",
+        "  foreach ($name in $seed) {",
+        "    if (Test-Path -LiteralPath \"$dir\\$name\") { Copy-Item -LiteralPath \"$dir\\$name\" -Destination $data }",
+        "  }",
+        "  Write-Host \"Created '$data' for the EVE IPH database and settings.\"",
+        "}",
+        "Remove-Item -LiteralPath \"$dir\\EVEIPH DB.sqlite\", \"$dir\\FirstProgramLoad\" -Force -ErrorAction SilentlyContinue"
+    ],
+    "shortcuts": [
+        [
+            "EVE Isk per Hour.exe",
+            "EVE Isk per Hour"
+        ]
+    ],
+    "checkver": {
+        "script": [
+            "# The newest commit that touched the file list, and the version of the main program in that list.",
+            "$headers = @{}",
+            "$token = Get-GitHubToken",
+            "if ($token) { $headers['Authorization'] = \"token $token\" }",
+            "$commit = @(Invoke-RestMethod -Headers $headers 'https://api.github.com/repos/EVEIPH/LatestFiles/commits?path=LatestVersionIPH.xml&per_page=1')[0].sha",
+            "$list = (Invoke-WebRequest -UseBasicParsing \"https://raw.githubusercontent.com/EVEIPH/LatestFiles/$commit/LatestVersionIPH.xml\").Content",
+            "\"$list`ncommit=$commit\""
+        ],
+        "regex": "Name=\"EVE Isk per Hour\\.exe\" Version=\"(?<version>[\\d.]+)\"[\\s\\S]*commit=(?<commit>[0-9a-f]{40})"
+    }
+}
