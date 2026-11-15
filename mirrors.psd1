@@ -16,4 +16,11 @@
       '32bit'     = 'https://download.trueconf.ru/download/client/windows/trueconf_client_x86.msi'
     }
   )
+  'Mi-Unlock' = @(
+    @{
+      name        = 'miuirom.xiaomi.com'
+      description = "Xiaomi's ROM server: the same English archive as the CDN link on miui.com (same SHA-256 for 7.6.727.43)"
+      url         = 'https://miuirom.xiaomi.com/rom/u1106245679/$version/miflash_unlock_en_$version.zip'
+    }
+  )
 }
