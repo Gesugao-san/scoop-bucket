@@ -23,4 +23,11 @@
       url         = 'https://miuirom.xiaomi.com/rom/u1106245679/$version/miflash_unlock_en_$version.zip'
     }
   )
+  Victoria = @(
+    @{
+      name        = 'sourceforge'
+      description = "Copy on SourceForge (project victoria-ssd-hdd), not run by the author; same SHA-256 as hdd.by for 5.37. The file name has no dots in the version, so this URL is pinned to 5.37"
+      url         = 'https://downloads.sourceforge.net/project/victoria-ssd-hdd/Victoria537.zip'
+    }
+  )
 }
