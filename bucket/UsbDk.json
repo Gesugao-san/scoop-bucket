@@ -1,6 +1,6 @@
 {
     "version": "1.0.22",
-    "description": "UsbDk (USB Development Kit): filter driver and library that give user-mode programs exclusive access to any USB device without replacing its driver. libusb uses it as a backend (mtkclient, QEMU, SPICE).",
+    "description": "UsbDk (USB Development Kit): filter driver and library that give user-mode programs exclusive access to any USB device without replacing its driver. libusb uses it as a backend (MTKClient, QEMU, SPICE).",
     "homepage": "https://github.com/daynix/UsbDk",
     "license": "Apache-2.0",
     "notes": [

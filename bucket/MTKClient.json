@@ -8,6 +8,7 @@
     },
     "notes": [
         "Tracks upstream main, not releases: the version is the last release tag plus the UTC time of the main commit.",
+        "Install only one of MTKClient and MTKClient-Release (latest release): both add the same commands.",
         "",
         "Install needs internet access: uv downloads a private Python 3.14 (x64, also on ARM64, because the bundled",
         "libusb is x64 only) into the app folder, and the packages pinned in upstream's uv.lock from PyPI.",
