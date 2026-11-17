@@ -9,7 +9,7 @@
     "notes": [
         "Latest upstream release, not main: v2.1.4.1 from 18 March 2026. gesu/MTKClient tracks main and has fixes",
         "this release lacks, among them a safer 'da seccfg unlock' (this release's unlock can brick some devices).",
-        "Install only one of MTKClient and MTKClient-Release: both add the same commands (mtk, mtk_gui, ...).",
+        "Only one of MTKClient and MTKClient-Release can be installed: both add the same commands (mtk, mtk_gui, ...). Installing one while the other is installed stops.",
         "",
         "Install needs internet access: uv downloads a private Python 3.14 (x64, also on ARM64, because the bundled",
         "libusb is x64 only) into the app folder, and the packages pinned in upstream's uv.lock from PyPI.",
@@ -42,6 +42,10 @@
         }
     },
     "extract_dir": "mtkclient-2.1.4.1",
+    "pre_install": [
+        "# MTKClient adds the same commands (mtk, mtk_gui, ...): only one of the two may be installed.",
+        "if ($cmd -eq 'install' -and (installed 'MTKClient')) { error \"$app conflicts with MTKClient, which is installed. Run 'scoop uninstall MTKClient' first.\"; break }"
+    ],
     "installer": {
         "script": [
             "# There is no Windows build: uv installs the source from $dir with the dependency versions pinned in",
