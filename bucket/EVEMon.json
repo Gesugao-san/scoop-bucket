@@ -1,5 +1,5 @@
 {
-    "version": "5.0.1.20261111.0905",
+    "version": "5.0.1.20261117.2123",
     "description": "Character monitor and skill planner for EVE Online: skills, training queues, assets, market orders, industry jobs, mail and notifications for several characters.",
     "homepage": "https://github.com/mgoeppner/evemon",
     "license": {
@@ -21,7 +21,7 @@
         "on all interfaces and shows your characters' data to anyone on the network."
     ],
     "url": "https://github.com/mgoeppner/evemon/releases/download/v5.0.1/EVEMon-5.0.1.msi",
-    "hash": "9947bb0295de07c4e72139af93db7621d91384156a05ce98c026552a70c6c032",
+    "hash": "6781382c6426e63c982a8cf4612bec17821b7fcd2e6874686b52e1d55f2a2c50",
     "extract_dir": "PFiles64\\EVEMon",
     "shortcuts": [
         [
