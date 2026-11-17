@@ -1,5 +1,5 @@
 {
-    "version": "2.7.1",
+    "version": "2.7.3",
     "description": "Impactor (formerly PlumeImpactor): sign and sideload IPAs on an iPhone/iPad/Apple TV with an Apple ID, install SideStore or LiveContainer, place pairing files. With the plumesign command-line tool.",
     "homepage": "https://github.com/claration/impactor",
     "license": "MIT",
@@ -21,32 +21,32 @@
     "architecture": {
         "64bit": {
             "url": [
-                "https://github.com/claration/impactor/releases/download/v2.7.1/Impactor-windows-x86_64-portable.exe#/Impactor.exe",
-                "https://github.com/claration/impactor/releases/download/v2.7.1/plumesign-windows-x86_64.exe#/plumesign.exe"
+                "https://github.com/claration/impactor/releases/download/v2.7.3/Impactor-windows-x86_64-portable.exe#/Impactor.exe",
+                "https://github.com/claration/impactor/releases/download/v2.7.3/plumesign-windows-x86_64.exe#/plumesign.exe"
             ],
             "hash": [
-                "b11b1885265e568995cc0c1de397d6f8cb65172f82e6ef5fd8257cae7ba87e69",
-                "c747ea4a46bc6567f3bea54da9b88d39c61ae708a0e0bfd0c368bdb9488ff710"
+                "ebf939f8c8e74b4cd693d2f9871db4b8304f12396181fdd17404a127427b9923",
+                "94664749fbbceb9a16bf89583f473dafb9b35c8d058a9d8665dc963b3453c6fc"
             ]
         },
         "32bit": {
             "url": [
-                "https://github.com/claration/impactor/releases/download/v2.7.1/Impactor-windows-x86-portable.exe#/Impactor.exe",
-                "https://github.com/claration/impactor/releases/download/v2.7.1/plumesign-windows-x86.exe#/plumesign.exe"
+                "https://github.com/claration/impactor/releases/download/v2.7.3/Impactor-windows-x86-portable.exe#/Impactor.exe",
+                "https://github.com/claration/impactor/releases/download/v2.7.3/plumesign-windows-x86.exe#/plumesign.exe"
             ],
             "hash": [
-                "bb064273cd551ec04abc688ad1bcd1bbec520f2e4094cb856a6c20dae80db336",
-                "27c8453f684894823dfa45f7bb8d34c2338de743bcf91a26bd3e2c34abbb249b"
+                "185d8461ce1f8c61952eef4799d83b6edf3f6606ddbc77a5f834dd9ab5b88d1e",
+                "e0ed0fd796650d824d3fe21924982a2ba79c0307922f07b71d75cb8abfec70a4"
             ]
         },
         "arm64": {
             "url": [
-                "https://github.com/claration/impactor/releases/download/v2.7.1/Impactor-windows-arm64-portable.exe#/Impactor.exe",
-                "https://github.com/claration/impactor/releases/download/v2.7.1/plumesign-windows-arm64.exe#/plumesign.exe"
+                "https://github.com/claration/impactor/releases/download/v2.7.3/Impactor-windows-arm64-portable.exe#/Impactor.exe",
+                "https://github.com/claration/impactor/releases/download/v2.7.3/plumesign-windows-arm64.exe#/plumesign.exe"
             ],
             "hash": [
-                "8a33b76a83fc6bcba62136fe424e9fa33801af2636b7475f1888d12b55466dae",
-                "4495da573a8a7a8f3cee91ae8780b18000c6996f659635ed35a5c2f350184e3d"
+                "ef4a1fdceece04b35a14b099c336bc24fb81489a3297fca38727b34a754fc4a7",
+                "cb137127c3c4f1f5b43340bdf3976b5f5d581017152d7c218953e0575f2ec0c0"
             ]
         }
     },
