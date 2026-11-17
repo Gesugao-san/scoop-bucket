@@ -14,9 +14,9 @@
         "",
         "USB driver: Windows binds MediaTek's BROM/preloader port (VID_0E8D, PID_0003 or PID_2000) to a serial driver,",
         "which libusb cannot open. Either bind WinUSB to it with Zadig (https://zadig.akeo.ie), or install UsbDk",
-        "(https://github.com/daynix/UsbDk/releases): mtkclient falls back to it on 'Access denied'.",
+        "(suggested gesu/UsbDk): mtkclient falls back to it on 'Access denied' and keeps the serial driver.",
         "",
-        "'mtk fs' (mount partitions) needs the WinFsp driver: see the suggested winfsp-np.",
+        "'mtk fs' (mount partitions) needs the WinFsp driver: see the suggested nonportable/winfsp-np.",
         "",
         "mtkclient writes 'logs' (log.txt and the per-device hwparam keys) into the current folder. The MTKClient shortcut",
         "in Scoop Apps starts the GUI where that folder is persisted; 'mtk' from a console writes into the console's folder.",
@@ -26,7 +26,8 @@
     ],
     "depends": "uv",
     "suggest": {
-        "WinFsp": "nonportable/winfsp-np"
+        "WinFsp": "nonportable/winfsp-np",
+        "UsbDk": "gesu/UsbDk"
     },
     "architecture": {
         "64bit": {
