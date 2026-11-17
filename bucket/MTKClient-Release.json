@@ -15,7 +15,7 @@
         "libusb is x64 only) into the app folder, and the packages pinned in upstream's uv.lock from PyPI.",
         "",
         "USB driver: Windows binds MediaTek's BROM/preloader port (VID_0E8D, PID_0003 or PID_2000) to a serial driver,",
-        "which libusb cannot open. Either bind WinUSB to it with Zadig (https://zadig.akeo.ie), or install UsbDk",
+        "which libusb cannot open. Either bind WinUSB to it with Zadig (suggested gesu/Zadig), or install UsbDk",
         "(suggested gesu/UsbDk): mtkclient falls back to it on 'Access denied' and keeps the serial driver.",
         "",
         "'mtk fs' (mount partitions) needs the WinFsp driver: see the suggested nonportable/winfsp-np.",
@@ -29,7 +29,10 @@
     "depends": "uv",
     "suggest": {
         "WinFsp": "nonportable/winfsp-np",
-        "UsbDk": "gesu/UsbDk"
+        "USB access": [
+            "gesu/UsbDk",
+            "gesu/Zadig"
+        ]
     },
     "architecture": {
         "64bit": {
