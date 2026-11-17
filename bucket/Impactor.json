@@ -1,0 +1,99 @@
+{
+    "version": "2.7.1",
+    "description": "Impactor (formerly PlumeImpactor): sign and sideload IPAs on an iPhone/iPad/Apple TV with an Apple ID, install SideStore or LiveContainer, place pairing files. With the plumesign command-line tool.",
+    "homepage": "https://github.com/claration/impactor",
+    "license": "MIT",
+    "notes": [
+        "Impactor talks to the device through Apple's usbmuxd, which comes with iTunes or the Apple Devices app.",
+        "Install one of them first, otherwise the iPhone/iPad will not be found:",
+        "  winget install 9NP83LWLPZ9K   (Apple Devices, Microsoft Store)",
+        "",
+        "Closing the window keeps Impactor running in the tray (for auto-refresh); quit it from the tray icon",
+        "before 'scoop update Impactor'.",
+        "",
+        "Accounts, certificate keys and the refresh list live in %APPDATA%\\PlumeImpactor and are kept on uninstall.",
+        "If you turned on start with Windows, uninstall removes that entry."
+    ],
+    "architecture": {
+        "64bit": {
+            "url": [
+                "https://github.com/claration/impactor/releases/download/v2.7.1/Impactor-windows-x86_64-portable.exe#/Impactor.exe",
+                "https://github.com/claration/impactor/releases/download/v2.7.1/plumesign-windows-x86_64.exe#/plumesign.exe"
+            ],
+            "hash": [
+                "b11b1885265e568995cc0c1de397d6f8cb65172f82e6ef5fd8257cae7ba87e69",
+                "c747ea4a46bc6567f3bea54da9b88d39c61ae708a0e0bfd0c368bdb9488ff710"
+            ]
+        },
+        "32bit": {
+            "url": [
+                "https://github.com/claration/impactor/releases/download/v2.7.1/Impactor-windows-x86-portable.exe#/Impactor.exe",
+                "https://github.com/claration/impactor/releases/download/v2.7.1/plumesign-windows-x86.exe#/plumesign.exe"
+            ],
+            "hash": [
+                "bb064273cd551ec04abc688ad1bcd1bbec520f2e4094cb856a6c20dae80db336",
+                "27c8453f684894823dfa45f7bb8d34c2338de743bcf91a26bd3e2c34abbb249b"
+            ]
+        },
+        "arm64": {
+            "url": [
+                "https://github.com/claration/impactor/releases/download/v2.7.1/Impactor-windows-arm64-portable.exe#/Impactor.exe",
+                "https://github.com/claration/impactor/releases/download/v2.7.1/plumesign-windows-arm64.exe#/plumesign.exe"
+            ],
+            "hash": [
+                "8a33b76a83fc6bcba62136fe424e9fa33801af2636b7475f1888d12b55466dae",
+                "4495da573a8a7a8f3cee91ae8780b18000c6996f659635ed35a5c2f350184e3d"
+            ]
+        }
+    },
+    "bin": [
+        "Impactor.exe",
+        "plumesign.exe"
+    ],
+    "shortcuts": [
+        [
+            "Impactor.exe",
+            "Impactor"
+        ]
+    ],
+    "uninstaller": {
+        "script": [
+            "# Start with Windows writes 'Impactor' = '<exe path> --tray' to HKCU Run (auto-launcher crate).",
+            "# The path goes through 'current', so it survives updates; only a real uninstall removes it.",
+            "if ($cmd -eq 'uninstall') {",
+            "    $runKey = 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Run'",
+            "    $approvedKey = 'HKCU:\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\StartupApproved\\Run'",
+            "    $entry = (Get-ItemProperty -Path $runKey -Name 'Impactor' -ErrorAction SilentlyContinue).Impactor",
+            "    if ($entry -and $entry -like \"$(Split-Path $dir)\\*\") {",
+            "        Remove-ItemProperty -Path $runKey -Name 'Impactor' -ErrorAction SilentlyContinue",
+            "        Remove-ItemProperty -Path $approvedKey -Name 'Impactor' -ErrorAction SilentlyContinue",
+            "    }",
+            "}"
+        ]
+    },
+    "checkver": {
+        "github": "https://github.com/claration/impactor"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": [
+                    "https://github.com/claration/impactor/releases/download/v$version/Impactor-windows-x86_64-portable.exe#/Impactor.exe",
+                    "https://github.com/claration/impactor/releases/download/v$version/plumesign-windows-x86_64.exe#/plumesign.exe"
+                ]
+            },
+            "32bit": {
+                "url": [
+                    "https://github.com/claration/impactor/releases/download/v$version/Impactor-windows-x86-portable.exe#/Impactor.exe",
+                    "https://github.com/claration/impactor/releases/download/v$version/plumesign-windows-x86.exe#/plumesign.exe"
+                ]
+            },
+            "arm64": {
+                "url": [
+                    "https://github.com/claration/impactor/releases/download/v$version/Impactor-windows-arm64-portable.exe#/Impactor.exe",
+                    "https://github.com/claration/impactor/releases/download/v$version/plumesign-windows-arm64.exe#/plumesign.exe"
+                ]
+            }
+        }
+    }
+}
