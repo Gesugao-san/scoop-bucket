@@ -30,4 +30,11 @@
       url         = 'https://downloads.sourceforge.net/project/victoria-ssd-hdd/Victoria537.zip'
     }
   )
+  'Borderless-Gaming' = @(
+    @{
+      name        = 'dropbox'
+      description = "Dropbox copy used by the starise/scoop-gaming bucket, not run by the author (who asks for the official download); byte-identical to the file on legacy.borderlessgam.ing for 9.6.0 (same SHA-256). Pinned to 9.6.0"
+      url         = 'https://www.dropbox.com/scl/fi/0l6er6hchkqtbgodvqe3l/BorderlessGaming-9.6.0.exe?rlkey=xbj8j0ldr8i4g0g0nxakvpicd&dl=1#/dl.exe'
+    }
+  )
 }
