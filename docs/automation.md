@@ -5,14 +5,14 @@ GitHub Actions from Scoop's [BucketTemplate](https://github.com/ScoopInstaller/B
 | Workflow | Runs | Does |
 |---|---|---|
 | [`excavator.yml`](../.github/workflows/excavator.yml) | every 4 hours, or by hand ([see below](#running-workflows-by-hand)) | Runs `checkver` with autoupdate on every manifest and pushes new versions with their hashes straight to `main`, as `github-actions[bot]`. A second job, *Check TLS*, runs [`bin/Test-Tls.ps1`](../bin/Test-Tls.ps1) ([see below](#checking-tls)) |
-| [`ci.yml`](../.github/workflows/ci.yml) | every push and PR | Scoop's Pester tests in Windows PowerShell and PowerShell 7: manifest schema and file style |
+| [`ci.yml`](../.github/workflows/ci.yml) | every push and PR | Scoop's Pester tests in Windows PowerShell and PowerShell 7: file style of `bucket/`, schema of the manifests that changed |
 | [`issues.yml`](../.github/workflows/issues.yml) | new issues | Checks reports such as `app@1.2.3: hash check failed` and fixes the hash if it really changed |
 | [`pull_request.yml`](../.github/workflows/pull_request.yml) | new PRs, `/verify` comments | Checks the changed manifests and posts the results |
 | [`iph-watch.yml`](../.github/workflows/iph-watch.yml) | every 4 hours (at :50), or by hand | Checks a new EVE-IPH build with [`bin/Test-NetMetadata.ps1`](../bin/Test-NetMetadata.ps1) and opens a pull request with the update, or an issue when the check is red ([see below](#checking-eve-iph-builds)) |
 
 Notes:
 
-- The tests run on `bucket/` only ([`Scoop-Bucket.Tests.ps1`](../Scoop-Bucket.Tests.ps1)): Scoop's style tests read every file as text and would fail on the PNGs in `icons/` and `screenshots/`. The schema check is wider in CI: it takes every changed `*.json` in the repository, so JSON files that are not manifests must not be added anywhere.
+- The tests run on `bucket/` only ([`Scoop-Bucket.Tests.ps1`](../Scoop-Bucket.Tests.ps1)): Scoop's style tests read every file as text and would fail on the PNGs in `icons/` and `screenshots/`. The schema check covers only the manifests in `bucket/` that changed since the commit before the push (or the base of a pull request), across all commits of the push; when nothing in `bucket/` changed, it does not run. Without that base commit (a local run, a run by hand) it checks every manifest. Scoop's own version checks the `*.json` files changed in the last commit only, anywhere in the repository, which misses earlier commits of a push and treats data files such as [`hosts.json`](research/tixati-software/hosts.json) as manifests; [`Scoop-Bucket.Tests.ps1`](../Scoop-Bucket.Tests.ps1) does the check itself instead. JSON data files outside `bucket/` are fine.
 - Manifests use Scoop's own format (4-space JSON) because Excavator rewrites a manifest with Scoop's formatter whenever it updates it. Run `.\bin\formatjson.ps1` after editing by hand.
 - `.gitattributes` gives text files CRLF in working copies, which the tests require; the repository itself stores LF.
 - GitHub turns off scheduled workflows in public repositories after 60 days without activity; re-enable Excavator on the Actions tab if that happens.

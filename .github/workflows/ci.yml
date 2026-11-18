@@ -25,8 +25,8 @@ jobs:
       - name: Checkout Bucket
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
-          # Need at least 2 commits to properly gather changed files for linting
-          fetch-depth: 2
+          # Full history, so the tests can compare with BASE_SHA however many commits a push has
+          fetch-depth: 0
           path: 'my_bucket'
       - name: Checkout Scoop
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -39,6 +39,9 @@ jobs:
           modules-to-cache: BuildHelpers, Pester
           shell: ${{ matrix.shell }}
       - name: Run tests
+        env:
+          # Schema check covers manifests changed since this commit (see Scoop-Bucket.Tests.ps1)
+          BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
         run: |
           $env:SCOOP_HOME="$(Convert-Path '.\scoop_core')"
           .\my_bucket\bin\test.ps1
