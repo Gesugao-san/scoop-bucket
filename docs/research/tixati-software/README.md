@@ -65,7 +65,7 @@ Run from a cloud workspace outside Russia, through an HTTPS-inspecting proxy, on
 
 ### Refreshing
 
-[`bin/update-host-notes.py`](../../bin/update-host-notes.py) repeats all of the above and rewrites both JSON files in place. It needs Python 3 (standard library only) and, for the signatures, `gpg` on PATH (`scoop install gpg`); without `gpg` the signatures are skipped.
+[`bin/update-host-notes.py`](../../../bin/update-host-notes.py) repeats all of the above and rewrites both JSON files in place. It needs Python 3 (standard library only) and, for the signatures, `gpg` on PATH (`scoop install gpg`); without `gpg` the signatures are skipped.
 
 ```sh
 python bin/update-host-notes.py                    # hosts.json and downloads.json

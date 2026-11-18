@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Refreshes a host survey in notes/ (hosts.json and downloads.json) from the live servers.
+Refreshes a host survey in docs/research/ (hosts.json and downloads.json) from the live servers.
 
 hosts.json:
   The domains listed in its "domains" section are looked up in certificate transparency
@@ -22,9 +22,9 @@ Exit code: 0 when everything matches, 1 when a signature is bad, a hash differs 
 manifest, or a mirror serves different bytes.
 
 Usage:
-  python bin/update-host-notes.py                       # notes/tixati-software, everything
+  python bin/update-host-notes.py                       # docs/research/tixati-software, everything
   python bin/update-host-notes.py --skip-downloads      # hosts.json only
-  python bin/update-host-notes.py notes/other --samples 5
+  python bin/update-host-notes.py docs/research/other --samples 5
 """
 
 import argparse
@@ -43,7 +43,7 @@ import urllib.parse
 import urllib.request
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DEFAULT_NOTES = os.path.join(REPO_ROOT, 'notes', 'tixati-software')
+DEFAULT_NOTES = os.path.join(REPO_ROOT, 'docs', 'research', 'tixati-software')
 TIMEOUT_SEC = 15
 USER_AGENT = 'scoop-bucket-host-notes/1.0'
 # Path that should not exist anywhere: shows whether a redirect keeps the path.
