@@ -6,8 +6,17 @@ Personal [Scoop](https://scoop.sh) bucket by [Gesugao-san](https://github.com/Ge
 
 ## Usage
 
+Add the bucket once:
+
 ```powershell
 scoop bucket add gesu https://github.com/Gesugao-san/scoop-bucket
+```
+
+`gesu` is only a local name for the bucket; any other name works too.
+
+Then install packages from it:
+
+```powershell
 scoop install gesu/NBT-Studio
 scoop install gesu/NBT-Explorer
 scoop install gesu/iloader
@@ -46,8 +55,6 @@ scoop install gesu/UltraDefrag              # runs elevated (UAC prompt)
 scoop install gesu/JkDefrag                 # runs elevated (UAC prompt)
 scoop install gesu/Victoria                 # runs elevated (UAC prompt)
 ```
-
-`gesu` is only a local name for the bucket; any other name works too.
 
 Works in [UniGetUI](https://github.com/Devolutions/UniGetUI) too: add the bucket in UniGetUI's Scoop settings (or with the command above), then search for the package.
 
