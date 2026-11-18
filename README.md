@@ -114,4 +114,12 @@ Each package has a page with its notes: requirements, what the manifest does dif
 - [Research](docs/research/README.md) behind some manifests
 - [Skill for adding a package](skills/scoop-bucket-add/SKILL.md), for Claude and other AI assistants
 
+## License
+
+The bucket's own files (manifests, scripts, documentation) are released into the public domain under the [Unlicense](LICENSE), like Scoop's [BucketTemplate](https://github.com/ScoopInstaller/BucketTemplate). It does not cover:
+
+- the programs themselves, which keep their upstream licenses (see each [package page](docs/packages/));
+- third-party license texts in [`licenses/`](licenses);
+- icons and screenshots, whose sources and licenses are listed in [Icons and screenshots](docs/icons.md).
+
 Manifests only point to upstream release files; nothing else is redistributed here.
