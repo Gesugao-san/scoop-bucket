@@ -1,0 +1,11 @@
+# Victoria
+
+| | |
+|---|---|
+| Manifest | [`bucket/Victoria.json`](../../bucket/Victoria.json) |
+| Upstream | [hdd.by](https://hdd.by/victoria/) (Sergei Kazanskij, freeware) |
+| Install | `scoop install gesu/Victoria                 # runs elevated (UAC prompt)` |
+
+HDD and SSD diagnostics: drive passport and S.M.A.R.T. (with a history database and graphs), surface scan that can ignore, remap, erase or refresh slow and bad blocks, HPA, AAM/APM and Secure Erase; IDE/SATA through ports or the Windows API, NVMe, SCSI, memory cards and USB drives. **5.37 (14 October 2021) is still the current version.** Uses the official zip; the manifest URL is the file itself, without the download counter in front of it (`https://hdd.by?download=1&kcccount=…`) that the site links. Only the *Victoria* shortcut in Scoop Apps, no command: `Victoria.exe` asks for admin rights (UAC) on every start, and the author ships `Victoria.ini` (settings, with the window layout) and the `LOGS` folder (event logs, S.M.A.R.T. database `SMBASE_*`) next to it, so it should start in its own folder, which the shortcut does. Both are persisted. The write and erase tests and the *Remap*, *Erase* and *Refresh* scan actions write to the drive; *Settings → Disable dangerous features* forbids all writes. There is no built-in update check. `checkver` reads the version from the download button on the Russian-language page (the archive section lower down links every older build, so the regex matches only the link with the download counter). The archive stores the Russian help and language file names in CP866 with Info-ZIP Unicode path fields; Scoop extracts zips with 7-Zip when it is installed, which reads those fields, so the names come out right on any Windows. The site has no license text; the author asks that any copy of the archive posted elsewhere carries an active link to [hdd.by](https://hdd.by). Hash checked against [winget](https://github.com/microsoft/winget-pkgs/tree/master/manifests/v/Victoria/Victoria/5.37) and a copy on SourceForge (listed in [`mirrors.psd1`](../../mirrors.psd1) for [`Use-Mirror.ps1`](../mirrors.md#installing-from-a-mirror); not run by the author, who says he has nothing to do with copies on other sites). Not in Scoop's official buckets.
+
+[All packages](../../README.md#packages)
