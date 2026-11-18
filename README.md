@@ -122,4 +122,20 @@ The bucket's own files (manifests, scripts, documentation) are released into the
 - third-party license texts in [`licenses/`](licenses);
 - icons and screenshots, whose sources and licenses are listed in [Icons and screenshots](docs/icons.md).
 
+## Moved sections
+
+These sections used to be in this README and now live in [`docs/`](docs/README.md). Old links to them land here:
+
+- <a id="installing-from-a-mirror"></a>Installing from a mirror: [docs/mirrors.md](docs/mirrors.md)
+- <a id="automation"></a>Automation: [docs/automation.md](docs/automation.md)
+- <a id="running-workflows-by-hand"></a>Running workflows by hand: [docs/automation.md#running-workflows-by-hand](docs/automation.md#running-workflows-by-hand)
+- <a id="checking-tls"></a>Checking TLS: [docs/automation.md#checking-tls](docs/automation.md#checking-tls)
+- <a id="checking-eve-iph-builds"></a>Checking EVE-IPH builds: [docs/automation.md#checking-eve-iph-builds](docs/automation.md#checking-eve-iph-builds)
+- <a id="notes"></a>Notes: [docs/research/README.md](docs/research/README.md)
+- <a id="licenses"></a>Licenses: [docs/conventions.md#licenses](docs/conventions.md#licenses)
+- <a id="file-associations"></a>File associations: [docs/conventions.md#file-associations](docs/conventions.md#file-associations)
+- <a id="icons"></a>Icons: [docs/icons.md](docs/icons.md)
+- <a id="icon-size-in-unigetui"></a>Icon size in UniGetUI: [docs/icons.md#icon-size-in-unigetui](docs/icons.md#icon-size-in-unigetui)
+- <a id="screenshots"></a>Screenshots: [docs/icons.md#screenshots](docs/icons.md#screenshots)
+
 Manifests only point to upstream release files; nothing else is redistributed here.
