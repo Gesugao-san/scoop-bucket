@@ -8,7 +8,7 @@
     },
     "notes": [
         "Needs the .NET Desktop Runtime 10 or newer (or 9). If it is missing: scoop install extras/windowsdesktop-runtime-lts",
-        "The 'RealiTLScanner GUI' shortcut starts it on the newest installed runtime, since .NET 9 is out of support.",
+        "The command realitlscanner-gui and the 'RealiTLScanner GUI' shortcut start it on the newest installed runtime, since .NET 9 is out of support.",
         "",
         "The GUI runs the scanner from gesu/RealiTLScanner (instead of the 0.2.1 copy in the GUI's zip),",
         "so 'scoop update RealiTLScanner' updates it for the GUI too.",
@@ -62,6 +62,12 @@
             "[IO.File]::WriteAllText(\"$dir\\RealiTLScanner-GUI.cmd\", ($lines -join \"`r`n\") + \"`r`n\")"
         ]
     },
+    "bin": [
+        [
+            "RealiTLScanner-GUI.cmd",
+            "realitlscanner-gui"
+        ]
+    ],
     "shortcuts": [
         [
             "RealiTLScanner-GUI.cmd",
