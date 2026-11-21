@@ -37,4 +37,21 @@
       url         = 'https://www.dropbox.com/scl/fi/0l6er6hchkqtbgodvqe3l/BorderlessGaming-9.6.0.exe?rlkey=xbj8j0ldr8i4g0g0nxakvpicd&dl=1#/dl.exe'
     }
   )
+  'Loyalsoldier-GeoIP' = @(
+    @{
+      name        = 'raw'
+      description = "Upstream's release branch on raw.githubusercontent.com: the same files, but always the newest build (no version in the URL), so they match the manifest only until the next Thursday build and Excavator's update after it. Checked for 202611190019"
+      url         = @(
+        'https://raw.githubusercontent.com/Loyalsoldier/geoip/release/Country.mmdb'
+        'https://raw.githubusercontent.com/Loyalsoldier/geoip/release/Country-without-asn.mmdb'
+        'https://raw.githubusercontent.com/Loyalsoldier/geoip/release/Country-only-cn-private.mmdb'
+        'https://raw.githubusercontent.com/Loyalsoldier/geoip/release/Country-asn.mmdb'
+        'https://raw.githubusercontent.com/Loyalsoldier/geoip/release/geoip.dat'
+        'https://raw.githubusercontent.com/Loyalsoldier/geoip/release/geoip-only-cn-private.dat'
+        'https://raw.githubusercontent.com/Loyalsoldier/geoip/release/geoip-asn.dat'
+        'https://raw.githubusercontent.com/Loyalsoldier/geoip/release/cn.dat'
+        'https://raw.githubusercontent.com/Loyalsoldier/geoip/release/private.dat'
+      )
+    }
+  )
 }

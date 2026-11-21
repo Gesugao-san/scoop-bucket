@@ -51,6 +51,8 @@ scoop install gesu/Tftpd64
 scoop install gesu/doggo
 scoop install gesu/dnslookup
 scoop install gesu/q-DNS                   # command qdns, not q
+scoop install gesu/RealiTLScanner           # finds TLS targets for Xray REALITY
+scoop install gesu/Loyalsoldier-GeoIP       # GeoIP databases (.mmdb, .dat)
 scoop install gesu/OCCT                     # runs elevated (UAC prompt)
 scoop install gesu/TrueConf
 scoop install gesu/Ghidra                   # needs JDK 25
@@ -104,6 +106,8 @@ Each package has a page with its notes: requirements, what the manifest does dif
 | [`doggo`](docs/packages/doggo.md) | [mr-karan/doggo](https://github.com/mr-karan/doggo) | DNS client with readable output; DoT, DoH, DoQ, DNSCrypt |
 | [`dnslookup`](docs/packages/dnslookup.md) | [ameshkov/dnslookup](https://github.com/ameshkov/dnslookup) | One DNS query over any protocol, including DoH, DoT, DoQ, DNSCrypt |
 | [`q-DNS`](docs/packages/q-dns.md) | [natesales/q](https://github.com/natesales/q) | DNS client with DoT, DoH, DoQ, ODoH and DNSCrypt (command `qdns`) |
+| [`RealiTLScanner`](docs/packages/realitlscanner.md) | [XTLS/RealiTLScanner](https://github.com/XTLS/RealiTLScanner) | Finds TLS 1.3 + HTTP/2 servers to use as Xray REALITY targets |
+| [`Loyalsoldier-GeoIP`](docs/packages/loyalsoldier-geoip.md) | [Loyalsoldier/geoip](https://github.com/Loyalsoldier/geoip) | Weekly GeoIP databases for MaxMind readers and Xray; used by `RealiTLScanner` |
 | [`OCCT`](docs/packages/occt.md) | [ocbase.com](https://www.ocbase.com/occt-personal-use) (OCBASE, Personal edition) | Stability check and stress test tool |
 | [`TrueConf`](docs/packages/trueconf.md) | [trueconf.com](https://trueconf.com/downloads/windows.html) (TrueConf, proprietary) | Video conferencing client |
 | [`Ghidra`](docs/packages/ghidra.md) | [NationalSecurityAgency/ghidra](https://github.com/NationalSecurityAgency/ghidra) | Reverse engineering framework |

@@ -11,5 +11,6 @@ Files that manifests use at install, update or uninstall time, and helpers for t
 | [`gale/`](gale) | `Gale`: registry templates for the `.r2z` [file association](../docs/conventions.md#file-associations) |
 | [`nbt-studio/`](nbt-studio) | `NBT-Studio`: registry templates for [file associations](../docs/conventions.md#file-associations) |
 | [`planetside-2/`](planetside-2) | `PlanetSide-2`: the `PlanetSide-2` command, which starts the game through Steam |
+| [`realitlscanner/`](realitlscanner) | `RealiTLScanner`: the `realitlscanner` command, which runs the scanner with the [GeoIP database](../docs/packages/realitlscanner.md#geoip) from `Loyalsoldier-GeoIP`, and `realitlscanner-scan`, which scans one range once into the persisted `results` folder |
 
 [Back to the main README](../README.md)
