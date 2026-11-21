@@ -1,0 +1,91 @@
+{
+    "version": "1.4.2",
+    "description": "doggo: command-line DNS client (like dig) with readable output. Queries over UDP, TCP, DNS-over-TLS, DNS-over-HTTPS (HTTP/2 and HTTP/3), DNS-over-QUIC and DNSCrypt; JSON output, reverse lookups, delegation trace.",
+    "homepage": "https://github.com/mr-karan/doggo",
+    "license": {
+        "identifier": "GPL-3.0-only",
+        "url": "https://github.com/mr-karan/doggo/blob/HEAD/LICENSE"
+    },
+    "notes": [
+        "Command: doggo. The 'doggo' shortcut in Scoop Apps shows examples and waits for a key.",
+        "Without @server, doggo asks the DNS servers of your network adapters (on a home network: the router).",
+        "",
+        "Defaults for any flag: %APPDATA%\\doggo\\config.toml (or %USERPROFILE%\\.doggo.toml), or DOGGO_* environment variables.",
+        "Both are outside the Scoop folder: they survive updates, and 'scoop uninstall' leaves them.",
+        "",
+        "Only one of gesu/doggo and main/doggo can be installed: Scoop treats them as the same app."
+    ],
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/mr-karan/doggo/releases/download/v1.4.2/doggo-windows-x86_64.zip",
+            "hash": "d3dcf3e3ff233acca443027f4cf072be6b331f0301f0ac3674d4de8802438791"
+        },
+        "32bit": {
+            "url": "https://github.com/mr-karan/doggo/releases/download/v1.4.2/doggo-windows-i386.zip",
+            "hash": "68fcd8b8d0bd6ce88f60660446ec71ebdbfe9a3e2890e3454511a5dc02c1f49b"
+        }
+    },
+    "installer": {
+        "script": [
+            "# doggo.exe prints its help and exits at once, so the 'doggo' shortcut opens this micro-launcher instead.",
+            "$lines = @(",
+            "  '@ECHO OFF',",
+            "  ':: doggo: shows what doggo does and how to run it, then waits for a key.',",
+            "  ':: Written by the gesu Scoop bucket at install time.',",
+            "  'ECHO doggo is a command-line DNS client, like dig, with readable output.',",
+            "  'ECHO Run it from any console as doggo.',",
+            "  'ECHO.',",
+            "  'ECHO Usage: doggo [query options] [arguments...]',",
+            "  'ECHO.',",
+            "  'ECHO Examples:',",
+            "  'ECHO   doggo example.com',",
+            "  'ECHO       A record through the DNS servers of your network adapters',",
+            "  'ECHO   doggo MX example.com @9.9.9.9',",
+            "  'ECHO       MX records from Quad9 over plain DNS',",
+            "  'ECHO   doggo example.com @tcp://1.1.1.1',",
+            "  'ECHO       Over TCP',",
+            "  'ECHO   doggo example.com @tls://1.1.1.1',",
+            "  'ECHO       Over DNS-over-TLS (TCP port 853)',",
+            "  'ECHO   doggo example.com @https://cloudflare-dns.com/dns-query',",
+            "  'ECHO       Over DNS-over-HTTPS (port 443)',",
+            "  'ECHO   doggo example.com @quic://dns.quad9.net',",
+            "  'ECHO       Over DNS-over-QUIC (UDP port 853)',",
+            "  'ECHO   doggo --reverse 8.8.8.8 --short',",
+            "  'ECHO       Reverse lookup (PTR), values only',",
+            "  'ECHO   doggo example.com --trace',",
+            "  'ECHO       Follows the delegation from the root servers',",
+            "  'ECHO   doggo example.com --json',",
+            "  'ECHO       JSON output for scripts',",
+            "  'ECHO.',",
+            "  'ECHO Run doggo --help for every option.',",
+            "  'ECHO.',",
+            "  'PAUSE',",
+            "  ''",
+            ")",
+            "[IO.File]::WriteAllText(\"$dir\\doggo.cmd\", ($lines -join \"`r`n\") + \"`r`n\")"
+        ]
+    },
+    "bin": "doggo.exe",
+    "shortcuts": [
+        [
+            "doggo.cmd",
+            "doggo"
+        ]
+    ],
+    "checkver": {
+        "github": "https://github.com/mr-karan/doggo"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/mr-karan/doggo/releases/download/v$version/doggo-windows-x86_64.zip"
+            },
+            "32bit": {
+                "url": "https://github.com/mr-karan/doggo/releases/download/v$version/doggo-windows-i386.zip"
+            }
+        },
+        "hash": {
+            "url": "$baseurl/doggo_$version_checksums.txt"
+        }
+    }
+}

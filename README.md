@@ -48,6 +48,9 @@ scoop install gesu/Zadig                    # asks for admin rights (UAC) on sta
 scoop install gesu/PuTTY
 scoop install gesu/Tabby
 scoop install gesu/Tftpd64
+scoop install gesu/doggo
+scoop install gesu/dnslookup
+scoop install gesu/q-DNS                   # command qdns, not q
 scoop install gesu/OCCT                     # runs elevated (UAC prompt)
 scoop install gesu/TrueConf
 scoop install gesu/Ghidra                   # needs JDK 25
@@ -98,6 +101,9 @@ Each package has a page with its notes: requirements, what the manifest does dif
 | [`PuTTY`](docs/packages/putty.md) | [chiark.greenend.org.uk/~sgtatham/putty](https://www.chiark.greenend.org.uk/~sgtatham/putty/) (Simon Tatham) | SSH, Telnet and serial client |
 | [`Tabby`](docs/packages/tabby.md) | [tabby.sh](https://tabby.sh) ([Eugeny/tabby](https://github.com/Eugeny/tabby), MIT) | Terminal with SSH, SFTP and serial |
 | [`Tftpd64`](docs/packages/tftpd64.md) | [pjo2.github.io/tftpd64](https://pjo2.github.io/tftpd64/) ([PJO2/tftpd64](https://github.com/PJO2/tftpd64), Philippe Jounin) | TFTP, DHCP, DNS, SNTP and Syslog servers |
+| [`doggo`](docs/packages/doggo.md) | [mr-karan/doggo](https://github.com/mr-karan/doggo) | DNS client with readable output; DoT, DoH, DoQ, DNSCrypt |
+| [`dnslookup`](docs/packages/dnslookup.md) | [ameshkov/dnslookup](https://github.com/ameshkov/dnslookup) | One DNS query over any protocol, including DoH, DoT, DoQ, DNSCrypt |
+| [`q-DNS`](docs/packages/q-dns.md) | [natesales/q](https://github.com/natesales/q) | DNS client with DoT, DoH, DoQ, ODoH and DNSCrypt (command `qdns`) |
 | [`OCCT`](docs/packages/occt.md) | [ocbase.com](https://www.ocbase.com/occt-personal-use) (OCBASE, Personal edition) | Stability check and stress test tool |
 | [`TrueConf`](docs/packages/trueconf.md) | [trueconf.com](https://trueconf.com/downloads/windows.html) (TrueConf, proprietary) | Video conferencing client |
 | [`Ghidra`](docs/packages/ghidra.md) | [NationalSecurityAgency/ghidra](https://github.com/NationalSecurityAgency/ghidra) | Reverse engineering framework |

@@ -1,0 +1,96 @@
+{
+    "version": "0.19.12",
+    "description": "q (natesales/q): small command-line DNS client with support for UDP, TCP, DNS-over-TLS, DNS-over-HTTPS (HTTP/2 and HTTP/3), DNS-over-QUIC, Oblivious DoH and DNSCrypt. Installed as the command qdns.",
+    "homepage": "https://github.com/natesales/q",
+    "license": {
+        "identifier": "GPL-3.0-only",
+        "url": "https://github.com/natesales/q/blob/HEAD/LICENSE"
+    },
+    "notes": [
+        "Command: qdns (not q: main/q is an unrelated tool that runs SQL on CSV files and also adds the q command).",
+        "The 'q (DNS client)' shortcut in Scoop Apps shows examples and waits for a key.",
+        "",
+        "Without @server, q on Windows does NOT use your network's DNS: it looks for /etc/resolv.conf, finds none and",
+        "queries Cloudflare over DNS-over-HTTPS. To ask the router, give its address: qdns example.com @192.168.1.1",
+        "Or set a default: SET Q_DEFAULT_SERVER=9.9.9.9 (cmd) or $env:Q_DEFAULT_SERVER = '9.9.9.9' (PowerShell)."
+    ],
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/natesales/q/releases/download/v0.19.12/q_0.19.12_windows_amd64.zip",
+            "hash": "35238a11b4b2623064dbb7e61207a53e1b55619f3249f2e9b3acd26f8de18d14"
+        },
+        "arm64": {
+            "url": "https://github.com/natesales/q/releases/download/v0.19.12/q_0.19.12_windows_arm64.zip",
+            "hash": "25479b18dbcb3897551d712d5a993707be982d6cb14932ca4e2abf801548f19e"
+        }
+    },
+    "installer": {
+        "script": [
+            "# q.exe prints its help and exits at once, so the 'q (DNS client)' shortcut opens this micro-launcher instead.",
+            "$lines = @(",
+            "  '@ECHO OFF',",
+            "  ':: q (DNS client): shows what qdns does and how to run it, then waits for a key.',",
+            "  ':: Written by the gesu Scoop bucket at install time.',",
+            "  'ECHO q is a command-line DNS client. This package installs it as qdns:',",
+            "  'ECHO the q command belongs to an unrelated tool (main/q, SQL on CSV files).',",
+            "  'ECHO.',",
+            "  'ECHO Usage: qdns [options] [@server] [type...] [name]',",
+            "  'ECHO.',",
+            "  'ECHO Without @server qdns asks Cloudflare over DNS-over-HTTPS, not your network.',",
+            "  'ECHO Set Q_DEFAULT_SERVER to change that, for example: SET Q_DEFAULT_SERVER=192.168.1.1',",
+            "  'ECHO.',",
+            "  'ECHO Examples:',",
+            "  'ECHO   qdns example.com',",
+            "  'ECHO       A, AAAA, NS, MX, TXT and CNAME records at once',",
+            "  'ECHO   qdns example.com MX SOA @9.9.9.9',",
+            "  'ECHO       Chosen types from Quad9 over plain DNS',",
+            "  'ECHO   qdns example.com @tcp://9.9.9.9',",
+            "  'ECHO       Over TCP',",
+            "  'ECHO   qdns example.com @tls://1.1.1.1',",
+            "  'ECHO       Over DNS-over-TLS (TCP port 853)',",
+            "  'ECHO   qdns example.com @https://cloudflare-dns.com/dns-query --http3',",
+            "  'ECHO       Over DNS-over-HTTPS with HTTP/3',",
+            "  'ECHO   qdns example.com @quic://dns.quad9.net',",
+            "  'ECHO       Over DNS-over-QUIC (UDP port 853)',",
+            "  'ECHO   qdns -x 8.8.8.8',",
+            "  'ECHO       Reverse lookup (PTR)',",
+            "  'ECHO   qdns example.com --format=raw',",
+            "  'ECHO       Output like dig; also json, yaml, column',",
+            "  'ECHO.',",
+            "  'ECHO Run qdns --help for every option.',",
+            "  'ECHO.',",
+            "  'PAUSE',",
+            "  ''",
+            ")",
+            "[IO.File]::WriteAllText(\"$dir\\q-DNS.cmd\", ($lines -join \"`r`n\") + \"`r`n\")"
+        ]
+    },
+    "bin": [
+        [
+            "q.exe",
+            "qdns"
+        ]
+    ],
+    "shortcuts": [
+        [
+            "q-DNS.cmd",
+            "q (DNS client)"
+        ]
+    ],
+    "checkver": {
+        "github": "https://github.com/natesales/q"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/natesales/q/releases/download/v$version/q_$version_windows_amd64.zip"
+            },
+            "arm64": {
+                "url": "https://github.com/natesales/q/releases/download/v$version/q_$version_windows_arm64.zip"
+            }
+        },
+        "hash": {
+            "url": "$baseurl/q_$version_checksums.txt"
+        }
+    }
+}

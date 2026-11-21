@@ -1,0 +1,94 @@
+{
+    "version": "1.12.0",
+    "description": "dnslookup: simple command-line DNS lookup tool that supports every DNS protocol: plain DNS over UDP and TCP, DNS-over-TLS, DNS-over-HTTPS (HTTP/2 and HTTP/3), DNS-over-QUIC and DNSCrypt.",
+    "homepage": "https://github.com/ameshkov/dnslookup",
+    "license": {
+        "identifier": "MIT",
+        "url": "https://github.com/ameshkov/dnslookup/blob/HEAD/LICENSE"
+    },
+    "notes": [
+        "Command: dnslookup <name> [server]. The 'dnslookup' shortcut in Scoop Apps shows examples and waits for a key.",
+        "The protocol comes from the server address: 9.9.9.9, tcp://, tls://, https://, h3://, quic://, sdns://.",
+        "",
+        "Options are environment variables, not flags. In cmd: SET RRTYPE=AAAA (stays set in that window until SET RRTYPE=).",
+        "In PowerShell: $env:RRTYPE = 'AAAA' (until Remove-Item Env:RRTYPE). Others: JSON=1, VERBOSE=1, DNSSEC=1, CLASS=CH, SUBNET=1.2.3.4/24.",
+        "",
+        "Only one of gesu/dnslookup and main/dnslookup can be installed: Scoop treats them as the same app."
+    ],
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/ameshkov/dnslookup/releases/download/v1.12.0/dnslookup-windows-amd64-v1.12.0.zip",
+            "hash": "eed786e7dd4e7b9b89913ed1c4eb8b62304d895fe8e0ffa6b9eb5f7aa4972593",
+            "extract_dir": "windows-amd64"
+        },
+        "32bit": {
+            "url": "https://github.com/ameshkov/dnslookup/releases/download/v1.12.0/dnslookup-windows-386-v1.12.0.zip",
+            "hash": "731bb87b1e97535565945821500e7e1b7e53765fe764f2557cdd745837e4951d",
+            "extract_dir": "windows-386"
+        }
+    },
+    "installer": {
+        "script": [
+            "# dnslookup.exe prints its usage and exits at once, so the 'dnslookup' shortcut opens this micro-launcher instead.",
+            "$lines = @(",
+            "  '@ECHO OFF',",
+            "  ':: dnslookup: shows what dnslookup does and how to run it, then waits for a key.',",
+            "  ':: Written by the gesu Scoop bucket at install time.',",
+            "  'ECHO dnslookup sends one DNS query over the protocol you pick and prints the answer.',",
+            "  'ECHO Run it from any console as dnslookup.',",
+            "  'ECHO.',",
+            "  'ECHO Usage: dnslookup ^<name^> [server]',",
+            "  'ECHO The server address picks the protocol:',",
+            "  'ECHO   dnslookup example.org',",
+            "  'ECHO       Through the system resolver',",
+            "  'ECHO   dnslookup example.org 9.9.9.9',",
+            "  'ECHO       Plain DNS over UDP',",
+            "  'ECHO   dnslookup example.org tcp://9.9.9.9',",
+            "  'ECHO       Plain DNS over TCP',",
+            "  'ECHO   dnslookup example.org tls://one.one.one.one',",
+            "  'ECHO       DNS-over-TLS (TCP port 853)',",
+            "  'ECHO   dnslookup example.org https://cloudflare-dns.com/dns-query',",
+            "  'ECHO       DNS-over-HTTPS (port 443)',",
+            "  'ECHO   dnslookup example.org https://cloudflare-dns.com/dns-query 1.1.1.1',",
+            "  'ECHO       The same, connecting to 1.1.1.1 without resolving the server name first',",
+            "  'ECHO   dnslookup example.org h3://dns.google/dns-query',",
+            "  'ECHO       DNS-over-HTTPS over HTTP/3 only',",
+            "  'ECHO   dnslookup example.org quic://dns.quad9.net',",
+            "  'ECHO       DNS-over-QUIC (UDP port 853)',",
+            "  'ECHO   dnslookup 8.8.8.8',",
+            "  'ECHO       Reverse lookup (PTR)',",
+            "  'ECHO.',",
+            "  'ECHO Options are environment variables, not flags. In cmd:',",
+            "  'ECHO   SET RRTYPE=AAAA',",
+            "  'ECHO   dnslookup example.org 9.9.9.9',",
+            "  'ECHO   SET RRTYPE=',",
+            "  'ECHO In PowerShell: $env:RRTYPE = \"AAAA\"; then Remove-Item Env:RRTYPE',",
+            "  'ECHO Others: JSON=1, VERBOSE=1, DNSSEC=1, CLASS=CH, SUBNET=1.2.3.4/24, PAD=1, VERIFY=0',",
+            "  'ECHO.',",
+            "  'PAUSE',",
+            "  ''",
+            ")",
+            "[IO.File]::WriteAllText(\"$dir\\dnslookup.cmd\", ($lines -join \"`r`n\") + \"`r`n\")"
+        ]
+    },
+    "bin": "dnslookup.exe",
+    "shortcuts": [
+        [
+            "dnslookup.cmd",
+            "dnslookup"
+        ]
+    ],
+    "checkver": "github",
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/ameshkov/dnslookup/releases/download/v$version/dnslookup-windows-amd64-v$version.zip",
+                "extract_dir": "windows-amd64"
+            },
+            "32bit": {
+                "url": "https://github.com/ameshkov/dnslookup/releases/download/v$version/dnslookup-windows-386-v$version.zip",
+                "extract_dir": "windows-386"
+            }
+        }
+    }
+}
