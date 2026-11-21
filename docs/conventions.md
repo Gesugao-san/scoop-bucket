@@ -6,6 +6,8 @@ Rules that several manifests in this bucket follow.
 
 Non-portable packages (`NetTime`, `Radmin-VPN`, `Samsung-Magician`, `PlanetSide-2-LaunchPad`, `WinMX`) check before installing whether the program is already installed on the system without Scoop, and stop instead of silently taking it over (a later `scoop uninstall` would remove that copy too). `scoop update` is not affected. For `Radmin-VPN`, `Samsung-Magician`, `PlanetSide-2-LaunchPad` and `WinMX`, whose installers can install over an existing copy, run `$env:GESU_ALLOW_EXISTING = '1'` in the same shell to let Scoop take over; the variable stays set until you close the shell or run `Remove-Item Env:GESU_ALLOW_EXISTING`. `NetTime` has no such override: its regular installer registers its own `NetTimeSvc`, which a Scoop copy cannot share.
 
+`Gale` is portable, but stops too if upstream's MSI copy is installed (two copies would fight over the `ror2mm://` links), with no override: Scoop cannot take over an MSI install.
+
 ## Shortcuts to programs outside the app folder
 
 Scoop puts shortcuts only for files inside its app folder, so `Radmin-VPN`, `Samsung-Magician`, `PlanetSide-2-LaunchPad` and `WinMX` find the folder the installer used (through the program's uninstall entry) and link it into the app folder as a junction (`RadminVPN`, `SamsungMagician`, `LaunchPad`, `Winmx`); the shortcut in *Scoop Apps* points through it. Update and uninstall delete only the junction, before Scoop touches the app folder, never the files it points to. If the program is not found where its uninstall entry says, Scoop warns and installs without the shortcut. To get the shortcut for a copy installed before it was added, run `scoop update -f <package>` from an elevated shell: it reruns the installer over the existing copy.
@@ -38,3 +40,5 @@ reg import "%USERPROFILE%\scoop\apps\NBT-Studio\current\install-associations.reg
 ```
 
 This makes NBT Studio the default app for `.nbt` and adds it to "Open with" for `.snbt`, `.dat`, `.dat_old`, `.mca`, `.mcr`, `.mcc`, `.mcstructure` and `.schematic` without changing their defaults. Paths point to `current`, so they survive updates. `scoop uninstall` imports [`uninstall-associations.reg`](../scripts/nbt-studio/uninstall-associations.reg) and removes the entries.
+
+`Gale` does the same for `.r2z` profile files ([templates](../scripts/gale)), as its upstream MSI would: `reg import "%USERPROFILE%\scoop\apps\Gale\current\install-associations.reg"`.

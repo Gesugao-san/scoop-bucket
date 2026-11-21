@@ -1,0 +1,11 @@
+Windows Registry Editor Version 5.00
+
+; Undo install-associations.reg. Drop the .r2z default only; the extension key itself may hold other apps' data
+
+[HKEY_CURRENT_USER\Software\Classes\.r2z]
+@=-
+
+[HKEY_CURRENT_USER\Software\Classes\.r2z\OpenWithProgIDs]
+"Gale.r2z"=-
+
+[-HKEY_CURRENT_USER\Software\Classes\Gale.r2z]

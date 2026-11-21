@@ -1,0 +1,22 @@
+Windows Registry Editor Version 5.00
+
+; Open .r2z profile files (exported by Gale and r2modman) with Gale,
+; like upstream's MSI does
+
+[HKEY_CURRENT_USER\Software\Classes\.r2z]
+@="Gale.r2z"
+
+[HKEY_CURRENT_USER\Software\Classes\.r2z\OpenWithProgIDs]
+"Gale.r2z"=hex(0):
+
+[HKEY_CURRENT_USER\Software\Classes\Gale.r2z]
+@="Gale profile"
+
+[HKEY_CURRENT_USER\Software\Classes\Gale.r2z\DefaultIcon]
+@="\"{{gale_dir}}\\gale.exe\",0"
+
+[HKEY_CURRENT_USER\Software\Classes\Gale.r2z\shell\open]
+@="Open with Gale"
+
+[HKEY_CURRENT_USER\Software\Classes\Gale.r2z\shell\open\command]
+@="\"{{gale_dir}}\\gale.exe\" \"%1\""

@@ -1,0 +1,82 @@
+{
+    "version": "1.24.0",
+    "description": "Modern mod manager for Thunderstore. Profiles, one-click installs from thunderstore.io, r2modman profile codes.",
+    "homepage": "https://github.com/Kesomannen/gale",
+    "license": {
+        "identifier": "GPL-3.0-only",
+        "url": "https://github.com/Kesomannen/gale/blob/HEAD/LICENSE.md"
+    },
+    "notes": [
+        "Update Gale with 'scoop update Gale', not with its own updater: the in-app update",
+        "runs the upstream MSI, which installs a second copy for all users in Program Files.",
+        "",
+        "Gale keeps its settings and profiles in %APPDATA%\\com.kesomannen.gale and its cache",
+        "in %LOCALAPPDATA%\\com.kesomannen.gale; 'scoop uninstall -p' does not delete them.",
+        "",
+        "'Install with Mod Manager' on thunderstore.io (ror2mm:// and gale:// links) works after",
+        "Gale has been started once: Gale registers these links for the current user itself.",
+        "",
+        "To open .r2z profile files with Gale, execute:",
+        "reg import \"$dir\\install-associations.reg\""
+    ],
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/Kesomannen/gale/releases/download/1.24.0/Gale_1.24.0_x64_en-US.msi",
+            "hash": "3e721f6f6b03e318a5b72730290c4e4d11752bff9c7ddafbe5553f7bae7742bc"
+        }
+    },
+    "extract_dir": "PFiles\\Gale",
+    "pre_install": [
+        "# Upstream's MSI (also run by its in-app updater and by games/gale) installs Gale for all users in Program Files.",
+        "$roots = 'HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall', 'HKLM:\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall', 'HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall'",
+        "$msiCopy = Get-ChildItem $roots -ErrorAction SilentlyContinue | Get-ItemProperty -ErrorAction SilentlyContinue | Where-Object { ($_.DisplayName -eq 'Gale') -and ($_.Publisher -eq 'kesomannen') } | Select-Object -First 1",
+        "if ($msiCopy -and ($cmd -eq 'install')) {",
+        "  error \"Gale $($msiCopy.DisplayVersion) is already installed from upstream's MSI ($($msiCopy.InstallLocation)). Uninstall it first in Settings > Apps (from an elevated shell: msiexec /x $($msiCopy.PSChildName)); your profiles in %APPDATA%\\com.kesomannen.gale stay. Scoop has already downloaded and unpacked ${app}: run 'scoop uninstall $app' or simply install again, which cleans that up.\"",
+        "  break",
+        "}",
+        "if ($msiCopy) { warn \"A second copy of Gale from upstream's MSI is installed ($($msiCopy.InstallLocation)), probably by Gale's own updater. Uninstall it in Settings > Apps and update with 'scoop update $app'.\" }"
+    ],
+    "post_install": [
+        "$templates = Join-Path (Find-BucketDirectory -Name $bucket -Root) \"scripts\\$($app.ToLowerInvariant())\"",
+        "if (!(Test-Path -LiteralPath $templates -PathType Container)) {",
+        "  warn \"Registry templates not found in '$templates', the .r2z file association is unavailable.\"",
+        "  return",
+        "}",
+        "$app_dir = $dir -replace '\\\\', '\\\\'",
+        "Get-ChildItem -Path $templates -Filter '*.reg' -File | ForEach-Object {",
+        "  $content = Get-Content -Path $_.FullName -Encoding utf8",
+        "  if ($global) { $content = $content -replace 'HKEY_CURRENT_USER', 'HKEY_LOCAL_MACHINE' }",
+        "  $content -replace '{{gale_dir}}', $app_dir | Set-Content -Path \"$dir\\$($_.Name)\" -Encoding unicode",
+        "}"
+    ],
+    "bin": "gale.exe",
+    "shortcuts": [
+        [
+            "gale.exe",
+            "Gale"
+        ]
+    ],
+    "uninstaller": {
+        "script": [
+            "if ($cmd -ne 'uninstall') { return }",
+            "reg import \"$dir\\uninstall-associations.reg\" *> $null",
+            "# Gale registers ror2mm:// and gale:// for the current user on every start; drop them only if they point to this copy.",
+            "$appRoot = Split-Path $dir",
+            "foreach ($scheme in 'ror2mm', 'gale') {",
+            "  $key = \"HKCU:\\Software\\Classes\\$scheme\"",
+            "  $command = (Get-ItemProperty \"$key\\shell\\open\\command\" -ErrorAction SilentlyContinue).'(default)'",
+            "  if ($command -and ($command.IndexOf($appRoot, [StringComparison]::OrdinalIgnoreCase) -ge 0)) { Remove-Item $key -Recurse -Force }",
+            "}"
+        ]
+    },
+    "checkver": {
+        "github": "https://github.com/Kesomannen/gale"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/Kesomannen/gale/releases/download/$version/Gale_$version_x64_en-US.msi"
+            }
+        }
+    }
+}

@@ -11,6 +11,7 @@ One page per package. The [main README](../../README.md#packages) has the same l
 - [`EVEMon`](evemon.md)
 - [`Fopnu`](fopnu.md)
 - [`Freesm-Launcher`](freesm-launcher.md)
+- [`Gale`](gale.md)
 - [`Ghidra`](ghidra.md)
 - [`Google-USB-Driver`](google-usb-driver.md)
 - [`iloader`](iloader.md)
