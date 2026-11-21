@@ -1,0 +1,43 @@
+name: Security
+
+# Checks the TLS connection to every host the manifests use, with bin/Test-Tls.ps1.
+# A workflow of its own, not a job in Excavator: when a host fails, the run and GitHub's notification
+# say "Security failed", not "Excavator failed", and version updates are never involved.
+
+on:
+  # Manual run: Actions tab > Security > Run workflow, or `gh workflow run security.yml`
+  workflow_dispatch:
+    inputs:
+      app:
+        description: 'Manifests to check, comma-separated, wildcards allowed (e.g. "TrueConf,PlanetSide-2*"). Leave empty for all.'
+        required: false
+        default: ''
+        type: string
+  schedule:
+    # Once a day: certificates are warned about 21 days ahead, so this is enough, and a failing host
+    # costs at most one notification a day. Away from Excavator (:20) and EVE-IPH watch (:50).
+    - cron: '35 4 * * *'
+
+permissions:
+  contents: read
+
+jobs:
+  tls:
+    name: Check TLS
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - name: Check TLS of every host the manifests use
+        shell: pwsh
+        env:
+          # Through env, not ${{ }} in the script, so the input cannot inject code
+          APPS: ${{ inputs.app }}
+        # Results: table in the log and the run summary, errors and warnings as annotations.
+        # A host that does not answer within 30 s gets 2 more tries 60 s apart: one dropped connection from a runner is common.
+        # The run fails when a host still fails, so it shows red on the Actions tab.
+        run: |
+          $app = if ($env:APPS) { @($env:APPS -split '\s*,\s*' | Where-Object { $_ }) } else { '*' }
+          $results = @(./bin/Test-Tls.ps1 -App $app -TimeoutSec 30 -Retries 2 -RetryDelaySec 60)
+          $results | Format-Table -AutoSize -Wrap
+          if ($results.Status -contains 'FAIL') { exit 1 }

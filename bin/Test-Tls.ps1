@@ -29,6 +29,14 @@
 .PARAMETER WarnDays
   Warn when a certificate expires within this many days.
 
+.PARAMETER Retries
+  How many more times to probe a host that gave no connection or no handshake, before it fails.
+  A single dropped connection from a CI runner is common and says nothing about the host, so the
+  Security workflow passes 2; the default 0 keeps a run on your own PC fast.
+
+.PARAMETER RetryDelaySec
+  Seconds to wait before each retry.
+
 .PARAMETER FailOnError
   Exit with code 1 when any host has the status FAIL.
 
@@ -54,6 +62,12 @@ param (
 
   [ValidateRange(0, 3650)]
   [int] $WarnDays = 21,
+
+  [ValidateRange(0, 10)]
+  [int] $Retries = 0,
+
+  [ValidateRange(0, 300)]
+  [int] $RetryDelaySec = 60,
 
   [switch] $FailOnError
 )
@@ -358,6 +372,14 @@ function Test-Endpoint {
   }
 
   $probe = [GesuTlsProbe]::Probe($Endpoint.Host, $Endpoint.Port, $TimeoutSec * 1000)
+  $attempts = 1
+  # Only a missing handshake is retried: a bad certificate stays bad on the next try.
+  while (-not $probe.Handshake -and $attempts -le $Retries) {
+    Write-Verbose "Retrying $($Endpoint.Host):$($Endpoint.Port) in $RetryDelaySec s: $($probe.Error)"
+    Start-Sleep -Seconds $RetryDelaySec
+    $probe = [GesuTlsProbe]::Probe($Endpoint.Host, $Endpoint.Port, $TimeoutSec * 1000)
+    $attempts++
+  }
   $daysLeft = [int] [Math]::Floor(($probe.NotAfter - [DateTime]::UtcNow).TotalDays)
 
   $row.TLS = $probe.Protocol
@@ -369,6 +391,10 @@ function Test-Endpoint {
     if (-not $hit) { continue }
     if ($severity[$rule.Status] -gt $severity[$row.Status]) { $row.Status = $rule.Status }
     $probe | ForEach-Object $rule.Note
+  }
+  # Say when a host needed more than one try: a host that keeps needing retries is worth a look.
+  if ($attempts -gt 1) {
+    $notes = @($notes) + $(if ($probe.Handshake) { "passed on attempt $attempts" } else { "all $attempts attempts" })
   }
   $row.Note = @($notes) -join '; '
   [pscustomobject] $row

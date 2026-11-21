@@ -4,7 +4,8 @@ GitHub Actions from Scoop's [BucketTemplate](https://github.com/ScoopInstaller/B
 
 | Workflow | Runs | Does |
 |---|---|---|
-| [`excavator.yml`](../.github/workflows/excavator.yml) | every 4 hours, or by hand ([see below](#running-workflows-by-hand)) | Runs `checkver` with autoupdate on every manifest and pushes new versions with their hashes straight to `main`, as `github-actions[bot]`. A second job, *Check TLS*, runs [`bin/Test-Tls.ps1`](../bin/Test-Tls.ps1) ([see below](#checking-tls)) |
+| [`excavator.yml`](../.github/workflows/excavator.yml) | every 4 hours, or by hand ([see below](#running-workflows-by-hand)) | Runs `checkver` with autoupdate on every manifest and pushes new versions with their hashes straight to `main`, as `github-actions[bot]` |
+| [`security.yml`](../.github/workflows/security.yml) | once a day (04:35 UTC), or by hand ([see below](#running-workflows-by-hand)) | Runs [`bin/Test-Tls.ps1`](../bin/Test-Tls.ps1) on every host the manifests use ([see below](#checking-tls)) |
 | [`ci.yml`](../.github/workflows/ci.yml) | every push and PR | Scoop's Pester tests in Windows PowerShell and PowerShell 7: file style of `bucket/`, schema of the manifests that changed |
 | [`issues.yml`](../.github/workflows/issues.yml) | new issues | Checks reports such as `app@1.2.3: hash check failed` and fixes the hash if it really changed |
 | [`pull_request.yml`](../.github/workflows/pull_request.yml) | new PRs, `/verify` comments | Checks the changed manifests and posts the results |
@@ -20,16 +21,18 @@ Notes:
 
 ## Running workflows by hand
 
-Excavator and CI can be started from the [Actions tab](https://github.com/Gesugao-san/scoop-bucket/actions) (pick the workflow, then **Run workflow**) or with the [GitHub CLI](https://cli.github.com/):
+Excavator, Security and CI can be started from the [Actions tab](https://github.com/Gesugao-san/scoop-bucket/actions) (pick the workflow, then **Run workflow**) or with the [GitHub CLI](https://cli.github.com/):
 
 ```powershell
 gh workflow run excavator.yml -R Gesugao-san/scoop-bucket
 gh workflow run excavator.yml -R Gesugao-san/scoop-bucket -f force=NetTime,Privoxy
+gh workflow run security.yml -R Gesugao-san/scoop-bucket
+gh workflow run security.yml -R Gesugao-san/scoop-bucket -f app=PlanetSide-2*
 gh workflow run ci.yml -R Gesugao-san/scoop-bucket
 gh run watch -R Gesugao-san/scoop-bucket
 ```
 
-`force` lists manifests that Excavator re-downloads and re-hashes even when the version is unchanged, for when upstream replaces a file without a new version number. The issue and PR handlers have no manual run: they need the issue or PR that triggered them.
+`force` lists manifests that Excavator re-downloads and re-hashes even when the version is unchanged, for when upstream replaces a file without a new version number. `app` limits the Security run's TLS check to these manifests (comma-separated, wildcards allowed). The issue and PR handlers have no manual run: they need the issue or PR that triggered them.
 
 ## Checking TLS
 
@@ -41,11 +44,12 @@ gh run watch -R Gesugao-san/scoop-bucket
 | `WARN` | plain HTTP, TLS older than 1.2, or a certificate that expires within 21 days (`-WarnDays`) |
 | `OK` | everything else |
 
-Excavator runs it as a separate job, *Check TLS*, every 4 hours: the table goes to the run summary, failures and warnings appear as annotations, and the job turns red when a host fails (Excavate itself is not affected). A GitHub runner is outside Russia, so comparing with a run on your own PC tells where a problem is: a host that fails on both is broken on its own side; a host that fails only at home is blocked or filtered on the way.
+The *Security* workflow runs it once a day: the table goes to the run summary, failures and warnings appear as annotations, and the run turns red when a host fails. It is a workflow of its own, not a job in Excavator, so a failure shows up as "Security failed" (in GitHub's notifications too) and never as "Excavator failed". There the timeout is 30 s (`-TimeoutSec`, 15 s by default), and a host that gives no connection or no handshake is tried 2 more times, 60 s apart (`-Retries`, `-RetryDelaySec`), because a single dropped connection from a runner is common; the note says when a host needed a retry. Certificates are warned about 21 days ahead, so once a day is enough. A GitHub runner is outside Russia, so comparing with a run on your own PC tells where a problem is: a host that fails on both is broken on its own side; a host that fails only at home is blocked or filtered on the way.
 
 ```powershell
 .\bin\Test-Tls.ps1                                  # all hosts, as a table
 .\bin\Test-Tls.ps1 TrueConf, Radmin-VPN | Format-List  # these apps only, all details
+.\bin\Test-Tls.ps1 PlanetSide-2* -Retries 2            # retry hosts that do not answer
 ```
 
 ## Checking EVE-IPH builds
