@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Loyalsoldier-GeoIP icon for the gesu Scoop bucket: original drawing,
+       written by scripts/loyalsoldier-geoip/make_icon.py. -->
+  <polygon points="80,404 256,478 256,504 80,430" fill="#2f6fe0"/>
+  <polygon points="432,404 256,478 256,504 432,430" fill="#1f56c2"/>
+  <polygon points="256,330 432,404 256,478 80,404" fill="#4d94ff"/>
+  <polygon points="80,350 256,424 256,450 80,376" fill="#2f6fe0"/>
+  <polygon points="432,350 256,424 256,450 432,376" fill="#1f56c2"/>
+  <polygon points="256,276 432,350 256,424 80,350" fill="#6aa8ff"/>
+  <defs>
+    <linearGradient id="globe" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#9cc8ff"/>
+      <stop offset="1" stop-color="#3a82f0"/>
+    </linearGradient>
+    <clipPath id="disc"><circle cx="236" cy="214" r="120"/></clipPath>
+  </defs>
+  <circle cx="236" cy="214" r="120" fill="url(#globe)"/>
+  <g clip-path="url(#disc)" fill="none" stroke="#ffffff" stroke-opacity="0.6" stroke-width="7">
+    <line x1="236" y1="94" x2="236" y2="334"/>
+    <ellipse cx="236" cy="214" rx="50.4" ry="120"/>
+    <ellipse cx="236" cy="214" rx="96.0" ry="120"/>
+    <line x1="128.8" y1="160.0" x2="343.2" y2="160.0"/>
+    <line x1="116.0" y1="214.0" x2="356.0" y2="214.0"/>
+    <line x1="128.8" y1="268.0" x2="343.2" y2="268.0"/>
+  </g>
+  <path d="M352,214 C327.7,171.4 298,144.4 298,112 A54,54 0 1 1 406,112 C406,144.4 376.3,171.4 352,214 Z" fill="#1450c8" stroke="#ffffff" stroke-width="12" stroke-linejoin="round" paint-order="stroke"/>
+  <circle cx="352" cy="112" r="20" fill="#ffffff"/>
+</svg>

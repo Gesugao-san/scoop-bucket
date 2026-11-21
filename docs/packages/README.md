@@ -38,6 +38,7 @@ One page per package. The [main README](../../README.md#packages) has the same l
 - [`q-DNS`](q-dns.md)
 - [`Radmin-VPN`](radmin-vpn.md)
 - [`RealiTLScanner`](realitlscanner.md)
+- [`RealiTLScanner-GUI`](realitlscanner-gui.md)
 - [`Samsung-Magician`](samsung-magician.md)
 - [`Tabby`](tabby.md)
 - [`Tftpd64`](tftpd64.md)

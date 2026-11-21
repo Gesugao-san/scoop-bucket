@@ -12,6 +12,8 @@ Downloads the official `RealiTLScanner-windows-64.exe` from the GitHub release, 
 
 [VirusTotal](https://www.virustotal.com/gui/file/03d4b8fa92cbc23e92d1af70ca74f90f650f1f51d19a5d769016dd71964559e4) (0.2.3, November 2026): 1 of 71 engines, Bkav Pro with the generic `W32.Malware.ACEA2513`; every other engine finds nothing. A lone generic detection from Bkav is a common false positive, and the build information above matches the tagged source.
 
+For a window instead of the console, see [`RealiTLScanner-GUI`](realitlscanner-gui.md), which uses this package's scanner.
+
 ## Commands and shortcuts
 
 - `realitlscanner -addr <IP, CIDR or domain>`: a CIDR range is scanned once. A single IP or domain starts **infinite mode**: the scanner resolves it, then walks to the neighbouring addresses in both directions until you press Ctrl+C.

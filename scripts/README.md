@@ -9,8 +9,9 @@ Files that manifests use at install, update or uninstall time, and helpers for t
 | [`borderless-gaming/`](borderless-gaming) | `Borderless-Gaming`: `make_icon.py` draws the redrawn [icon](../docs/icons.md) for UniGetUI and renders its PNG |
 | [`eve-iph/`](eve-iph) | `EVE-IPH`: checks new upstream builds, see [Checking EVE-IPH builds](../docs/automation.md#checking-eve-iph-builds) |
 | [`gale/`](gale) | `Gale`: registry templates for the `.r2z` [file association](../docs/conventions.md#file-associations) |
+| [`loyalsoldier-geoip/`](loyalsoldier-geoip) | `Loyalsoldier-GeoIP`: `make_icon.py` draws the original [icon](../docs/icons.md) for UniGetUI and renders its PNG |
 | [`nbt-studio/`](nbt-studio) | `NBT-Studio`: registry templates for [file associations](../docs/conventions.md#file-associations) |
 | [`planetside-2/`](planetside-2) | `PlanetSide-2`: the `PlanetSide-2` command, which starts the game through Steam |
-| [`realitlscanner/`](realitlscanner) | `RealiTLScanner`: the `realitlscanner` command, which runs the scanner with the [GeoIP database](../docs/packages/realitlscanner.md#geoip) from `Loyalsoldier-GeoIP`, and `realitlscanner-scan`, which scans one range once into the persisted `results` folder |
+| [`realitlscanner/`](realitlscanner) | `RealiTLScanner`: the `realitlscanner` command, which runs the scanner with the [GeoIP database](../docs/packages/realitlscanner.md#geoip) from `Loyalsoldier-GeoIP`, `realitlscanner-scan`, which scans one range once into the persisted `results` folder, and `make_icon.py`, which writes the [icon](../docs/icons.md) |
 
 [Back to the main README](../README.md)
