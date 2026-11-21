@@ -24,7 +24,7 @@
 
 File names: `<package>[-<variant>][-<size>].<ext>`. Upstream-based icons carry their size; `alt` is the redrawn one.
 
-Icons already in UniGetUI's database, so nothing is hosted here for them: `nbt-explorer`, `privoxy`, `nettime`, `samsung-magician`, `ghidra`, `x64dbg`, `bulk-crap-uninstaller`, `ultradefrag` and `victoria`.
+Icons already in UniGetUI's database, so nothing is hosted here for them: `nbt-explorer`, `privoxy`, `nettime`, `samsung-magician`, `ghidra`, `x64dbg`, `dnspyex`, `bulk-crap-uninstaller`, `ultradefrag` and `victoria`.
 
 ## Icon size in UniGetUI
 

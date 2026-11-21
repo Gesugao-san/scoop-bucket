@@ -1,0 +1,89 @@
+{
+    "version": "6.6.0",
+    "description": ".NET debugger, decompiler and assembly editor (the maintained dnSpy fork): decompiles to C# or VB, debugs .NET and Unity (Mono) games without source, edits IL and metadata; GUI and command-line decompiler.",
+    "homepage": "https://github.com/dnSpyEx/dnSpy",
+    "license": {
+        "identifier": "GPL-3.0-or-later",
+        "url": "https://github.com/dnSpyEx/dnSpy/blob/HEAD/LICENSE.txt"
+    },
+    "notes": [
+        "Commands: dnSpy (the GUI) and dnSpy.Console (decompiles from the command line; run it without arguments for every option).",
+        "Shortcuts in Scoop Apps: 'dnSpy', and 'dnSpy Console', which shows how to use dnSpy.Console and waits for a key.",
+        "",
+        "Settings live in %APPDATA%\\dnSpy (dnSpy.xml), outside the Scoop folder: they survive updates, and 'scoop uninstall' leaves them.",
+        "",
+        "Debugging Unity (Mono) games needs a patched mono DLL in the game's folder, from https://github.com/dnSpyEx/dnSpy-Unity-mono",
+        "IL2CPP games (GameAssembly.dll, no Managed folder) have no .NET code for dnSpy to open.",
+        "",
+        "Only one of dnSpyEx and extras/dnspy (the abandoned original, 6.1.8) can be installed: both add the dnSpy.Console command."
+    ],
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/dnSpyEx/dnSpy/releases/download/v6.6.0/dnSpy-net-win64.zip",
+            "hash": "8ed48f165dc355e869f3a0037ad4f9216147f995a5ae0258b296eeef1f73aab0"
+        },
+        "32bit": {
+            "url": "https://github.com/dnSpyEx/dnSpy/releases/download/v6.6.0/dnSpy-net-win32.zip",
+            "hash": "6ec1271aabb6503985e4d6299b0929aaa72f995a17a68d3233d5a3363092cdca"
+        }
+    },
+    "pre_install": [
+        "# extras/dnspy (the original dnSpy) adds the same commands, dnSpy.Console among them: only one of the two may be installed.",
+        "if ($cmd -eq 'install' -and (installed 'dnspy')) { error \"$app conflicts with dnspy (the original dnSpy, from the extras bucket), which is installed. Run 'scoop uninstall dnspy' first; your settings in %APPDATA%\\dnSpy stay and dnSpyEx reads them. Scoop has already unpacked $app and treats this install as failed: the next 'scoop install' cleans it up, or run 'scoop uninstall $app'.\"; break }"
+    ],
+    "installer": {
+        "script": [
+            "# dnSpy.Console.exe prints its usage and exits at once, so the 'dnSpy Console' shortcut opens this micro-launcher instead.",
+            "$lines = @(",
+            "  '@ECHO OFF',",
+            "  ':: dnSpy Console: shows what dnSpy.Console does and how to run it, then waits for a key.',",
+            "  ':: Written by the dnSpyEx package of the gesu Scoop bucket.',",
+            "  'ECHO dnSpy.Console is the command-line decompiler of dnSpyEx: it decompiles .NET assemblies',",
+            "  'ECHO to C# or Visual Basic source and project files. Run it from any console as dnSpy.Console.',",
+            "  'ECHO.',",
+            "  'ECHO Usage: dnSpy.Console [options] [fileOrDir1] [fileOrDir2] [...]',",
+            "  'ECHO.',",
+            "  'ECHO Examples:',",
+            "  'ECHO   dnSpy.Console -o C:\\out\\path C:\\some\\path',",
+            "  'ECHO       Decompiles all .NET files in that folder and saves them to C:\\out\\path',",
+            "  'ECHO   dnSpy.Console -o C:\\out\\path -r C:\\some\\path',",
+            "  'ECHO       The same, with all subfolders',",
+            "  'ECHO   dnSpy.Console -o C:\\out\\Game \"C:\\Games\\Game\\Game_Data\\Managed\\Assembly-CSharp.dll\"',",
+            "  'ECHO       Decompiles the code of a Unity (Mono) game into a project',",
+            "  'ECHO   dnSpy.Console --md 0x06000123 file.dll',",
+            "  'ECHO       Prints the member with metadata token 0x06000123',",
+            "  'ECHO.',",
+            "  'ECHO Run dnSpy.Console without arguments to list every option and decompiler language.',",
+            "  'ECHO.',",
+            "  'PAUSE',",
+            "  ''",
+            ")",
+            "[IO.File]::WriteAllText(\"$dir\\dnSpy-Console.cmd\", ($lines -join \"`r`n\") + \"`r`n\")"
+        ]
+    },
+    "bin": [
+        "dnSpy.exe",
+        "dnSpy.Console.exe"
+    ],
+    "shortcuts": [
+        [
+            "dnSpy.exe",
+            "dnSpy"
+        ],
+        [
+            "dnSpy-Console.cmd",
+            "dnSpy Console"
+        ]
+    ],
+    "checkver": "github",
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/dnSpyEx/dnSpy/releases/download/v$version/dnSpy-net-win64.zip"
+            },
+            "32bit": {
+                "url": "https://github.com/dnSpyEx/dnSpy/releases/download/v$version/dnSpy-net-win32.zip"
+            }
+        }
+    }
+}

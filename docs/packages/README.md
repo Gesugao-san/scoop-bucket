@@ -6,6 +6,7 @@ One page per package. The [main README](../../README.md#packages) has the same l
 - [`Apple-Mobile-Drivers-Installer`](apple-mobile-drivers-installer.md)
 - [`Bulk-Crap-Uninstaller`](bulk-crap-uninstaller.md)
 - [`DarkMX`](darkmx.md)
+- [`dnSpyEx`](dnspyex.md)
 - [`DriverStore-Explorer`](driverstore-explorer.md)
 - [`EVE-IPH`](eve-iph.md)
 - [`EVEMon`](evemon.md)

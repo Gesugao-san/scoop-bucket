@@ -52,6 +52,7 @@ scoop install gesu/OCCT                     # runs elevated (UAC prompt)
 scoop install gesu/TrueConf
 scoop install gesu/Ghidra                   # needs JDK 25
 scoop install gesu/x64dbg
+scoop install gesu/dnSpyEx
 scoop install gesu/Bulk-Crap-Uninstaller    # runs elevated (UAC prompt)
 scoop install gesu/UltraDefrag              # runs elevated (UAC prompt)
 scoop install gesu/JkDefrag                 # runs elevated (UAC prompt)
@@ -101,6 +102,7 @@ Each package has a page with its notes: requirements, what the manifest does dif
 | [`TrueConf`](docs/packages/trueconf.md) | [trueconf.com](https://trueconf.com/downloads/windows.html) (TrueConf, proprietary) | Video conferencing client |
 | [`Ghidra`](docs/packages/ghidra.md) | [NationalSecurityAgency/ghidra](https://github.com/NationalSecurityAgency/ghidra) | Reverse engineering framework |
 | [`x64dbg`](docs/packages/x64dbg.md) | [x64dbg/x64dbg](https://github.com/x64dbg/x64dbg) | x64 and x32 debugger |
+| [`dnSpyEx`](docs/packages/dnspyex.md) | [dnSpyEx/dnSpy](https://github.com/dnSpyEx/dnSpy) | .NET and Unity debugger, decompiler and assembly editor |
 | [`Bulk-Crap-Uninstaller`](docs/packages/bulk-crap-uninstaller.md) | [BCUninstaller/Bulk-Crap-Uninstaller](https://github.com/BCUninstaller/Bulk-Crap-Uninstaller) | Bulk program uninstaller with leftover cleanup |
 | [`UltraDefrag`](docs/packages/ultradefrag.md) | [SourceForge](https://sourceforge.net/projects/ultradefrag/) (GPL, last open source release) | Disk defragmenter, last open source release |
 | [`JkDefrag`](docs/packages/jkdefrag.md) | [JkDefrag Portable](https://portableapps.com/apps/utilities/jkdefrag_portable) (PortableApps.com; JkDefrag by Jeroen Kessels) | Disk defragmenter and optimizer |
