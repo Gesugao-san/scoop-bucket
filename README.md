@@ -127,7 +127,7 @@ Each package has a page with its notes: requirements, what the manifest does dif
 
 ## Documentation
 
-- [Conventions](docs/conventions.md): programs installed outside Scoop, shortcuts, running programs, paths in notes, manifest names, licenses, file associations
+- [Conventions](docs/conventions.md): programs installed outside Scoop, shortcuts, running programs, paths in notes and messages, manifest names, licenses, file associations
 - [Installing from a mirror](docs/mirrors.md)
 - [Automation](docs/automation.md): workflows, TLS check, EVE-IPH build check
 - [Icons and screenshots](docs/icons.md) for UniGetUI

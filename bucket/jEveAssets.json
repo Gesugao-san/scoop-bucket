@@ -51,7 +51,7 @@
         "",
         "# The icon exists only as PNGs inside the jar; build the .ico for the shortcut from them.",
         "$iconTool = Join-Path (Find-BucketDirectory -Name $bucket -Root) 'scripts\\common\\New-IconFromArchive.ps1'",
-        "if (!(Test-Path -LiteralPath $iconTool)) { error \"Cannot build the icon: '$iconTool' is missing.\"; break }",
+        "if (!(Test-Path -LiteralPath $iconTool)) { error \"Cannot build the icon: '$($iconTool -replace [regex]::Escape($env:USERPROFILE), '%USERPROFILE%')' is missing.\"; break }",
         "$images = 32, 64 | ForEach-Object { \"net/nikr/eve/jeveasset/gui/images/misc_assets_$_.png\" }",
         "& $iconTool -Archive \"$dir\\jeveassets.jar\" -Entry $images -Destination \"$dir\\jEveAssets.ico\" | Out-Null"
     ],

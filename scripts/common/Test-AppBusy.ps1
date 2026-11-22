@@ -28,7 +28,8 @@
   How many busy files to list by name; the rest are only counted.
 
 .OUTPUTS
-  System.String, one line per problem. No output means the app is idle.
+  System.String, one line per problem, with the user's profile folder shown as %USERPROFILE%.
+  No output means the app is idle.
 
 .EXAMPLE
   & .\scripts\common\Test-AppBusy.ps1 -ProcessName tixati -Path "$env:APPDATA\tixati"
@@ -95,5 +96,17 @@ function Get-BusyFileLines([string[]] $Folders, [int] $Limit) {
   if ($busy.Count -gt $Limit) { "in use: $($busy.Count - $Limit) more file(s)" }
 }
 
-Get-RunningProcessLines $ProcessName
-Get-BusyFileLines $Path $MaxFiles
+<#
+.SYNOPSIS
+  Replaces the user's profile folder in a line with %USERPROFILE%, so that pasted output does not show
+  the Windows user name (see docs/conventions.md#paths-in-notes-and-messages).
+.OUTPUTS
+  System.String: the line with every occurrence of the profile path replaced, case-insensitively.
+#>
+function Hide-UserProfile([string] $Line) {
+  if (!$env:USERPROFILE) { return $Line }
+  $Line -replace [regex]::Escape($env:USERPROFILE), '%USERPROFILE%'
+}
+
+Get-RunningProcessLines $ProcessName | ForEach-Object { Hide-UserProfile $_ }
+Get-BusyFileLines $Path $MaxFiles | ForEach-Object { Hide-UserProfile $_ }

@@ -41,7 +41,7 @@
         "  foreach ($name in $seed) {",
         "    if (Test-Path -LiteralPath \"$dir\\$name\") { Copy-Item -LiteralPath \"$dir\\$name\" -Destination $data }",
         "  }",
-        "  Write-Host \"Created '$data' for the EVE IPH database and settings.\"",
+        "  Write-Host \"Created '$($data -replace [regex]::Escape($env:USERPROFILE), '%USERPROFILE%')' for the EVE IPH database and settings.\"",
         "}",
         "Remove-Item -LiteralPath \"$dir\\EVEIPH DB.sqlite\", \"$dir\\FirstProgramLoad\" -Force -ErrorAction SilentlyContinue"
     ],

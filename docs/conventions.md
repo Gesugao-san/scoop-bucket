@@ -16,9 +16,11 @@ Scoop puts shortcuts only for files inside its app folder, so `Radmin-VPN`, `Sam
 
 `Tixati`, `Fopnu`, `DarkMX` and `WinMX` stop if the program is running or its data files are open in another program (the program itself, a backup or sync tool). Scoop's own check only looks for processes started from the app's folder in `~\scoop\apps`; [`scripts/common/Test-AppBusy.ps1`](../scripts/common/Test-AppBusy.ps1) also finds copies started from anywhere else, by process name, and tries to open every file in the data folder (`%APPDATA%\tixati`, `%APPDATA%\fopnu`, `%APPDATA%\darkmx`, the WinMX folder) exclusively. A fresh install is checked in `pre_install`; `scoop update` and `scoop uninstall` are checked in `pre_uninstall`, because Scoop runs that hook before it removes anything, while `pre_install` of the new version only runs after the old one is gone. Scoop runs the `pre_uninstall` of the manifest saved at install time, so the update check starts working once a version with it is installed (`scoop update <app> -f` does that). If the helper is missing, for example after `scoop bucket rm gesu`, the uninstall check only warns, so the app can still be removed.
 
-## Paths in notes
+## Paths in notes and messages
 
 Notes never use Scoop's `$dir`, `$persist_dir` or `$original_dir`: Scoop expands them to full paths that contain the Windows user name (`C:\Users\<name>\scoop\...`), which then ends up in screenshots and pasted logs. Notes write the default location with an environment variable instead: `%USERPROFILE%\scoop\persist\<package>` or `%USERPROFILE%\scoop\apps\<package>\current`, and `%ProgramData%\scoop\...` for packages that install only globally. A command meant to be copied gets two lines, one for cmd with `%USERPROFILE%` and one for PowerShell with `$env:USERPROFILE`, because PowerShell does not expand `%VAR%` in arguments. These paths assume Scoop's default folders; with a custom `SCOOP` or `SCOOP_GLOBAL` they are elsewhere.
+
+Messages from hooks and from the scripts they call (`warn`, `error`, `info`, `Write-Host`, `Write-Warning`) print real paths, so every path in them goes through `-replace [regex]::Escape($env:USERPROFILE), '%USERPROFILE%'`, for example `'$($busyCheck -replace [regex]::Escape($env:USERPROFILE), '%USERPROFILE%')'`. [`Test-AppBusy.ps1`](../scripts/common/Test-AppBusy.ps1) does the same for the processes and files it lists.
 
 ## Manifest names
 

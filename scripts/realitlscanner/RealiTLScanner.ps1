@@ -191,7 +191,7 @@ function Convert-ScannerArgument {
 
 $scanner = Join-Path $PSScriptRoot 'RealiTLScanner.exe'
 if (-not (Test-Path -LiteralPath $scanner -PathType Leaf)) {
-  Write-Error "RealiTLScanner.exe is missing from $PSScriptRoot; reinstall with 'scoop install gesu/RealiTLScanner'."
+  Write-Error "RealiTLScanner.exe is missing from $($PSScriptRoot -replace [regex]::Escape($env:USERPROFILE), '%USERPROFILE%'); reinstall with 'scoop install gesu/RealiTLScanner'."
   exit 1
 }
 

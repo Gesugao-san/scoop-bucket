@@ -34,15 +34,15 @@
         "$roots = 'HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall', 'HKLM:\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall', 'HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall'",
         "$msiCopy = Get-ChildItem $roots -ErrorAction SilentlyContinue | Get-ItemProperty -ErrorAction SilentlyContinue | Where-Object { ($_.DisplayName -eq 'Gale') -and ($_.Publisher -eq 'kesomannen') } | Select-Object -First 1",
         "if ($msiCopy -and ($cmd -eq 'install')) {",
-        "  error \"Gale $($msiCopy.DisplayVersion) is already installed from upstream's MSI ($($msiCopy.InstallLocation)). Uninstall it first in Settings > Apps (from an elevated shell: msiexec /x $($msiCopy.PSChildName)); your profiles in %APPDATA%\\com.kesomannen.gale stay. Scoop has already downloaded and unpacked ${app}: run 'scoop uninstall $app' or simply install again, which cleans that up.\"",
+        "  error \"Gale $($msiCopy.DisplayVersion) is already installed from upstream's MSI ($(($msiCopy.InstallLocation) -replace [regex]::Escape($env:USERPROFILE), '%USERPROFILE%')). Uninstall it first in Settings > Apps (from an elevated shell: msiexec /x $($msiCopy.PSChildName)); your profiles in %APPDATA%\\com.kesomannen.gale stay. Scoop has already downloaded and unpacked ${app}: run 'scoop uninstall $app' or simply install again, which cleans that up.\"",
         "  break",
         "}",
-        "if ($msiCopy) { warn \"A second copy of Gale from upstream's MSI is installed ($($msiCopy.InstallLocation)), probably by Gale's own updater. Uninstall it in Settings > Apps and update with 'scoop update $app'.\" }"
+        "if ($msiCopy) { warn \"A second copy of Gale from upstream's MSI is installed ($(($msiCopy.InstallLocation) -replace [regex]::Escape($env:USERPROFILE), '%USERPROFILE%')), probably by Gale's own updater. Uninstall it in Settings > Apps and update with 'scoop update $app'.\" }"
     ],
     "post_install": [
         "$templates = Join-Path (Find-BucketDirectory -Name $bucket -Root) \"scripts\\$($app.ToLowerInvariant())\"",
         "if (!(Test-Path -LiteralPath $templates -PathType Container)) {",
-        "  warn \"Registry templates not found in '$templates', the .r2z file association is unavailable.\"",
+        "  warn \"Registry templates not found in '$($templates -replace [regex]::Escape($env:USERPROFILE), '%USERPROFILE%')', the .r2z file association is unavailable.\"",
         "  return",
         "}",
         "$app_dir = $dir -replace '\\\\', '\\\\'",

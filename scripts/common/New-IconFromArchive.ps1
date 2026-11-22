@@ -88,7 +88,7 @@ function Read-PngFrame([string] $Path, [string[]] $Names) {
     $frames = foreach ($name in $Names) {
       $item = $zip.GetEntry($name)
       if (!$item) {
-        Write-Warning "Icon image '$name' is not in '$Path'."
+        Write-Warning "Icon image '$name' is not in '$($Path -replace [regex]::Escape($env:USERPROFILE), '%USERPROFILE%')'."
         continue
       }
 
@@ -99,7 +99,7 @@ function Read-PngFrame([string] $Path, [string[]] $Names) {
       $bytes = $buffer.ToArray()
       $size = Get-PngSize $bytes
       if (!$size) {
-        Write-Warning "Icon image '$name' in '$Path' is not a PNG."
+        Write-Warning "Icon image '$name' in '$($Path -replace [regex]::Escape($env:USERPROFILE), '%USERPROFILE%')' is not a PNG."
         continue
       }
 

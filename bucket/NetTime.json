@@ -33,7 +33,7 @@
         "if ($existing) { error \"$($existing.DisplayName) is already installed on this system without Scoop. Uninstall it first (Settings > Apps), then install again.\"; break }",
         "$svc = Get-CimInstance Win32_Service -Filter \"Name='NetTimeSvc'\" -ErrorAction SilentlyContinue",
         "if ($svc -and ($svc.PathName -notlike \"*$(appsdir $true)\\NetTime\\*\")) {",
-        "  error \"NetTimeSvc already exists ($($svc.PathName)). Remove that copy first: 'scoop uninstall NetTime' for a per-user Scoop install, or uninstall the regular NetTime.\"",
+        "  error \"NetTimeSvc already exists ($(($svc.PathName) -replace [regex]::Escape($env:USERPROFILE), '%USERPROFILE%')). Remove that copy first: 'scoop uninstall NetTime' for a per-user Scoop install, or uninstall the regular NetTime.\"",
         "  break",
         "}"
     ],
@@ -42,7 +42,7 @@
         "# Set on the app root so every future version folder inherits it from the moment it is created.",
         "$appRoot = Split-Path $original_dir",
         "icacls \"$appRoot\" /inheritance:r /grant:r '*S-1-5-32-544:(OI)(CI)F' '*S-1-5-18:(OI)(CI)F' '*S-1-5-32-545:(OI)(CI)RX' /Q | Out-Null",
-        "if ($LASTEXITCODE -ne 0) { warn \"Could not restrict permissions on $appRoot (icacls exit code $LASTEXITCODE).\" }",
+        "if ($LASTEXITCODE -ne 0) { warn \"Could not restrict permissions on $($appRoot -replace [regex]::Escape($env:USERPROFILE), '%USERPROFILE%') (icacls exit code $LASTEXITCODE).\" }",
         "$binPath = \"`\"$dir\\NetTimeService.exe`\"\"",
         "$svc = Get-CimInstance Win32_Service -Filter \"Name='NetTimeSvc'\" -ErrorAction SilentlyContinue",
         "if ($svc) {",
