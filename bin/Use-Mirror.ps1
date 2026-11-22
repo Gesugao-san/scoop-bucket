@@ -130,17 +130,22 @@ function Find-AppMirror([object[]] $Entries, [string] $Key) {
 
 <#
 .SYNOPSIS
-  Picks the URL of a mirror entry for the architecture and file index, with $version filled in.
+  Picks the URL of a mirror entry for the architecture and file index, with $version and $tag filled in.
 .OUTPUTS
   System.String with the URL; throws if the entry has none for this architecture.
 #>
-function Get-MirrorUrl([object] $Entry, [string] $Arch, [int] $FileIndex, [string] $Version) {
+function Get-MirrorUrl([object] $Entry, [string] $Arch, [int] $FileIndex, [string] $Version, [string] $Tag) {
   # An entry may list URLs per architecture, or one 'url' for apps without architectures.
   $urls = @($Entry.$Arch, $Entry.url | Where-Object { $_ } | Select-Object -First 1)
   $urls = @($urls | ForEach-Object { $_ })
   if ($urls.Count -eq 0) { throw "Mirror '$($Entry.name)' has no file for $Arch." }
   if ($FileIndex -ge $urls.Count) { throw "Mirror '$($Entry.name)' lists $($urls.Count) file(s) for $Arch; -Index $FileIndex is out of range." }
-  return $urls[$FileIndex].Replace('$version', $Version)
+  $url = $urls[$FileIndex].Replace('$version', $Version)
+  if ($url.Contains('$tag')) {
+    if (!$Tag) { throw "Mirror '$($Entry.name)' uses `$tag, but the manifest URL is not a GitHub release download." }
+    $url = $url.Replace('$tag', $Tag)
+  }
+  return $url
 }
 
 # Load Scoop's own helpers (foreach, not ForEach-Object: a script block would scope the dot-sourcing away).
@@ -167,19 +172,22 @@ if (!$Mirror) {
   return
 }
 
-$mirrorUrl = $Mirror
-if ($Mirror -notmatch '^https?://') {
-  if ($mirrors.Count -eq 0) { throw "No mirrors for '$appName' in mirrors.psd1. Pass a URL instead." }
-  $entry = Find-AppMirror $mirrors $Mirror
-  $mirrorUrl = Get-MirrorUrl $entry $Architecture $Index $manifest.version
-}
-
 $urls = @(@(url $manifest $Architecture) | Where-Object { $_ })
 $hashes = @(hash $manifest $Architecture)
 if ($urls.Count -eq 0) { throw "'$appName' has no download for $Architecture." }
 if ($Index -ge $urls.Count) { throw "'$appName' lists $($urls.Count) URL(s) for $Architecture; -Index $Index is out of range." }
 
 $manifestUrl = @($urls)[$Index]
+
+$mirrorUrl = $Mirror
+if ($Mirror -notmatch '^https?://') {
+  if ($mirrors.Count -eq 0) { throw "No mirrors for '$appName' in mirrors.psd1. Pass a URL instead." }
+  $entry = Find-AppMirror $mirrors $Mirror
+  # The release tag from the manifest's own GitHub URL, for mirrors that name their folders after the tag
+  # (such as 0.2.2+26.3-26.60), which the manifest's version alone does not give.
+  $tag = if ($manifestUrl -match '/releases/download/(?<tag>[^/]+)/') { [uri]::UnescapeDataString($Matches.tag) } else { '' }
+  $mirrorUrl = Get-MirrorUrl $entry $Architecture $Index $manifest.version $tag
+}
 $manifestHash = @($hashes)[$Index]
 if (!$manifestHash) { throw "The manifest has no hash for this file, so a mirror's copy cannot be checked." }
 $algorithm, $expected = Split-ManifestHash $manifestHash
