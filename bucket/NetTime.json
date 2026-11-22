@@ -7,7 +7,7 @@
         "url": "https://github.com/Gesugao-san/scoop-bucket/blob/HEAD/licenses/NetTime.txt"
     },
     "notes": [
-        "NetTime runs as the Windows service NetTimeSvc (as SYSTEM), created from $dir\\NetTimeService.exe.",
+        "NetTime runs as the Windows service NetTimeSvc (as SYSTEM), created from %ProgramData%\\scoop\\apps\\NetTime\\current\\NetTimeService.exe.",
         "Install it globally from an elevated (admin) shell: scoop install -g NetTime. Updates and uninstall need admin too.",
         "Only Administrators and SYSTEM can change the files in the app folder, so other programs cannot replace the service.",
         "Install stops if the regular NetTime (from its own installer) is present; uninstall that one first.",

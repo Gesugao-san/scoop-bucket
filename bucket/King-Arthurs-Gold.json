@@ -15,7 +15,7 @@
         "Through Steam: Steam's install dialog opens and Steam downloads and updates the game; 'scoop uninstall' asks Steam to remove it.",
         "Standalone: portable, unpacked from the official MSI (no admin rights). The game updates itself from kag2d.com on start,",
         "and keeps its settings (*.cfg) and screenshots in its own folder, so the whole folder is persisted:",
-        "$persist_dir\\KAG survives updates and 'scoop uninstall'; 'scoop uninstall --purge' deletes it.",
+        "%USERPROFILE%\\scoop\\persist\\King-Arthurs-Gold\\KAG survives updates and 'scoop uninstall'; 'scoop uninstall --purge' deletes it.",
         "Multiplayer needs a free kag2d.com account (Steam users get one automatically).",
         "",
         "The 'King-Arthurs-Gold' command and the 'King Arthur's Gold' shortcut in Scoop Apps start the chosen copy."

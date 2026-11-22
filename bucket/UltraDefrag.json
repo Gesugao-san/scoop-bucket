@@ -14,7 +14,7 @@
         "and logs in the current folder, and the shortcut starts it in its own folder.",
         "The command-line tool is 'udefrag' (from an elevated terminal; see 'udefrag --help').",
         "",
-        "conf\\options.lua is kept in $persist_dir and survives updates; gui.ini (window, sorting, language) is copied there on update.",
+        "conf\\options.lua is kept in %USERPROFILE%\\scoop\\persist\\UltraDefrag and survives updates; gui.ini (window, sorting, language) is copied there on update.",
         "The update check on start is set to 'Never check' on the first install, because newer versions are paid;",
         "turn it back on in Help > Upgrade.",
         "The portable build has no boot-time defragmentation and no Explorer context menu; both need the regular installer."

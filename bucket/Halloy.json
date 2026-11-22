@@ -7,7 +7,7 @@
         "url": "https://github.com/squidowl/halloy/blob/HEAD/LICENSE"
     },
     "notes": [
-        "Halloy keeps its config, history (history.sqlite3), logs and themes in $persist_dir:",
+        "Halloy keeps its config, history (history.sqlite3), logs and themes in %USERPROFILE%\\scoop\\persist\\Halloy:",
         "the manifest sets the user environment variable HALLOY_PORTABLE_DIR to that folder.",
         "If Halloy opens with an empty config right after the install, sign out and back in once,",
         "so that Explorer picks up the new variable.",

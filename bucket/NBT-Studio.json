@@ -14,7 +14,8 @@
         "Scoop's suggestion below only sees runtimes installed through Scoop.",
         "",
         "To register file associations (.nbt by default, 'Open with' for other NBT formats), execute:",
-        "reg import \"$dir\\install-associations.reg\""
+        "reg import \"%USERPROFILE%\\scoop\\apps\\NBT-Studio\\current\\install-associations.reg\"   (cmd)",
+        "reg import \"$env:USERPROFILE\\scoop\\apps\\NBT-Studio\\current\\install-associations.reg\"   (PowerShell)"
     ],
     "suggest": {
         ".NET 6 Desktop Runtime": "versions/windowsdesktop-runtime-6.0"

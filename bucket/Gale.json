@@ -19,7 +19,8 @@
         "before 'scoop cleanup Gale', or the links break until its next start.",
         "",
         "To open .r2z profile files with Gale, execute:",
-        "reg import \"$dir\\install-associations.reg\""
+        "reg import \"%USERPROFILE%\\scoop\\apps\\Gale\\current\\install-associations.reg\"   (cmd)",
+        "reg import \"$env:USERPROFILE\\scoop\\apps\\Gale\\current\\install-associations.reg\"   (PowerShell)"
     ],
     "architecture": {
         "64bit": {

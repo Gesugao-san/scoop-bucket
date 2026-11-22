@@ -11,7 +11,7 @@
         "Needs Windows 10 or newer (64-bit or ARM64); .NET 8 is bundled.",
         "",
         "Settings (BCUninstaller.settings), notes on programs (CustomNotes.xml) and the default uninstall list (Default.bcul)",
-        "are kept in $persist_dir and survive updates.",
+        "are kept in %USERPROFILE%\\scoop\\persist\\Bulk-Crap-Uninstaller and survive updates.",
         "",
         "Do not use 'Uninstall BCUninstaller' from its Help menu; use 'scoop uninstall Bulk-Crap-Uninstaller'.",
         "Its update check only opens the release page; update with 'scoop update Bulk-Crap-Uninstaller'."
