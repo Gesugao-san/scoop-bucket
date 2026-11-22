@@ -10,7 +10,7 @@ Open-source IRC client written in Rust with the [iced](https://iced.rs) GUI libr
 
 ## Data in persist
 
-Halloy runs in [portable mode](https://github.com/squidowl/halloy/blob/HEAD/docs/guides/portable-mode.md) when the environment variable `HALLOY_PORTABLE_DIR` points to an existing folder (or when `config.toml` lies next to `halloy.exe`), and then keeps everything in that one folder: `config.toml`, the history database `history.sqlite3` (with its `-wal` and `-shm` files while Halloy runs), `msdb`, `logs`, `themes`, `sounds`, `drafts.json`, `window.json`, `dashboard.json.gz` and `known_filehosts`. Relative paths in the config (`password_file`, SASL EXTERNAL certificates) are resolved against that folder too.
+Halloy runs in [portable mode](https://halloy.chat/guides/portable-mode) when the environment variable `HALLOY_PORTABLE_DIR` points to an existing folder (or when `config.toml` lies next to `halloy.exe`), and then keeps everything in that one folder: `config.toml`, the history database `history.sqlite3` (with its `-wal` and `-shm` files while Halloy runs), `msdb`, `logs`, `themes`, `sounds`, `drafts.json`, `window.json`, `dashboard.json.gz` and `known_filehosts`. Relative paths in the config (`password_file`, SASL EXTERNAL certificates) are resolved against that folder too.
 
 The manifest sets `HALLOY_PORTABLE_DIR` (a user variable, system-wide for `-g`) to the app's persist folder, `~\scoop\persist\Halloy`, instead of listing the files in `persist`: Scoop links persisted files into the app folder as hard links, and the list would have to follow every file Halloy adds. Scoop announces the variable to running programs; if Halloy still starts with an empty config right after the first install, sign out and back in once. `scoop uninstall` removes the variable, `scoop uninstall -p` also deletes the folder.
 
@@ -44,7 +44,7 @@ Scoop is case-insensitive, so `extras/halloy` and `gesu/Halloy` share the app an
 
 ## Passwords
 
-Instead of writing passwords into `config.toml`, Halloy (2026.8 and later) can keep them in Windows Credential Manager: set `password_keyring = true` (for SASL under `[servers.<name>.sasl.plain]`) and Halloy asks for the password on the next start. See upstream's [keyring guide](https://github.com/squidowl/halloy/blob/HEAD/docs/guides/keyring.md). Credential Manager is outside the persist folder: `scoop uninstall -p` does not delete those entries.
+Instead of writing passwords into `config.toml`, Halloy (2026.8 and later) can keep them in Windows Credential Manager: set `password_keyring = true` (for SASL under `[servers.<name>.sasl.plain]`) and Halloy asks for the password on the next start. See upstream's [keyring guide](https://halloy.chat/guides/keyring). Credential Manager is outside the persist folder: `scoop uninstall -p` does not delete those entries.
 
 ## Links
 
