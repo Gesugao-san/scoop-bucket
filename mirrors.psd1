@@ -37,6 +37,13 @@
       url         = 'https://www.dropbox.com/scl/fi/0l6er6hchkqtbgodvqe3l/BorderlessGaming-9.6.0.exe?rlkey=xbj8j0ldr8i4g0g0nxakvpicd&dl=1#/dl.exe'
     }
   )
+  Halloy = @(
+    @{
+      name        = 'sourceforge'
+      description = "SourceForge's automatic copy of the GitHub releases (project halloy-irc-client.mirror), not run by the developers; same SHA-256 as GitHub for 2026.10"
+      '64bit'     = 'https://downloads.sourceforge.net/project/halloy-irc-client.mirror/$version/halloy-installer.exe'
+    }
+  )
   'Loyalsoldier-GeoIP' = @(
     @{
       name        = 'raw'

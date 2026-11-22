@@ -1,0 +1,90 @@
+{
+    "version": "2026.10",
+    "description": "Halloy: open-source IRC client written in Rust with the iced GUI library. IRCv3, SASL, multiple servers, themes and a split-pane layout.",
+    "homepage": "https://halloy.chat/",
+    "license": {
+        "identifier": "GPL-3.0-only",
+        "url": "https://github.com/squidowl/halloy/blob/HEAD/LICENSE"
+    },
+    "notes": [
+        "Halloy keeps its config, history (history.sqlite3), logs and themes in $persist_dir:",
+        "the manifest sets the user environment variable HALLOY_PORTABLE_DIR to that folder.",
+        "If Halloy opens with an empty config right after the install, sign out and back in once,",
+        "so that Explorer picks up the new variable.",
+        "",
+        "Passwords saved with password_keyring = true live in Windows Credential Manager;",
+        "'scoop uninstall -p' does not delete them.",
+        "",
+        "irc://, ircs:// and halloy:// links are not registered: upstream's installer does that, Scoop does not run it."
+    ],
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/squidowl/halloy/releases/download/2026.10/halloy-installer.exe",
+            "hash": "c79b4c13ac21dbcb35d75619daec1ce5c1147eef5c79224d437623900ea35549"
+        }
+    },
+    "innosetup": true,
+    "pre_install": [
+        "if ($cmd -eq 'install') {",
+        "  # Upstream's Inno Setup installer (per user by default). With HALLOY_PORTABLE_DIR set, that copy would share this one's data.",
+        "  $roots = 'HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall', 'HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall', 'HKLM:\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall'",
+        "  $innoCopy = $roots | ForEach-Object { Get-ItemProperty \"$_\\{3ED18662-FB43-4803-A4F9-89BBBC0B6D01}_is1\" -ErrorAction SilentlyContinue } | Select-Object -First 1",
+        "  if ($innoCopy) {",
+        "    error \"Halloy $($innoCopy.DisplayVersion) is already installed with upstream's installer ($($innoCopy.InstallLocation)). Uninstall it first in Settings > Apps; your config and history in %APPDATA%\\halloy stay and are copied into Scoop's persist folder on install. Scoop has already downloaded and unpacked ${app}: run 'scoop uninstall $app' or simply install again, which cleans that up.\"",
+        "    break",
+        "  }",
+        "  # A fresh install stops if Halloy is running or its data files are in use (scripts/common/Test-AppBusy.ps1).",
+        "  # Updates are checked in pre_uninstall, which Scoop runs before it removes the old version.",
+        "  $busyCheck = Join-Path (Find-BucketDirectory -Name $bucket -Root) 'scripts\\common\\Test-AppBusy.ps1'",
+        "  if (!(Test-Path -LiteralPath $busyCheck)) { error \"Cannot check whether $app is in use: '$busyCheck' is missing.\"; break }",
+        "  $busy = @(& $busyCheck -ProcessName 'halloy' -Path $persist_dir, \"$env:APPDATA\\halloy\")",
+        "  if ($busy) { error \"$app is in use. Close it (and anything holding its files open) and try again:`n  $($busy -join \"`n  \")\"; break }",
+        "}",
+        "",
+        "# Halloy keeps all config and data in HALLOY_PORTABLE_DIR (see env_set), that is directly in $persist_dir.",
+        "ensure $persist_dir | Out-Null",
+        "# Data that a manifest without HALLOY_PORTABLE_DIR (such as extras/halloy) left in the previous version folder.",
+        "$prev = Get-ChildItem (Split-Path $dir) -Directory | Where-Object { $_.Name -notin @('current', $version) } | Sort-Object LastWriteTime -Descending | Select-Object -First 1",
+        "if ($prev) {",
+        "  $keep = 'history.sqlite3*', 'msdb', 'logs', 'irc_protocol_logs', 'sounds', 'drafts.json', 'window.json', 'known_filehosts', '*.gz', '*.log', '*.toml'",
+        "  # Filter by name: 'Get-ChildItem path\\* -Include' would list the contents of subfolders instead of the subfolders.",
+        "  Get-ChildItem -LiteralPath $prev.FullName |",
+        "    Where-Object { $name = $_.Name; @($keep | Where-Object { $name -like $_ }).Count -gt 0 } |",
+        "    Where-Object { !(Test-Path \"$persist_dir\\$($_.Name)\") } |",
+        "    ForEach-Object { Copy-Item -LiteralPath $_.FullName -Destination (Join-Path $persist_dir $_.Name) -Recurse -ErrorAction Continue }",
+        "}",
+        "# Data of a copy from upstream's installer (or of Halloy run without Scoop); left in place.",
+        "if (!(Test-Path \"$persist_dir\\config.toml\") -and (Test-Path \"$env:APPDATA\\halloy\")) {",
+        "  Copy-Item \"$env:APPDATA\\halloy\\*\" $persist_dir -Recurse -ErrorAction Continue",
+        "}",
+        "# No default config here: on its first start Halloy writes its own config.toml with a random halloyNNNN nick."
+    ],
+    "pre_uninstall": [
+        "# 'scoop update' and 'scoop uninstall' stop here, before anything is removed, if Halloy is running",
+        "# or its data files are in use (scripts/common/Test-AppBusy.ps1).",
+        "$busyCheck = Join-Path (Find-BucketDirectory -Name $bucket -Root) 'scripts\\common\\Test-AppBusy.ps1'",
+        "# Without the helper (e.g. the bucket was removed) only warn: uninstalling must stay possible.",
+        "if (!(Test-Path -LiteralPath $busyCheck)) { warn \"Cannot check whether $app is in use: '$busyCheck' is missing.\"; return }",
+        "$busy = @(& $busyCheck -ProcessName 'halloy' -Path $persist_dir)",
+        "if ($busy) { error \"$app is in use. Close it (and anything holding its files open) and try again:`n  $($busy -join \"`n  \")\"; break }"
+    ],
+    "env_set": {
+        "HALLOY_PORTABLE_DIR": "$persist_dir"
+    },
+    "shortcuts": [
+        [
+            "halloy.exe",
+            "Halloy"
+        ]
+    ],
+    "checkver": {
+        "github": "https://github.com/squidowl/halloy"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/squidowl/halloy/releases/download/$version/halloy-installer.exe"
+            }
+        }
+    }
+}

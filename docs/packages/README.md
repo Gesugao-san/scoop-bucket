@@ -17,6 +17,7 @@ One page per package. The [main README](../../README.md#packages) has the same l
 - [`Gale`](gale.md)
 - [`Ghidra`](ghidra.md)
 - [`Google-USB-Driver`](google-usb-driver.md)
+- [`Halloy`](halloy.md)
 - [`iloader`](iloader.md)
 - [`Impactor`](impactor.md)
 - [`jEveAssets`](jeveassets.md)
