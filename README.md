@@ -35,6 +35,7 @@ scoop install gesu/Borderless-Gaming
 scoop install gesu/Gale                     # Thunderstore mod manager
 scoop install gesu/CKAN                     # KSP mod manager, .NET 10 build
 scoop install gesu/CKAN-NetFx               # KSP mod manager, .NET Framework build; one of the two
+scoop install -g gesu/NetFx-4.8.1           # global, elevated shell; for CKAN-NetFx on older Windows
 scoop install gesu/Tixati
 scoop install gesu/Fopnu
 scoop install gesu/DarkMX
@@ -94,6 +95,7 @@ Each package has a page with its notes: requirements, what the manifest does dif
 | [`Gale`](docs/packages/gale.md) | [Kesomannen/gale](https://github.com/Kesomannen/gale) | Mod manager for Thunderstore games |
 | [`CKAN`](docs/packages/ckan.md) | [KSP-CKAN/CKAN](https://github.com/KSP-CKAN/CKAN) | Mod manager for Kerbal Space Program, self-contained .NET 10 build |
 | [`CKAN-NetFx`](docs/packages/ckan-netfx.md) | [KSP-CKAN/CKAN](https://github.com/KSP-CKAN/CKAN) | Mod manager for Kerbal Space Program, small .NET Framework 4.8.1 build |
+| [`NetFx-4.8.1`](docs/packages/netfx-4.8.1.md) | [Microsoft](https://dotnet.microsoft.com/download/dotnet-framework/net481) (proprietary) | .NET Framework 4.8.1 runtime, installed only where Windows lacks it |
 | [`Tixati`](docs/packages/tixati.md) | [tixati.com](https://tixati.com) (Tixati Software, freeware) | BitTorrent client |
 | [`Fopnu`](docs/packages/fopnu.md) | [fopnu.com](https://www.fopnu.com) (Tixati Software, freeware) | Decentralized file sharing from Tixati's author |
 | [`DarkMX`](docs/packages/darkmx.md) | [darkmx.app](https://darkmx.app) (Tixati Software, freeware) | Anonymous file sharing and chat over Tor |

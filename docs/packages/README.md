@@ -32,6 +32,7 @@ One page per package. The [main README](../../README.md#packages) has the same l
 - [`MTKClient`](mtkclient.md)
 - [`NBT-Explorer`](nbt-explorer.md)
 - [`NBT-Studio`](nbt-studio.md)
+- [`NetFx-4.8.1`](netfx-4.8.1.md)
 - [`NetTime`](nettime.md)
 - [`OCCT`](occt.md)
 - [`PlanetSide-2-LaunchPad`](planetside-2-launchpad.md)
