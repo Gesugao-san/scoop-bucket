@@ -33,6 +33,8 @@ scoop install gesu/PlanetSide-2-LaunchPad   # standalone, elevated shell
 scoop install gesu/King-Arthurs-Gold        # asks: Steam or standalone
 scoop install gesu/Borderless-Gaming
 scoop install gesu/Gale                     # Thunderstore mod manager
+scoop install gesu/CKAN                     # KSP mod manager, .NET 10 build
+scoop install gesu/CKAN-NetFx               # KSP mod manager, .NET Framework build; one of the two
 scoop install gesu/Tixati
 scoop install gesu/Fopnu
 scoop install gesu/DarkMX
@@ -90,6 +92,8 @@ Each package has a page with its notes: requirements, what the manifest does dif
 | [`King-Arthurs-Gold`](docs/packages/king-arthurs-gold.md) | [kag2d.com](https://kag2d.com) (Transhuman Design, free to play; [Steam app 219830](https://store.steampowered.com/app/219830/King_Arthurs_Gold/)) | King Arthur's Gold, through Steam or standalone |
 | [`Borderless-Gaming`](docs/packages/borderless-gaming.md) | [legacy.borderlessgam.ing](https://legacy.borderlessgam.ing) ([andrewmd5/Borderless-Gaming](https://github.com/andrewmd5/Borderless-Gaming), GPL-2.0) | Borderless fullscreen for windowed games (free legacy edition) |
 | [`Gale`](docs/packages/gale.md) | [Kesomannen/gale](https://github.com/Kesomannen/gale) | Mod manager for Thunderstore games |
+| [`CKAN`](docs/packages/ckan.md) | [KSP-CKAN/CKAN](https://github.com/KSP-CKAN/CKAN) | Mod manager for Kerbal Space Program, self-contained .NET 10 build |
+| [`CKAN-NetFx`](docs/packages/ckan-netfx.md) | [KSP-CKAN/CKAN](https://github.com/KSP-CKAN/CKAN) | Mod manager for Kerbal Space Program, small .NET Framework 4.8.1 build |
 | [`Tixati`](docs/packages/tixati.md) | [tixati.com](https://tixati.com) (Tixati Software, freeware) | BitTorrent client |
 | [`Fopnu`](docs/packages/fopnu.md) | [fopnu.com](https://www.fopnu.com) (Tixati Software, freeware) | Decentralized file sharing from Tixati's author |
 | [`DarkMX`](docs/packages/darkmx.md) | [darkmx.app](https://darkmx.app) (Tixati Software, freeware) | Anonymous file sharing and chat over Tor |

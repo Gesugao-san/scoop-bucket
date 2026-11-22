@@ -27,6 +27,7 @@
 | [`halloy-192.png`](../icons/halloy-192.png) | 192×192 | Upstream logo, [`logo.png`](https://github.com/squidowl/halloy/blob/2026.10/assets/logo.png) (882×882, icon by Rune Seir per upstream's README; part of Halloy, GPL-3.0), scaled down with Lanczos |
 | [`loyalsoldier-geoip-alt.svg`](../icons/loyalsoldier-geoip-alt.svg) | vector | Original icon (upstream has no logo; the tile in its README banner is too small to use): a gridded globe with a map pin on two stacked data layers. Written by [`scripts/loyalsoldier-geoip/make_icon.py`](../scripts/loyalsoldier-geoip/make_icon.py) |
 | [`loyalsoldier-geoip-alt.png`](../icons/loyalsoldier-geoip-alt.png) | 192×192 | PNG render of `loyalsoldier-geoip-alt.svg`, used for UniGetUI |
+| [`ckan-192.png`](../icons/ckan-192.png) | 192×192 | Upstream logo, [`ckan-256.png`](https://github.com/KSP-CKAN/CKAN/blob/975c4d7799ecaf2fb74ef5b1bbe6a182da3984d5/assets/ckan-256.png) (one of the PNGs that CKAN's `ckan.ico` is built from), scaled down with Lanczos. Per upstream's [`assets/README.md`](https://github.com/KSP-CKAN/CKAN/blob/975c4d7799ecaf2fb74ef5b1bbe6a182da3984d5/assets/README.md), the CKAN logo is MIT licensed by Felger, and the KSP rocket in it is used with permission from Squad. Used for both `ckan` and `ckan-netfx`. UniGetUI already has an icon under `ksp-ckan` (Chocolatey's ID), not under these IDs. |
 
 File names: `<package>[-<variant>][-<size>].<ext>`. Upstream-based icons carry their size; `alt` is the redrawn one.
 

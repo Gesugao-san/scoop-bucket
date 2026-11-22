@@ -5,6 +5,8 @@ One page per package. The [main README](../../README.md#packages) has the same l
 - [`Apple-Mobile-Device-Support`](apple-mobile-device-support.md)
 - [`Apple-Mobile-Drivers-Installer`](apple-mobile-drivers-installer.md)
 - [`Bulk-Crap-Uninstaller`](bulk-crap-uninstaller.md)
+- [`CKAN-NetFx`](ckan-netfx.md)
+- [`CKAN`](ckan.md)
 - [`DarkMX`](darkmx.md)
 - [`dnslookup`](dnslookup.md)
 - [`dnSpyEx`](dnspyex.md)
