@@ -1,0 +1,73 @@
+{
+    "version": "0.2.107",
+    "description": "Launcher for Horizon, a Rust rewrite of Minecraft: Java Edition 26.3 aiming at one-to-one vanilla parity. Installs and updates the game, builds it from your own copy of Minecraft.",
+    "homepage": "https://github.com/horizon-rust/horizon",
+    "license": {
+        "identifier": "LGPL-3.0-or-later",
+        "url": "https://github.com/horizon-rust/horizon/blob/HEAD/LICENSE"
+    },
+    "notes": [
+        "Horizon needs your own copy of Minecraft: Java Edition 26.3, started once in the official launcher, and a GPU with Vulkan.",
+        "It cannot sign in to Microsoft accounts: multiplayer works only on offline-mode servers.",
+        "",
+        "The manifest sets two user environment variables (removed again by 'scoop uninstall'):",
+        "  HORIZON_LAUNCHER_NO_SELF_UPDATE=1   the launcher does not replace itself; update with 'scoop update Horizon-Launcher'.",
+        "                                      The game builds it installs keep updating through the launcher.",
+        "  HORIZON_TELEMETRY_URL=off           nothing is sent to telemetry.playhorizon.dev, not even the always-on",
+        "                                      'I'm playing' ping; bug reports cannot be sent from the launcher either.",
+        "If the launcher still offers an update right after the install, sign out and back in once,",
+        "so that Explorer picks up the new variables.",
+        "",
+        "The launcher keeps its data in %APPDATA%\\horizon-launcher and the game's saves and options in %APPDATA%\\horizon,",
+        "outside the Scoop folder: they survive updates, and 'scoop uninstall -p' does not delete them."
+    ],
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/horizon-rust/horizon/releases/download/launcher@0.2.107/horizon-launcher-windows-x64.zip",
+            "hash": "68bcbc1bd32a5913a43988b08a10d9ff2348ab45097a6c241a257c9610e3f465"
+        },
+        "arm64": {
+            "url": "https://github.com/horizon-rust/horizon/releases/download/launcher@0.2.107/horizon-launcher-windows-arm64.zip",
+            "hash": "0d81f7bc85030e86719b6bd6afc35754d7e470523dd744cb362c891362efc8bd"
+        }
+    },
+    "pre_install": [
+        "if ($cmd -ne 'install') { return }",
+        "# Upstream's per-user installer (horizon-launcher-setup.exe) copies the launcher to %LOCALAPPDATA%\\Programs\\Horizon Launcher.",
+        "$setupCopy = Get-ItemProperty 'HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall\\HorizonLauncher' -ErrorAction SilentlyContinue",
+        "if (!$setupCopy) { return }",
+        "if ($env:GESU_ALLOW_EXISTING -ne '1') {",
+        "  error \"Horizon Launcher $($setupCopy.DisplayVersion) is already installed with upstream's installer (in %LOCALAPPDATA%\\Programs\\Horizon Launcher by default). Uninstall it first in Settings > Apps without 'remove data' (the game and saves in %APPDATA%\\horizon-launcher and %APPDATA%\\horizon stay), or run `$env:GESU_ALLOW_EXISTING = '1' and install again to keep both copies. Scoop has already downloaded and unpacked ${app}: run 'scoop uninstall $app' or simply install again, which cleans that up.\"",
+        "  break",
+        "}",
+        "warn 'Horizon Launcher from upstream''s installer stays installed too. Both copies use the same data, and the environment variables of this package also stop that copy from updating itself and sending telemetry.'"
+    ],
+    "env_set": {
+        "HORIZON_LAUNCHER_NO_SELF_UPDATE": "1",
+        "HORIZON_TELEMETRY_URL": "off"
+    },
+    "bin": "horizon-launcher.exe",
+    "shortcuts": [
+        [
+            "horizon-launcher.exe",
+            "Horizon Launcher"
+        ]
+    ],
+    "checkver": {
+        "url": "https://api.github.com/repos/horizon-rust/horizon/releases?per_page=100",
+        "regex": "\"tag_name\":\\s*\"launcher@([\\d.]+)\""
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/horizon-rust/horizon/releases/download/launcher@$version/horizon-launcher-windows-x64.zip"
+            },
+            "arm64": {
+                "url": "https://github.com/horizon-rust/horizon/releases/download/launcher@$version/horizon-launcher-windows-arm64.zip"
+            }
+        },
+        "hash": {
+            "url": "$baseurl/SHA256SUMS"
+        }
+    }
+}

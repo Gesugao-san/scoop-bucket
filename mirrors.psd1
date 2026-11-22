@@ -6,7 +6,8 @@
 #   description  shown when listing mirrors
 #   '64bit', '32bit', 'arm64'  URL for that architecture; 'url' for apps without architectures.
 #                An array of URLs when the manifest downloads several files. '$version' is replaced
-#                with the manifest's version (keep such URLs in single quotes).
+#                with the manifest's version and '$tag' with the release tag from the manifest's GitHub URL
+#                (keep such URLs in single quotes).
 @{
   TrueConf = @(
     @{
@@ -59,6 +60,36 @@
         'https://raw.githubusercontent.com/Loyalsoldier/geoip/release/cn.dat'
         'https://raw.githubusercontent.com/Loyalsoldier/geoip/release/private.dat'
       )
+    }
+  )
+  Pumpkin = @(
+    @{
+      name        = 'sourceforge'
+      description = "SourceForge's automatic copy of the GitHub releases (project pumpkin.mirror), not run by the developers; same SHA-256 as GitHub for 0.2.2"
+      '64bit'     = 'https://downloads.sourceforge.net/project/pumpkin.mirror/$tag/pumpkin-X64-Windows.exe'
+      arm64       = 'https://downloads.sourceforge.net/project/pumpkin.mirror/$tag/pumpkin-ARM64-Windows.exe'
+    }
+  )
+  FerrumC = @(
+    @{
+      name        = 'sourceforge'
+      description = "SourceForge's automatic copy of the GitHub releases (project ferrumc.mirror), not run by the developers; same SHA-256 as GitHub for 0.1.0-rc2"
+      '64bit'     = 'https://downloads.sourceforge.net/project/ferrumc.mirror/v$version/ferrumc-v$version-x86_64-pc-windows-msvc.zip'
+    }
+  )
+  SteelMC = @(
+    @{
+      name        = 'sourceforge'
+      description = "SourceForge's automatic copy of the GitHub releases (project steelmc.mirror), not run by the developers; byte-identical for 0.17.0, but it lags behind GitHub (0.17.1 was not there yet in November 2026)"
+      '64bit'     = 'https://downloads.sourceforge.net/project/steelmc.mirror/$tag/steel-windows.exe'
+    }
+  )
+  MCHPRS = @(
+    @{
+      name        = 'sourceforge'
+      description = "SourceForge's automatic copy of the GitHub releases (project minecraft-high-perform.mirror), not run by the developers; byte-identical for 0.5.2, but it lags behind GitHub (0.5.3 was not there yet in November 2026)"
+      '64bit'     = 'https://downloads.sourceforge.net/project/minecraft-high-perform.mirror/v$version/mchprs-x86_64-pc-windows-msvc.zip'
+      arm64       = 'https://downloads.sourceforge.net/project/minecraft-high-perform.mirror/v$version/mchprs-aarch64-pc-windows-msvc.zip'
     }
   )
 }

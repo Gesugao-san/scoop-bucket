@@ -14,18 +14,21 @@ One page per package. The [main README](../../README.md#packages) has the same l
 - [`DriverStore-Explorer`](driverstore-explorer.md)
 - [`EVE-IPH`](eve-iph.md)
 - [`EVEMon`](evemon.md)
+- [`FerrumC`](ferrumc.md)
 - [`Fopnu`](fopnu.md)
 - [`Freesm-Launcher`](freesm-launcher.md)
 - [`Gale`](gale.md)
 - [`Ghidra`](ghidra.md)
 - [`Google-USB-Driver`](google-usb-driver.md)
 - [`Halloy`](halloy.md)
+- [`Horizon-Launcher`](horizon-launcher.md)
 - [`iloader`](iloader.md)
 - [`Impactor`](impactor.md)
 - [`jEveAssets`](jeveassets.md)
 - [`JkDefrag`](jkdefrag.md)
 - [`King-Arthurs-Gold`](king-arthurs-gold.md)
 - [`Loyalsoldier-GeoIP`](loyalsoldier-geoip.md)
+- [`MCHPRS`](mchprs.md)
 - [`Mi-Unlock`](mi-unlock.md)
 - [`mtk_uartboot`](mtk-uartboot.md)
 - [`MTKClient-Release`](mtkclient-release.md)
@@ -37,13 +40,16 @@ One page per package. The [main README](../../README.md#packages) has the same l
 - [`OCCT`](occt.md)
 - [`PlanetSide-2-LaunchPad`](planetside-2-launchpad.md)
 - [`PlanetSide-2`](planetside-2.md)
+- [`Pomme`](pomme.md)
 - [`Privoxy`](privoxy.md)
+- [`Pumpkin`](pumpkin.md)
 - [`PuTTY`](putty.md)
 - [`q-DNS`](q-dns.md)
 - [`Radmin-VPN`](radmin-vpn.md)
 - [`RealiTLScanner`](realitlscanner.md)
 - [`RealiTLScanner-GUI`](realitlscanner-gui.md)
 - [`Samsung-Magician`](samsung-magician.md)
+- [`SteelMC`](steelmc.md)
 - [`Tabby`](tabby.md)
 - [`Tftpd64`](tftpd64.md)
 - [`Tixati`](tixati.md)
@@ -54,5 +60,13 @@ One page per package. The [main README](../../README.md#packages) has the same l
 - [`WinMX`](winmx.md)
 - [`x64dbg`](x64dbg.md)
 - [`Zadig`](zadig.md)
+
+## Not packaged
+
+Open source programs that were looked at and left out, so they are not looked at again without a reason:
+
+- [Stevenarella](https://github.com/iceiix/stevenarella), a Minecraft client in Rust (1.7.10 to 1.18.2): no releases, only GitHub Actions artifacts, which need a GitHub sign-in to download and expire after 90 days.
+- [Leafish](https://github.com/Lea-fish/Leafish), a fork of Stevenarella (up to 1.16.5): last commit in July 2024; its only release, 0.0.1-alpha, is an installer that adds Leafish to Mojang's official launcher through a jar wrapper, outside Scoop's folders.
+- [Valence](https://github.com/valence-rs/valence): a Rust library for building Minecraft servers, not a program to install.
 
 [Back to the main README](../../README.md)

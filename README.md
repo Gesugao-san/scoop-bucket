@@ -26,6 +26,12 @@ scoop install -g gesu/Apple-Mobile-Device-Support   # global, from an elevated s
 scoop install gesu/Privoxy
 scoop install -g gesu/NetTime   # global, from an elevated shell
 scoop install gesu/Freesm-Launcher
+scoop install gesu/Pomme                    # Minecraft client in Rust
+scoop install gesu/Horizon-Launcher         # Minecraft rewritten in Rust, needs your copy of 26.3
+scoop install gesu/Pumpkin                  # Minecraft server in Rust (Java and Bedrock)
+scoop install gesu/SteelMC                  # Minecraft server in Rust, pre-alpha
+scoop install gesu/FerrumC                  # Minecraft 1.21.8 server in Rust
+scoop install gesu/MCHPRS                   # Minecraft 1.20.4 redstone server in Rust
 scoop install gesu/Radmin-VPN
 scoop install gesu/Samsung-Magician
 scoop install gesu/PlanetSide-2             # through Steam
@@ -86,6 +92,12 @@ Each package has a page with its notes: requirements, what the manifest does dif
 | [`Privoxy`](docs/packages/privoxy.md) | [privoxy.org](https://www.privoxy.org) ([SourceForge](https://sourceforge.net/projects/ijbswa/files/Win32/)) | Filtering web proxy |
 | [`NetTime`](docs/packages/nettime.md) | [timesynctool.com](https://www.timesynctool.com) ([SourceForge](https://sourceforge.net/projects/nettime/)) | SNTP time sync service |
 | [`Freesm-Launcher`](docs/packages/freesm-launcher.md) | [FreesmTeam/FreesmLauncher](https://github.com/FreesmTeam/FreesmLauncher) | Minecraft launcher, a Prism Launcher fork |
+| [`Pomme`](docs/packages/pomme.md) | [PommeMC/Client](https://github.com/PommeMC/Client) | Minecraft: Java Edition client in Rust and Vulkan; vanilla servers 1.20 to 26.3 |
+| [`Horizon-Launcher`](docs/packages/horizon-launcher.md) | [horizon-rust/horizon](https://github.com/horizon-rust/horizon) | Launcher for Horizon, Minecraft 26.3 rewritten in Rust; telemetry off |
+| [`Pumpkin`](docs/packages/pumpkin.md) | [pumpkinmc.org](https://pumpkinmc.org/) ([Pumpkin-MC/Pumpkin](https://github.com/Pumpkin-MC/Pumpkin)) | Multithreaded Minecraft server in Rust, Java and Bedrock clients |
+| [`SteelMC`](docs/packages/steelmc.md) | [steelmc.dev](https://steelmc.dev/) ([Steel-Foundation/SteelMC](https://github.com/Steel-Foundation/SteelMC)) | Minecraft server in Rust tracking the latest release, pre-alpha |
+| [`FerrumC`](docs/packages/ferrumc.md) | [ferrumc.com](https://www.ferrumc.com/) ([ferrumc-rs/ferrumc](https://github.com/ferrumc-rs/ferrumc)) | Minecraft 1.21.8 server in Rust, imports vanilla worlds |
+| [`MCHPRS`](docs/packages/mchprs.md) | [MCHPR/MCHPRS](https://github.com/MCHPR/MCHPRS) | Minecraft 1.20.4 creative server for computational redstone |
 | [`Radmin-VPN`](docs/packages/radmin-vpn.md) | [radmin-vpn.com](https://www.radmin-vpn.com) (Famatech, freeware) | Virtual LAN over the internet |
 | [`Samsung-Magician`](docs/packages/samsung-magician.md) | [Samsung Semiconductor](https://semiconductor.samsung.com/consumer-storage/magician/) (freeware) | Management tool for Samsung SSDs |
 | [`PlanetSide-2`](docs/packages/planetside-2.md) | [Steam app 218230](https://store.steampowered.com/app/218230/PlanetSide_2/) | PlanetSide 2 through Steam |
