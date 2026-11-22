@@ -20,6 +20,10 @@
         "",
         "Mod changes fail while the game runs: Windows locks the mods' DLLs. Close KSP first.",
         "",
+        "CKAN refuses to start with administrator rights (an elevated shell, or any program when UAC is off).",
+        "The second shortcut, 'CKAN (.NET Framework, --asroot)', starts it with --asroot, which skips that check. Files CKAN",
+        "then writes into the game folder belong to Administrators, so a non-elevated CKAN or KSP may not change them.",
+        "",
         "ckan:// links: on the first start CKAN offers to register them for all users, which needs admin rights (UAC).",
         "'scoop uninstall CKAN-NetFx' removes them if they point to this copy (from an elevated shell, if they were registered for all users)."
     ],
@@ -39,6 +43,11 @@
         [
             "ckan.exe",
             "CKAN (.NET Framework)"
+        ],
+        [
+            "ckan.exe",
+            "CKAN (.NET Framework, --asroot)",
+            "--asroot"
         ]
     ],
     "uninstaller": {

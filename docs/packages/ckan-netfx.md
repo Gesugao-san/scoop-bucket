@@ -10,7 +10,7 @@
 
 It needs .NET Framework 4.8.1 (the build targets it), which Windows 11 22H2 and later include; elsewhere, if CKAN does not start, install it with [`NetFx-4.8.1`](netfx-4.8.1.md) (`scoop install -g gesu/NetFx-4.8.1` from an elevated shell, suggested by the manifest) or from [Microsoft](https://dotnet.microsoft.com/download/dotnet-framework/net481).
 
-Both packages add the command `ckan`, so only one can be installed: each manifest's `pre_install` stops if the other one, or `ksp-ckan` from another bucket, is installed (Scoop runs it after the download). The shortcut in Scoop Apps is *CKAN (.NET Framework)*. One manifest without `architecture` serves all of them: `ckan.exe` is a plain AnyCPU .NET assembly (IL only), so it runs as a 64-bit process on x64 and natively on ARM64.
+Both packages add the command `ckan`, so only one can be installed: each manifest's `pre_install` stops if the other one, or `ksp-ckan` from another bucket, is installed (Scoop runs it after the download). The shortcuts in Scoop Apps are *CKAN (.NET Framework)* and *CKAN (.NET Framework, --asroot)*, the latter for elevated sessions (see [Administrator rights](ckan.md#administrator-rights)). One manifest without `architecture` serves all of them: `ckan.exe` is a plain AnyCPU .NET assembly (IL only), so it runs as a 64-bit process on x64 and natively on ARM64.
 
 Everything else (updates, `ckan://` links, data, other buckets) is as described for [`CKAN`](ckan.md), with `CKAN-NetFx` in the commands. The self-updater of this build always asks for `ckan.exe`, so it stays on this build. `checkver` follows GitHub releases; upstream publishes no hashes, so autoupdate computes them.
 
