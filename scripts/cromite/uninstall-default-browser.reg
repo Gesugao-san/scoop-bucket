@@ -1,0 +1,38 @@
+Windows Registry Editor Version 5.00
+
+; Remove what install-default-browser.reg added. If Cromite was the default browser,
+; Windows asks which app to use the next time a link is opened.
+
+[-HKEY_CURRENT_USER\Software\Classes\CromiteHTML.Scoop]
+
+[-HKEY_CURRENT_USER\Software\Clients\StartMenuInternet\Cromite.Scoop]
+
+[HKEY_CURRENT_USER\Software\RegisteredApplications]
+"Cromite.Scoop"=-
+
+
+; Drop only Cromite's "Open with" entries; the extension keys hold other apps' data
+
+[HKEY_CURRENT_USER\Software\Classes\.htm\OpenWithProgids]
+"CromiteHTML.Scoop"=-
+
+[HKEY_CURRENT_USER\Software\Classes\.html\OpenWithProgids]
+"CromiteHTML.Scoop"=-
+
+[HKEY_CURRENT_USER\Software\Classes\.shtml\OpenWithProgids]
+"CromiteHTML.Scoop"=-
+
+[HKEY_CURRENT_USER\Software\Classes\.xht\OpenWithProgids]
+"CromiteHTML.Scoop"=-
+
+[HKEY_CURRENT_USER\Software\Classes\.xhtml\OpenWithProgids]
+"CromiteHTML.Scoop"=-
+
+[HKEY_CURRENT_USER\Software\Classes\.pdf\OpenWithProgids]
+"CromiteHTML.Scoop"=-
+
+[HKEY_CURRENT_USER\Software\Classes\.svg\OpenWithProgids]
+"CromiteHTML.Scoop"=-
+
+[HKEY_CURRENT_USER\Software\Classes\.webp\OpenWithProgids]
+"CromiteHTML.Scoop"=-

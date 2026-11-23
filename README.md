@@ -65,6 +65,7 @@ scoop install gesu/RealiTLScanner-GUI       # window for RealiTLScanner, .NET De
 scoop install gesu/Loyalsoldier-GeoIP       # GeoIP databases (.mmdb, .dat)
 scoop install gesu/OCCT                     # runs elevated (UAC prompt)
 scoop install gesu/Halloy                   # IRC client
+scoop install gesu/Cromite                  # privacy-focused Chromium fork
 scoop install gesu/TrueConf
 scoop install gesu/Ghidra                   # needs JDK 25
 scoop install gesu/x64dbg
@@ -131,6 +132,7 @@ Each package has a page with its notes: requirements, what the manifest does dif
 | [`Loyalsoldier-GeoIP`](docs/packages/loyalsoldier-geoip.md) | [Loyalsoldier/geoip](https://github.com/Loyalsoldier/geoip) | Weekly GeoIP databases for MaxMind readers and Xray; used by `RealiTLScanner` |
 | [`OCCT`](docs/packages/occt.md) | [ocbase.com](https://www.ocbase.com/occt-personal-use) (OCBASE, Personal edition) | Stability check and stress test tool |
 | [`Halloy`](docs/packages/halloy.md) | [halloy.chat](https://halloy.chat) ([squidowl/halloy](https://github.com/squidowl/halloy), GPL-3.0) | IRC client; history and config kept across updates |
+| [`Cromite`](docs/packages/cromite.md) | [cromite.org](https://www.cromite.org/) ([uazo/cromite](https://github.com/uazo/cromite), GPL-3.0) | Privacy-focused Chromium fork with ad blocking; profile kept across updates, links open in it |
 | [`TrueConf`](docs/packages/trueconf.md) | [trueconf.com](https://trueconf.com/downloads/windows.html) (TrueConf, proprietary) | Video conferencing client |
 | [`Ghidra`](docs/packages/ghidra.md) | [NationalSecurityAgency/ghidra](https://github.com/NationalSecurityAgency/ghidra) | Reverse engineering framework |
 | [`x64dbg`](docs/packages/x64dbg.md) | [x64dbg/x64dbg](https://github.com/x64dbg/x64dbg) | x64 and x32 debugger |

@@ -1,0 +1,89 @@
+{
+    "version": "153.0.8010.37",
+    "description": "Chromium fork based on Bromite: privacy hardening, built-in ad blocking, no Google services.",
+    "homepage": "https://www.cromite.org/",
+    "license": {
+        "identifier": "GPL-3.0-only",
+        "url": "https://github.com/uazo/cromite/blob/HEAD/LICENSE"
+    },
+    "notes": [
+        "Cromite's profile (bookmarks, passwords, extensions, settings) is kept in",
+        "%USERPROFILE%\\scoop\\persist\\Cromite\\User Data and survives updates.",
+        "",
+        "To open links from other programs in this profile, register Cromite as a browser:",
+        "reg import \"%USERPROFILE%\\scoop\\apps\\Cromite\\current\\install-default-browser.reg\"   (cmd)",
+        "reg import \"$env:USERPROFILE\\scoop\\apps\\Cromite\\current\\install-default-browser.reg\"   (PowerShell)",
+        "then pick 'Cromite (Scoop)' in Settings > Apps > Default apps.",
+        "Do not use the 'Make default' button inside Cromite: it registers chrome.exe without the",
+        "profile folder, so links would open in an empty profile in %LOCALAPPDATA%\\Cromite."
+    ],
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/uazo/cromite/releases/download/v153.0.8010.37-11507ac1061b5ea227806f5e84db5a57df6ccf6a/chrome-win.zip",
+            "hash": "c95d1c679142a421df7de2cab090539ccb4158f69410dc1878735fb8f60e0fab"
+        }
+    },
+    "extract_dir": "chrome-win",
+    "post_install": [
+        "$templates = Join-Path (Find-BucketDirectory -Name $bucket -Root) \"scripts\\$($app.ToLowerInvariant())\"",
+        "if (Test-Path -LiteralPath $templates -PathType Container) {",
+        "  $app_dir = $dir -replace '\\\\', '\\\\'",
+        "  Get-ChildItem -Path $templates -Filter '*.reg' -File | ForEach-Object {",
+        "    $content = Get-Content -Path $_.FullName -Encoding utf8",
+        "    if ($global) { $content = $content -replace 'HKEY_CURRENT_USER', 'HKEY_LOCAL_MACHINE' }",
+        "    $content -replace '{{cromite_dir}}', $app_dir | Set-Content -Path \"$dir\\$($_.Name)\" -Encoding unicode",
+        "  }",
+        "} else {",
+        "  warn \"Registry templates not found in '$($templates -replace [regex]::Escape($env:USERPROFILE), '%USERPROFILE%')', registering Cromite as a browser is unavailable.\"",
+        "}",
+        "# Copy the profile of a Cromite run without Scoop into the empty persist folder; the original stays",
+        "$data = \"$persist_dir\\User Data\"",
+        "$old = \"$env:LOCALAPPDATA\\Cromite\\User Data\"",
+        "$empty = !(Get-ChildItem -LiteralPath $data -Force -ErrorAction SilentlyContinue | Select-Object -First 1)",
+        "if (!$global -and $empty -and (Test-Path -LiteralPath $old -PathType Container)) {",
+        "  $old_shown = $old -replace [regex]::Escape($env:USERPROFILE), '%USERPROFILE%'",
+        "  $running = Get-Process -Name 'chrome' -ErrorAction SilentlyContinue | Where-Object {",
+        "    $_.Path -and (Get-Item -LiteralPath $_.Path).VersionInfo.ProductName -eq 'Cromite'",
+        "  }",
+        "  if ($running) {",
+        "    warn \"Cromite is running, so its profile in '$old_shown' was not copied. Close Cromite and run: scoop update Cromite -f\"",
+        "  } else {",
+        "    info \"Copying Cromite's profile from '$old_shown' (the original stays in place)...\"",
+        "    Copy-Item -Path \"$old\\*\" -Destination $data -Recurse -Force",
+        "  }",
+        "}"
+    ],
+    "bin": [
+        [
+            "chrome.exe",
+            "cromite",
+            "--user-data-dir=\"$dir\\User Data\""
+        ]
+    ],
+    "shortcuts": [
+        [
+            "chrome.exe",
+            "Cromite",
+            "--user-data-dir=\"$dir\\User Data\""
+        ]
+    ],
+    "persist": "User Data",
+    "uninstaller": {
+        "script": [
+            "if ($cmd -eq 'uninstall') {",
+            "  reg import \"$dir\\uninstall-default-browser.reg\" *> $null",
+            "}"
+        ]
+    },
+    "checkver": {
+        "github": "https://github.com/uazo/cromite",
+        "regex": "/releases/tag/v([\\d.]+)-(?<sha>[0-9a-f]{40})"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/uazo/cromite/releases/download/v$version-$matchSha/chrome-win.zip"
+            }
+        }
+    }
+}

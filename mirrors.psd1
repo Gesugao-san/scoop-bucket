@@ -45,6 +45,13 @@
       '64bit'     = 'https://downloads.sourceforge.net/project/halloy-irc-client.mirror/$version/halloy-installer.exe'
     }
   )
+  Cromite = @(
+    @{
+      name        = 'sourceforge'
+      description = "SourceForge's automatic copy of the GitHub releases (project cromite.mirror), not run by the developers; same SHA-256 as GitHub for 153.0.8010.37"
+      '64bit'     = 'https://downloads.sourceforge.net/project/cromite.mirror/$tag/chrome-win.zip'
+    }
+  )
   'Loyalsoldier-GeoIP' = @(
     @{
       name        = 'raw'

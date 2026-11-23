@@ -1,0 +1,85 @@
+Windows Registry Editor Version 5.00
+
+; Register Cromite as a browser that Windows can offer in Settings > Apps > Default apps.
+; Every command passes --user-data-dir, so links open in the profile kept in Scoop's persist folder.
+; This changes no defaults by itself: the user picks "Cromite (Scoop)" in Windows Settings.
+
+; ProgID for links and web files
+
+[HKEY_CURRENT_USER\Software\Classes\CromiteHTML.Scoop]
+@="Cromite HTML Document"
+
+[HKEY_CURRENT_USER\Software\Classes\CromiteHTML.Scoop\Application]
+"ApplicationName"="Cromite (Scoop)"
+"ApplicationIcon"="{{cromite_dir}}\\chrome.exe,0"
+"ApplicationCompany"="Cromite"
+
+[HKEY_CURRENT_USER\Software\Classes\CromiteHTML.Scoop\DefaultIcon]
+@="{{cromite_dir}}\\chrome.exe,0"
+
+[HKEY_CURRENT_USER\Software\Classes\CromiteHTML.Scoop\shell\open\command]
+@="\"{{cromite_dir}}\\chrome.exe\" --user-data-dir=\"{{cromite_dir}}\\User Data\" --single-argument %1"
+
+
+; Browser entry and its capabilities
+
+[HKEY_CURRENT_USER\Software\Clients\StartMenuInternet\Cromite.Scoop]
+@="Cromite (Scoop)"
+
+[HKEY_CURRENT_USER\Software\Clients\StartMenuInternet\Cromite.Scoop\Capabilities]
+"ApplicationName"="Cromite (Scoop)"
+"ApplicationDescription"="Chromium fork based on Bromite, installed with Scoop"
+"ApplicationIcon"="{{cromite_dir}}\\chrome.exe,0"
+
+[HKEY_CURRENT_USER\Software\Clients\StartMenuInternet\Cromite.Scoop\Capabilities\FileAssociations]
+".htm"="CromiteHTML.Scoop"
+".html"="CromiteHTML.Scoop"
+".shtml"="CromiteHTML.Scoop"
+".xht"="CromiteHTML.Scoop"
+".xhtml"="CromiteHTML.Scoop"
+".pdf"="CromiteHTML.Scoop"
+".svg"="CromiteHTML.Scoop"
+".webp"="CromiteHTML.Scoop"
+
+[HKEY_CURRENT_USER\Software\Clients\StartMenuInternet\Cromite.Scoop\Capabilities\URLAssociations]
+"http"="CromiteHTML.Scoop"
+"https"="CromiteHTML.Scoop"
+
+[HKEY_CURRENT_USER\Software\Clients\StartMenuInternet\Cromite.Scoop\Capabilities\StartMenu]
+"StartMenuInternet"="Cromite.Scoop"
+
+[HKEY_CURRENT_USER\Software\Clients\StartMenuInternet\Cromite.Scoop\DefaultIcon]
+@="{{cromite_dir}}\\chrome.exe,0"
+
+[HKEY_CURRENT_USER\Software\Clients\StartMenuInternet\Cromite.Scoop\shell\open\command]
+@="\"{{cromite_dir}}\\chrome.exe\" --user-data-dir=\"{{cromite_dir}}\\User Data\""
+
+[HKEY_CURRENT_USER\Software\RegisteredApplications]
+"Cromite.Scoop"="Software\\Clients\\StartMenuInternet\\Cromite.Scoop\\Capabilities"
+
+
+; Offer Cromite in "Open with" for web files, without changing their current default
+
+[HKEY_CURRENT_USER\Software\Classes\.htm\OpenWithProgids]
+"CromiteHTML.Scoop"=hex(0):
+
+[HKEY_CURRENT_USER\Software\Classes\.html\OpenWithProgids]
+"CromiteHTML.Scoop"=hex(0):
+
+[HKEY_CURRENT_USER\Software\Classes\.shtml\OpenWithProgids]
+"CromiteHTML.Scoop"=hex(0):
+
+[HKEY_CURRENT_USER\Software\Classes\.xht\OpenWithProgids]
+"CromiteHTML.Scoop"=hex(0):
+
+[HKEY_CURRENT_USER\Software\Classes\.xhtml\OpenWithProgids]
+"CromiteHTML.Scoop"=hex(0):
+
+[HKEY_CURRENT_USER\Software\Classes\.pdf\OpenWithProgids]
+"CromiteHTML.Scoop"=hex(0):
+
+[HKEY_CURRENT_USER\Software\Classes\.svg\OpenWithProgids]
+"CromiteHTML.Scoop"=hex(0):
+
+[HKEY_CURRENT_USER\Software\Classes\.webp\OpenWithProgids]
+"CromiteHTML.Scoop"=hex(0):
