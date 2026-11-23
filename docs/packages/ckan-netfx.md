@@ -4,7 +4,7 @@
 |---|---|
 | Manifest | [`bucket/CKAN-NetFx.json`](../../bucket/CKAN-NetFx.json) |
 | Upstream | [KSP-CKAN/CKAN](https://github.com/KSP-CKAN/CKAN) (MIT) |
-| Install | `scoop install gesu/CKAN-NetFx               # KSP mod manager, .NET Framework build; one of the two` |
+| Install | `scoop install gesu/CKAN-NetFx      # KSP mod manager, .NET Framework build; one of the two` |
 
 [`CKAN`](ckan.md), the Kerbal Space Program mod manager, as `ckan.exe`: the small build (about 7.5 MB) for .NET Framework 4.8.1, which upstream now offers for Mono on macOS and Linux and which was its Windows download until 1.36.2. Same code, commands and data as `CKAN`, without the dark theme. Choose it to save disk space and download time (130 MB for every update of `CKAN`) or on 32-bit and ARM64 Windows, where the x64-only `ckan-windows.exe` cannot run or runs emulated.
 

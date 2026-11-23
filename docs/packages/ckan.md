@@ -4,7 +4,7 @@
 |---|---|
 | Manifest | [`bucket/CKAN.json`](../../bucket/CKAN.json) |
 | Upstream | [KSP-CKAN/CKAN](https://github.com/KSP-CKAN/CKAN) (MIT) |
-| Install | `scoop install gesu/CKAN                     # KSP mod manager, .NET 10 build` |
+| Install | `scoop install gesu/CKAN            # KSP mod manager, .NET 10 build` |
 
 The Comprehensive Kerbal Archive Network: the community mod manager for Kerbal Space Program (and KSP 2). It knows which mods fit the game version, installs them with their dependencies, warns about conflicts, updates and removes them. It has a GUI, a console UI (`ckan consoleui`) and a command line (`ckan install`, `ckan upgrade --all`, `ckan help`). Mods themselves come from SpaceDock, GitHub and other hosts that CKAN's metadata points to; CKAN itself only reads that metadata.
 

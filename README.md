@@ -139,13 +139,15 @@ scoop install gesu/King-Arthurs-Gold        # asks: Steam or standalone
 | [`CKAN`](docs/packages/ckan.md) | [KSP-CKAN/CKAN](https://github.com/KSP-CKAN/CKAN) | Mod manager for Kerbal Space Program, self-contained .NET 10 build |
 | [`CKAN-NetFx`](docs/packages/ckan-netfx.md) | [KSP-CKAN/CKAN](https://github.com/KSP-CKAN/CKAN) | Mod manager for Kerbal Space Program, small .NET Framework 4.8.1 build |
 | [`KML`](docs/packages/kml.md) | [my-th-os/KML](https://github.com/my-th-os/KML) | Save file editor for Kerbal Space Program (Kerbal Markup Lister) |
+| [`KSP-Mod-Admin`](docs/packages/ksp-mod-admin.md) | [MacTee/KSP-Mod-Admin-aOS](https://github.com/MacTee/KSP-Mod-Admin-aOS) (CC BY-NC-SA 3.0 DE) | Mod manager for Kerbal Space Program from archives and URLs (abandoned since 2019) |
 | [`Borderless-Gaming`](docs/packages/borderless-gaming.md) | [legacy.borderlessgam.ing](https://legacy.borderlessgam.ing) ([andrewmd5/Borderless-Gaming](https://github.com/andrewmd5/Borderless-Gaming), GPL-2.0) | Borderless fullscreen for windowed games (free legacy edition) |
 
 ```powershell
-scoop install gesu/Gale         # Thunderstore mod manager
-scoop install gesu/CKAN         # KSP mod manager, .NET 10 build
-scoop install gesu/CKAN-NetFx   # KSP mod manager, .NET Framework build; one of the two
-scoop install gesu/KML          # KSP save file editor
+scoop install gesu/Gale            # Thunderstore mod manager
+scoop install gesu/CKAN            # KSP mod manager, .NET 10 build
+scoop install gesu/CKAN-NetFx      # KSP mod manager, .NET Framework build; one of the two
+scoop install gesu/KML             # KSP save file editor
+scoop install gesu/KSP-Mod-Admin   # KSP mod manager, abandoned
 scoop install gesu/Borderless-Gaming
 ```
 

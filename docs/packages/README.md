@@ -30,6 +30,7 @@ One page per package. The [main README](../../README.md#packages) has the same l
 - [`JkDefrag`](jkdefrag.md)
 - [`King-Arthurs-Gold`](king-arthurs-gold.md)
 - [`KML`](kml.md)
+- [`KSP-Mod-Admin`](ksp-mod-admin.md)
 - [`Loyalsoldier-GeoIP`](loyalsoldier-geoip.md)
 - [`Loyalsoldier-v2ray-rules-dat`](loyalsoldier-v2ray-rules-dat.md)
 - [`MCHPRS`](mchprs.md)

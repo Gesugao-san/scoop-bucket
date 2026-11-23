@@ -4,7 +4,7 @@
 |---|---|
 | Manifest | [`bucket/KML.json`](../../bucket/KML.json) |
 | Upstream | [my-th-os/KML](https://github.com/my-th-os/KML) (GPL-3.0), [forum thread](https://forum.kerbalspaceprogram.com/topic/133971-win-kml-persistence-file-editor/) |
-| Install | `scoop install gesu/KML          # KSP save file editor` |
+| Install | `scoop install gesu/KML             # KSP save file editor` |
 
 KML (Kerbal Markup Lister) edits Kerbal Space Program saves (`saves\<save>\persistent.sfs`) and `.craft` files outside the game: the whole file as a tree, sorted and filtered lists of vessels and kerbals, a graph of how a vessel's parts are attached, warnings about structural problems, and repairs for broken docking ports, grappling devices and contract references. Upstream tests it with KSP 1.0 to 1.12. The package installs upstream's `KML_Windows_v<version>.zip`, which holds a single `KML.exe` with both the window and the command line; upstream's `KML_Mono` build is the command line alone for Mono on Linux and macOS and adds nothing on Windows.
 
