@@ -1,0 +1,48 @@
+name: Excavator 1d
+
+# One of the three update schedules (docs/automation.md#update-tiers): once a day at 00:10 UTC, the Daily tier:
+# manifests without a new version for dailyAfterDays days that are not EOL. When this run updates one,
+# its version changes and Excavator 4h takes it over.
+# Excavator 4h (excavator-4h.yml) and 1mo (excavator-1mo.yml) cover the rest of the manifests; the two Excavators that update share a concurrency group, so they never push at once.
+
+on:
+  # Manual run: Actions tab > Excavator 1d > Run workflow, or `gh workflow run excavator-1d.yml`
+  workflow_dispatch:
+    inputs:
+      force:
+        description: 'Manifests of this tier to re-download and re-hash even if the version did not change (comma-separated, e.g. "NetTime,Privoxy"). Leave empty for a normal run.'
+        required: false
+        default: ''
+        type: string
+  schedule:
+    # Runs are spread over 00:00-00:40 UTC, daily ones first: Security :00, Excavator 1d :10, Excavator 4h :20, EVE-IPH watch :30, Excavator 1mo :40.
+    - cron: '10 0 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: excavator
+  cancel-in-progress: false
+
+jobs:
+  excavate:
+    name: Excavate (Daily tier)
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # Full history: the tier of a manifest comes from when its version last changed
+          fetch-depth: 0
+      - name: Keep only the Daily tier
+        # Sparse checkout takes every other manifest out of the working copy: checkver does not see them,
+        # and git reports no change for them, so auto-pr neither checks nor commits them.
+        shell: pwsh
+        run: ./bin/Watch-Tiers.ps1 -Hide -Tier Daily
+      - name: Excavate
+        uses: ScoopInstaller/GithubActions@5bceeda181721d9d10a18fdcc3ddca6f33467ae6 # v3.0.0
+        env:
+          SKIP_UPDATED: 1
+          # Empty on scheduled runs, so nothing is forced then
+          SPECIAL_SNOWFLAKES: ${{ inputs.force }}

@@ -1,0 +1,80 @@
+name: Excavator 1mo
+
+# The third update schedule (docs/automation.md#update-tiers): the EOL tier, listed in update-tiers.json.
+# Both directions, with bin/Watch-Tiers.ps1:
+# - an EOL package with a new version and autoupdate goes back to the Daily tier, and this run starts the
+#   Excavator 1d; one without autoupdate stays EOL and gets an issue asking for a manual update;
+# - a package whose version has not changed for eolAfterDays days (update-tiers.json) becomes EOL.
+
+on:
+  # Manual run: Actions tab > Excavator 1mo > Run workflow, or `gh workflow run excavator-1mo.yml`
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'Only report: do not change update-tiers.json, open issues or start Excavator.'
+        required: false
+        default: false
+        type: boolean
+  schedule:
+    # 00:40 UTC on the 1st of each month, after the daily and 4-hour runs.
+    # Runs are spread over 00:00-00:40 UTC, daily ones first: Security :00, Excavator 1d :10, Excavator 4h :20, EVE-IPH watch :30, Excavator 1mo :40.
+    - cron: '40 0 1 * *'
+
+permissions:
+  # Commit update-tiers.json, open issues, start Excavator
+  contents: write
+  issues: write
+  actions: write
+
+jobs:
+  eol:
+    name: Check EOL packages
+    runs-on: windows-latest
+    steps:
+      - name: Checkout bucket
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          # Full history: demotion reads when each manifest's version last changed
+          fetch-depth: 0
+          path: 'my_bucket'
+      - name: Checkout Scoop
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          repository: ScoopInstaller/Scoop
+          path: 'scoop_core'
+      - name: Check and re-sort EOL packages
+        id: eol
+        shell: pwsh
+        working-directory: my_bucket
+        env:
+          GH_TOKEN: ${{ github.token }}
+          # GitHub API requests of checkver (github checkver type)
+          SCOOP_GH_TOKEN: ${{ github.token }}
+          # Through env, not ${{ }} in the script, so the input cannot inject code
+          DRY_RUN: ${{ inputs.dry_run }}
+        # Table in the log and the run summary; checkver errors as warnings. Outputs: changed, promoted.
+        run: |
+          $env:SCOOP_HOME = Convert-Path '..\scoop_core'
+          $dryRun = $env:DRY_RUN -eq 'true'
+          $changes = @(./bin/Watch-Tiers.ps1 -Check -Demote -OpenIssues:(-not $dryRun) -WhatIf:$dryRun)
+          $changes | Format-Table -AutoSize -Wrap
+          if ($dryRun -or -not (git status --porcelain -- update-tiers.json)) { return }
+
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          $body = $changes | Where-Object Action -In 'promoted', 'demoted', 'dropped' | ForEach-Object { "- $($_.Name): $($_.Action), $($_.Detail)" }
+          git add update-tiers.json
+          git commit -m 'update-tiers.json: monthly EOL check' -m ($body -join "`n")
+          git pull --rebase origin $env:GITHUB_REF_NAME
+          git push origin "HEAD:$env:GITHUB_REF_NAME"
+          if ($LASTEXITCODE) { exit $LASTEXITCODE }
+      - name: Hand updates over to Excavator 1d
+        if: steps.eol.outputs.promoted != '' && inputs.dry_run != true
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+          PROMOTED: ${{ steps.eol.outputs.promoted }}
+        # workflow_dispatch is the one event a GITHUB_TOKEN may start other workflows with
+        run: |
+          Write-Host "Back to the Daily tier: $env:PROMOTED"
+          gh workflow run excavator-1d.yml --repo $env:GITHUB_REPOSITORY --ref $env:GITHUB_REF_NAME

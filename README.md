@@ -1,6 +1,6 @@
 # scoop-bucket
 
-[![CI](https://github.com/Gesugao-san/scoop-bucket/actions/workflows/ci.yml/badge.svg)](https://github.com/Gesugao-san/scoop-bucket/actions/workflows/ci.yml) [![Excavator](https://github.com/Gesugao-san/scoop-bucket/actions/workflows/excavator.yml/badge.svg)](https://github.com/Gesugao-san/scoop-bucket/actions/workflows/excavator.yml) [![Security](https://github.com/Gesugao-san/scoop-bucket/actions/workflows/security.yml/badge.svg)](https://github.com/Gesugao-san/scoop-bucket/actions/workflows/security.yml)
+[![CI](https://github.com/Gesugao-san/scoop-bucket/actions/workflows/ci.yml/badge.svg)](https://github.com/Gesugao-san/scoop-bucket/actions/workflows/ci.yml) [![Excavator 4h](https://github.com/Gesugao-san/scoop-bucket/actions/workflows/excavator-4h.yml/badge.svg)](https://github.com/Gesugao-san/scoop-bucket/actions/workflows/excavator-4h.yml) [![Excavator 1d](https://github.com/Gesugao-san/scoop-bucket/actions/workflows/excavator-1d.yml/badge.svg)](https://github.com/Gesugao-san/scoop-bucket/actions/workflows/excavator-1d.yml) [![Excavator 1mo](https://github.com/Gesugao-san/scoop-bucket/actions/workflows/excavator-1mo.yml/badge.svg)](https://github.com/Gesugao-san/scoop-bucket/actions/workflows/excavator-1mo.yml) [![Security](https://github.com/Gesugao-san/scoop-bucket/actions/workflows/security.yml/badge.svg)](https://github.com/Gesugao-san/scoop-bucket/actions/workflows/security.yml)
 
 Personal [Scoop](https://scoop.sh) bucket by [Gesugao-san](https://github.com/Gesugao-san), automated by CI and by [Claude](https://claude.ai): GitHub Actions keep manifests up to date and check them (see [Automation](docs/automation.md)), and Claude researches, writes and maintains the packages with the [skill](skills/scoop-bucket-add/SKILL.md) kept here.
 
@@ -347,10 +347,10 @@ scoop install gesu/DriverStore-Explorer             # runs elevated (UAC prompt)
 
 | Package | Upstream | About |
 |---|---|---|
-| [`NetFx-4.8.1`](docs/packages/netfx-4.8.1.md) | [Microsoft](https://dotnet.microsoft.com/download/dotnet-framework/net481) (proprietary) | .NET Framework 4.8.1 runtime, installed only where Windows lacks it |
+| [`NetFx-4`](docs/packages/netfx-4.md) | [Microsoft](https://dotnet.microsoft.com/download/dotnet-framework) (proprietary) | Newest .NET Framework 4.x runtime (4.8.1), installed only where Windows lacks it |
 
 ```powershell
-scoop install -g gesu/NetFx-4.8.1   # global, elevated shell; for CKAN-NetFx on older Windows
+scoop install -g gesu/NetFx-4   # global, elevated shell; for CKAN-NetFx on older Windows
 ```
 
 ### Databases
@@ -367,7 +367,7 @@ scoop install gesu/Loyalsoldier-GeoIP   # GeoIP databases (.mmdb, .dat)
 
 - [Conventions](docs/conventions.md): programs installed outside Scoop, shortcuts, running programs, paths in notes and messages, manifest names, licenses, file associations
 - [Installing from a mirror](docs/mirrors.md)
-- [Automation](docs/automation.md): workflows, TLS check, EVE-IPH build check
+- [Automation](docs/automation.md): workflows, update tiers, TLS check, EVE-IPH build check
 - [Icons and screenshots](docs/icons.md) for UniGetUI
 - [Research](docs/research/README.md) behind some manifests
 - [Skill for adding a package](skills/scoop-bucket-add/SKILL.md), for Claude and other AI assistants
@@ -387,6 +387,7 @@ These sections used to be in this README and now live in [`docs/`](docs/README.m
 - <a id="installing-from-a-mirror"></a>Installing from a mirror: [docs/mirrors.md](docs/mirrors.md)
 - <a id="automation"></a>Automation: [docs/automation.md](docs/automation.md)
 - <a id="running-workflows-by-hand"></a>Running workflows by hand: [docs/automation.md#running-workflows-by-hand](docs/automation.md#running-workflows-by-hand)
+- <a id="update-tiers"></a>Update tiers: [docs/automation.md#update-tiers](docs/automation.md#update-tiers)
 - <a id="checking-tls"></a>Checking TLS: [docs/automation.md#checking-tls](docs/automation.md#checking-tls)
 - <a id="checking-eve-iph-builds"></a>Checking EVE-IPH builds: [docs/automation.md#checking-eve-iph-builds](docs/automation.md#checking-eve-iph-builds)
 - <a id="notes"></a>Notes: [docs/research/README.md](docs/research/README.md)

@@ -18,8 +18,9 @@ on:
         default: ''
         type: string
   schedule:
-    # Half an hour after Excavator, so the two do not race for the same minute.
-    - cron: '50 */4 * * *'
+    # Ten minutes after Excavator 4h, so the two do not race for the same minute.
+    # Runs are spread over 00:00-00:40 UTC, daily ones first: Security :00, Excavator 1d :10, Excavator 4h :20, EVE-IPH watch :30, Excavator 1mo :40.
+    - cron: '30 */4 * * *'
 
 permissions:
   contents: write

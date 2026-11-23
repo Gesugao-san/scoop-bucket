@@ -15,8 +15,9 @@ on:
         type: string
   schedule:
     # Once a day: certificates are warned about 21 days ahead, so this is enough, and a failing host
-    # costs at most one notification a day. Away from Excavator (:20) and EVE-IPH watch (:50).
-    - cron: '35 4 * * *'
+    # costs at most one notification a day. At :00, the most delayed minute on GitHub: Security can wait.
+    # Runs are spread over 00:00-00:40 UTC, daily ones first: Security :00, Excavator 1d :10, Excavator 4h :20, EVE-IPH watch :30, Excavator 1mo :40.
+    - cron: '0 0 * * *'
 
 permissions:
   contents: read

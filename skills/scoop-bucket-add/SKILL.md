@@ -47,7 +47,7 @@ Before starting, read:
 - Prefer unpacking the installer to running it: [7-Zip](https://www.7-zip.org/) for archives and many installers, [innounp](https://innounp.sourceforge.net/) for Inno Setup (`"innosetup": true`), [lessmsi](https://github.com/activescott/lessmsi) for MSI. If it must run: silent switches, an `uninstaller`, a warning in `notes` and on the package page, and tell the user.
 - **Dependencies:** `depends` for required ones, `suggest` for optional ones. Point to packages in this bucket (`gesu/<Package>`) when it has them.
 - **Services and drivers:** global install only (`-g`); stop the app's processes and services in `pre_uninstall` (see [`scripts/common/Test-AppBusy.ps1`](https://github.com/Gesugao-san/scoop-bucket/blob/HEAD/scripts/common/Test-AppBusy.ps1)).
-- **Autoupdate:** [`checkver` + `autoupdate`](https://github.com/ScoopInstaller/Scoop/wiki/App-Manifest-Autoupdate), extracting the hash when upstream publishes one, so the bucket's [Excavator workflow](https://github.com/Gesugao-san/scoop-bucket/blob/HEAD/.github/workflows/excavator.yml) (based on [ScoopInstaller/GithubActions](https://github.com/ScoopInstaller/GithubActions)) keeps the package current. If autoupdate is impossible, explain why on the package page.
+- **Autoupdate:** [`checkver` + `autoupdate`](https://github.com/ScoopInstaller/Scoop/wiki/App-Manifest-Autoupdate), extracting the hash when upstream publishes one, so the bucket's [Excavator workflow](https://github.com/Gesugao-san/scoop-bucket/blob/HEAD/.github/workflows/excavator-4h.yml) (based on [ScoopInstaller/GithubActions](https://github.com/ScoopInstaller/GithubActions)) keeps the package current. If autoupdate is impossible, explain why on the package page.
 
 ### Shortcuts
 
