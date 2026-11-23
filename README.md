@@ -138,12 +138,14 @@ scoop install gesu/King-Arthurs-Gold        # asks: Steam or standalone
 | [`Gale`](docs/packages/gale.md) | [Kesomannen/gale](https://github.com/Kesomannen/gale) | Mod manager for Thunderstore games |
 | [`CKAN`](docs/packages/ckan.md) | [KSP-CKAN/CKAN](https://github.com/KSP-CKAN/CKAN) | Mod manager for Kerbal Space Program, self-contained .NET 10 build |
 | [`CKAN-NetFx`](docs/packages/ckan-netfx.md) | [KSP-CKAN/CKAN](https://github.com/KSP-CKAN/CKAN) | Mod manager for Kerbal Space Program, small .NET Framework 4.8.1 build |
+| [`KML`](docs/packages/kml.md) | [my-th-os/KML](https://github.com/my-th-os/KML) | Save file editor for Kerbal Space Program (Kerbal Markup Lister) |
 | [`Borderless-Gaming`](docs/packages/borderless-gaming.md) | [legacy.borderlessgam.ing](https://legacy.borderlessgam.ing) ([andrewmd5/Borderless-Gaming](https://github.com/andrewmd5/Borderless-Gaming), GPL-2.0) | Borderless fullscreen for windowed games (free legacy edition) |
 
 ```powershell
 scoop install gesu/Gale         # Thunderstore mod manager
 scoop install gesu/CKAN         # KSP mod manager, .NET 10 build
 scoop install gesu/CKAN-NetFx   # KSP mod manager, .NET Framework build; one of the two
+scoop install gesu/KML          # KSP save file editor
 scoop install gesu/Borderless-Gaming
 ```
 
