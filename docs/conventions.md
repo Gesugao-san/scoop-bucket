@@ -8,6 +8,8 @@ Non-portable packages (`NetTime`, `Radmin-VPN`, `Samsung-Magician`, `PlanetSide-
 
 `Gale` is portable, but stops too if upstream's MSI copy is installed (two copies would fight over the `ror2mm://` links), with no override: Scoop cannot take over an MSI install.
 
+`zapret-discord-youtube` is portable too, but stops if a `zapret` service from another copy (Flowseal's zip unpacked elsewhere) is installed: two copies would fight over the traffic. `GESU_ALLOW_EXISTING` lets it install anyway; its service manager's *Install Service* then replaces that service.
+
 ## Shortcuts to programs outside the app folder
 
 Scoop puts shortcuts only for files inside its app folder, so `Radmin-VPN`, `Samsung-Magician`, `PlanetSide-2-LaunchPad` and `WinMX` find the folder the installer used (through the program's uninstall entry) and link it into the app folder as a junction (`RadminVPN`, `SamsungMagician`, `LaunchPad`, `Winmx`); the shortcut in *Scoop Apps* points through it. Update and uninstall delete only the junction, before Scoop touches the app folder, never the files it points to. If the program is not found where its uninstall entry says, Scoop warns and installs without the shortcut. To get the shortcut for a copy installed before it was added, run `scoop update -f <package>` from an elevated shell: it reruns the installer over the existing copy.
@@ -17,6 +19,19 @@ Scoop puts shortcuts only for files inside its app folder, so `Radmin-VPN`, `Sam
 `Tixati`, `Fopnu`, `DarkMX` and `WinMX` stop if the program is running or its data files are open in another program (the program itself, a backup or sync tool). Scoop's own check only looks for processes started from the app's folder in `~\scoop\apps`; [`scripts/common/Test-AppBusy.ps1`](../scripts/common/Test-AppBusy.ps1) also finds copies started from anywhere else, by process name, and tries to open every file in the data folder (`%APPDATA%\tixati`, `%APPDATA%\fopnu`, `%APPDATA%\darkmx`, the WinMX folder) exclusively. A fresh install is checked in `pre_install`; `scoop update` and `scoop uninstall` are checked in `pre_uninstall`, because Scoop runs that hook before it removes anything, while `pre_install` of the new version only runs after the old one is gone. Scoop runs the `pre_uninstall` of the manifest saved at install time, so the update check starts working once a version with it is installed (`scoop update <app> -f` does that). If the helper is missing, for example after `scoop bucket rm gesu`, the uninstall check only warns, so the app can still be removed.
 
 `3X-UI` uses the same helper for its processes (`3x-ui`, `xray-windows-amd64`, `mtg-windows-amd64`) and its persisted `data` folder: on install a panel running anywhere would compete for port 2053, and on update or uninstall the running panel holds its files.
+
+`TG-WS-Proxy` does the same for its tray app (`TgWsProxy`), which holds port 1443 and its persisted `TgWsProxy_data`.
+
+## Components shared between packages
+
+Some programs ship copies of other projects' files that this bucket has as packages of their own. The program keeps running from its own folder, and a script copies the files from the packages into it, so that `scoop update` of a component reaches every program that uses it:
+
+| Script | Copies | Into | When |
+|---|---|---|---|
+| [`scripts/3x-ui/Start-3XUI.ps1`](../scripts/3x-ui/Start-3XUI.ps1) | Xray, mtg-multi, geo files | `3X-UI`'s persisted `bin` | each start of the panel |
+| [`scripts/zapret/Sync-ZapretComponents.ps1`](../scripts/zapret/Sync-ZapretComponents.ps1) | `winws.exe` (zapret), `cygwin1.dll` (Cygwin-Runtime), WinDivert or WinDivert-hide | `zapret`, `zapret2`, `zapret-discord-youtube\bin` | `post_install` of each of these packages and of each component |
+
+Copies, not links: a running program then holds only its own copies open, so the component packages update while it runs, and the program gets the new files at its next start (3X-UI) or at the next copy (the zapret packages, whose `winws` keeps them open while it runs). The zapret packages and their components install only globally, and the script copies only from the same Scoop folder: a binary that ends up in a service running as SYSTEM must never come from a folder a non-admin user can change.
 
 ## Paths in notes and messages
 

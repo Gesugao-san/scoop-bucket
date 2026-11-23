@@ -37,6 +37,19 @@
 | [`chocolate4u-iran-v2ray-rules-alt.png`](../icons/chocolate4u-iran-v2ray-rules-alt.png) | 192×192 | PNG render of `chocolate4u-iran-v2ray-rules-alt.svg`, used for UniGetUI |
 | [`runetfreedom-russia-v2ray-rules-dat-alt.svg`](../icons/runetfreedom-russia-v2ray-rules-dat-alt.svg) | vector | The same drawing with white, blue and red layers (upstream has no logo) |
 | [`runetfreedom-russia-v2ray-rules-dat-alt.png`](../icons/runetfreedom-russia-v2ray-rules-dat-alt.png) | 192×192 | PNG render of `runetfreedom-russia-v2ray-rules-dat-alt.svg`, used for UniGetUI |
+| [`zapret-alt.svg`](../icons/zapret-alt.svg) | vector | Original icon in the spirit of `winws.exe`'s own 32×32 icon (a broken padlock), new artwork; too small to scale up. Written by [`scripts/zapret/make_icons.py`](../scripts/zapret/make_icons.py), which draws the next five icons as well |
+| [`zapret-alt.png`](../icons/zapret-alt.png) | 192×192 | PNG render of `zapret-alt.svg`, used for UniGetUI |
+| [`zapret2-alt.svg`](../icons/zapret2-alt.svg) | vector | The same padlock with a "2" badge. `winws2.exe` carries a padlock-and-key picture whose origin and license are not stated, so it is not used |
+| [`zapret2-alt.png`](../icons/zapret2-alt.png) | 192×192 | PNG render of `zapret2-alt.svg`, used for UniGetUI |
+| [`zapret-discord-youtube-alt.svg`](../icons/zapret-discord-youtube-alt.svg) | vector | Original icon (upstream has none; its README uses third-party icons): the padlock with a generic play triangle and a chat bubble badge, no Discord or YouTube marks |
+| [`zapret-discord-youtube-alt.png`](../icons/zapret-discord-youtube-alt.png) | 192×192 | PNG render of `zapret-discord-youtube-alt.svg`, used for UniGetUI |
+| [`windivert-alt.svg`](../icons/windivert-alt.svg) | vector | Original icon (upstream has none): packets on a line, one diverted up through a filter box and back |
+| [`windivert-alt.png`](../icons/windivert-alt.png) | 192×192 | PNG render of `windivert-alt.svg`, used for UniGetUI |
+| [`windivert-hide-alt.svg`](../icons/windivert-hide-alt.svg) | vector | The same drawing with a dark grey filter box, the diverted path dotted and a crossed-out eye badge |
+| [`windivert-hide-alt.png`](../icons/windivert-hide-alt.png) | 192×192 | PNG render of `windivert-hide-alt.svg`, used for UniGetUI |
+| [`cygwin-runtime-alt.svg`](../icons/cygwin-runtime-alt.svg) | vector | Original icon, not Cygwin's logo (which belongs to the Cygwin project): a green library tile with a terminal prompt |
+| [`cygwin-runtime-alt.png`](../icons/cygwin-runtime-alt.png) | 192×192 | PNG render of `cygwin-runtime-alt.svg`, used for UniGetUI. UniGetUI's icon under `cygwin` (Chocolatey's ID) is for the installer, a different package |
+| [`tg-ws-proxy-192.png`](../icons/tg-ws-proxy-192.png) | 192×192 | Upstream icon, the 192×192 frame of [`icon.ico`](https://github.com/Flowseal/tg-ws-proxy/blob/2085861957070eeea07990a522b29f42e5230210/icon.ico) (the exe's own icon; part of TG WS Proxy, MIT), unchanged |
 
 File names: `<package>[-<variant>][-<size>].<ext>`. Upstream-based icons carry their size; `alt` is the redrawn one.
 

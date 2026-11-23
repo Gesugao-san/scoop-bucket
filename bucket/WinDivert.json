@@ -1,0 +1,91 @@
+{
+    "version": "2.2.2-A",
+    "description": "WinDivert (Windows Packet Divert): signed kernel driver and library for capturing, filtering, changing and re-injecting network packets from user mode. The driver under zapret, zapret2 and zapret-discord-youtube (and GoodbyeDPI). Includes windivertctl and the sample tools.",
+    "homepage": "https://reqrypt.org/windivert.html",
+    "license": {
+        "identifier": "LGPL-3.0-only|GPL-2.0-only",
+        "url": "https://github.com/basil00/WinDivert/blob/HEAD/LICENSE"
+    },
+    "notes": [
+        "Global install only, from an elevated (admin) shell: scoop install -g gesu/WinDivert",
+        "Programs load the driver from the folder of their WinDivert.dll; it stays loaded until a reboot or windivertctl uninstall.",
+        "",
+        "gesu/zapret, gesu/zapret2 and gesu/zapret-discord-youtube get copies of WinDivert.dll and WinDivert64.sys",
+        "from this package each time it is installed or updated (while their winws is not running).",
+        "",
+        "Command: windivertctl list | watch | kill [filter] | uninstall (admin). Scoop Apps: 'WinDivert' shows them.",
+        "The samples (netdump, netfilter, passthru, socketdump, streamdump, flowtrack, webfilter) are in",
+        "%ProgramData%\\scoop\\apps\\WinDivert\\current",
+        "",
+        "Antivirus programs often flag WinDivert as a risk tool (Not-a-virus:RiskTool.WinDivert). The driver is",
+        "signed and the files are upstream's own; add an exclusion if yours quarantines them."
+    ],
+    "url": "https://github.com/basil00/WinDivert/releases/download/v2.2.2/WinDivert-2.2.2-A.zip",
+    "hash": "63cb41763bb4b20f600b6de04e991a9c2be73279e317d4d82f237b150c5f3f15",
+    "extract_dir": "WinDivert-2.2.2-A",
+    "pre_install": [
+        "if (!$global) { error \"$app puts a driver or a service on the system, which runs as SYSTEM: install it globally, so that only administrators can change its files: scoop install -g gesu/$app\"; break }",
+        "if ([System.Runtime.InteropServices.RuntimeInformation]::OSArchitecture -eq 'Arm64') { error \"$app has no ARM64 build: the WinDivert driver is x64 only (ARM64 Windows would need test signing).\"; break }",
+        "",
+        "# One set of files in the app folder: x86 has WinDivert32.sys for 32-bit Windows and WinDivert64.sys for",
+        "# 32-bit programs on 64-bit Windows.",
+        "$sub = if ($architecture -eq '32bit') { 'x86' } else { 'x64' }",
+        "Get-ChildItem \"$dir\\$sub\" | Move-Item -Destination $dir",
+        "Remove-Item \"$dir\\x64\", \"$dir\\x86\" -Recurse -Force",
+        "",
+        "# The 'WinDivert' shortcut opens this micro-launcher: windivertctl.exe without arguments only prints its usage.",
+        "$lines = @(",
+        "  '@ECHO OFF',",
+        "  ':: WinDivert: shows what the package holds and how to use windivertctl, then waits for a key.',",
+        "  ':: Written by the gesu Scoop bucket at install time.',",
+        "  ('ECHO WinDivert ' + $version + ': packet capture and filtering driver (basil00/WinDivert, reqrypt.org).'),",
+        "  'ECHO Programs load the driver from the folder of their WinDivert.dll, here:',",
+        "  'ECHO   %~dp0',",
+        "  'ECHO.',",
+        "  'ECHO windivertctl (run it from an elevated console):',",
+        "  'ECHO   windivertctl list [filter]    programs that have WinDivert open, with their filters',",
+        "  'ECHO   windivertctl watch [filter]   the same, live',",
+        "  'ECHO   windivertctl kill [filter]    ends those programs',",
+        "  'ECHO   windivertctl uninstall        unloads the driver once nothing uses it',",
+        "  'ECHO.',",
+        "  'ECHO Samples in the same folder: netdump, netfilter, passthru, socketdump, streamdump, flowtrack,',",
+        "  'ECHO webfilter, test. Documentation: doc\\WinDivert.html',",
+        "  'ECHO.',",
+        "  'PAUSE',",
+        "  ''",
+        ")",
+        "[IO.File]::WriteAllText(\"$dir\\WinDivert.cmd\", ($lines -join \"`r`n\") + \"`r`n\")"
+    ],
+    "post_install": [
+        "# Copy the new files to the zapret packages that use them (scripts/zapret/Sync-ZapretComponents.ps1).",
+        "# A copy fails while that package's winws runs; 'zapret-discord-youtube sync' or 'scoop update -f' redo it.",
+        "$sync = Join-Path (Find-BucketDirectory -Name $bucket -Root) 'scripts\\zapret\\Sync-ZapretComponents.ps1'",
+        "if (Test-Path -LiteralPath $sync) { & $sync -AppsDir (appsdir $global) | ForEach-Object { info $_ } }"
+    ],
+    "pre_uninstall": [
+        "# A driver service registered from this app's folder (by windivertctl or the samples here) would keep",
+        "# pointing at deleted files: stop it, and on uninstall remove it. Services of other folders stay.",
+        "$appRoot = Split-Path $dir",
+        "foreach ($name in 'WinDivert', 'WinDivert14') {",
+        "    $imagePath = (Get-ItemProperty \"HKLM:\\SYSTEM\\CurrentControlSet\\Services\\$name\" -Name ImagePath -ErrorAction SilentlyContinue).ImagePath",
+        "    if (!$imagePath -or ($imagePath -replace '^\\\\\\?\\?\\\\', '') -notlike \"$appRoot\\*\") { continue }",
+        "    sc.exe stop $name 2>&1 | Out-Null",
+        "    if ($cmd -eq 'uninstall') { sc.exe delete $name | Out-Null; info \"Removed the '$name' driver service.\" }",
+        "}"
+    ],
+    "bin": "windivertctl.exe",
+    "shortcuts": [
+        [
+            "WinDivert.cmd",
+            "WinDivert"
+        ]
+    ],
+    "checkver": {
+        "url": "https://api.github.com/repos/basil00/WinDivert/releases/latest",
+        "regex": "/download/v(?<tag>[\\d.]+)/WinDivert-(?<version>[\\d.]+-[A-Z])\\.zip"
+    },
+    "autoupdate": {
+        "url": "https://github.com/basil00/WinDivert/releases/download/v$matchTag/WinDivert-$version.zip",
+        "extract_dir": "WinDivert-$version"
+    }
+}

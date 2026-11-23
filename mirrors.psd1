@@ -147,4 +147,53 @@
       )
     }
   )
+  WinDivert = @(
+    @{
+      name        = 'reqrypt.org'
+      description = "The author's own download page (reqrypt.org/download), which upstream's README points to for the originals; not reachable from where this entry was written, so not compared byte for byte (Scoop still checks the hash)"
+      url         = 'https://reqrypt.org/download/WinDivert-$version.zip'
+    }
+  )
+  'Cygwin-Runtime' = @(
+    @{
+      name        = 'dotsrc'
+      description = "Official Cygwin mirror at dotsrc.org (Aalborg University); its sha512.sum lists the same SHA-512 as mirrors.kernel.org for 3.6.12-1"
+      '64bit'     = 'https://mirrors.dotsrc.org/cygwin/x86_64/release/cygwin/cygwin-$version-x86_64.tar.xz'
+    }
+    @{
+      name        = 'fau'
+      description = "Official Cygwin mirror at ftp.fau.de (University of Erlangen-Nuremberg); not compared from where this entry was written (Scoop still checks the hash)"
+      '64bit'     = 'https://ftp.fau.de/cygwin/x86_64/release/cygwin/cygwin-$version-x86_64.tar.xz'
+    }
+  )
+  zapret = @(
+    @{
+      name        = 'sourceforge'
+      description = "SourceForge's automatic copy of the GitHub releases (project zapret.mirror), not run by the developer; same SHA-256 as GitHub for 72.13"
+      '64bit'     = 'https://downloads.sourceforge.net/project/zapret.mirror/$tag/zapret-$tag.zip'
+    }
+  )
+  zapret2 = @(
+    @{
+      name        = 'sourceforge'
+      description = "SourceForge's automatic copy of the GitHub releases (project zapret2.mirror), not run by the developer; same SHA-256 as GitHub for 1.0.6"
+      '64bit'     = 'https://downloads.sourceforge.net/project/zapret2.mirror/$tag/zapret2-$tag.zip'
+    }
+  )
+  'zapret-discord-youtube' = @(
+    @{
+      name        = 'sourceforge'
+      description = "SourceForge's automatic copy of the GitHub releases (project zapret-discord-youtube.mirror), not run by Flowseal, who says he runs no other download pages; same SHA-256 as GitHub for 1.10.4"
+      '64bit'     = 'https://downloads.sourceforge.net/project/zapret-discord-youtube.mirror/$tag/zapret-discord-youtube-$tag.zip'
+    }
+  )
+  'TG-WS-Proxy' = @(
+    @{
+      name        = 'sourceforge'
+      description = "SourceForge's automatic copy of the GitHub releases (project tg-ws-proxy.mirror), which upstream's release notes offer to those who cannot reach GitHub; same SHA-256 as GitHub for 1.11.4 (all three builds)"
+      '64bit'     = 'https://downloads.sourceforge.net/project/tg-ws-proxy.mirror/$tag/TgWsProxy_windows.exe#/TgWsProxy.exe'
+      '32bit'     = 'https://downloads.sourceforge.net/project/tg-ws-proxy.mirror/$tag/TgWsProxy_windows_7_32bit.exe#/TgWsProxy.exe'
+      arm64       = 'https://downloads.sourceforge.net/project/tg-ws-proxy.mirror/$tag/TgWsProxy_windows_arm64.exe#/TgWsProxy.exe'
+    }
+  )
 }

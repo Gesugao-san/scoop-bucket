@@ -13,5 +13,7 @@ Files that manifests use at install, update or uninstall time, and helpers for t
 | [`nbt-studio/`](nbt-studio) | `NBT-Studio`: registry templates for [file associations](../docs/conventions.md#file-associations) |
 | [`planetside-2/`](planetside-2) | `PlanetSide-2`: the `PlanetSide-2` command, which starts the game through Steam |
 | [`realitlscanner/`](realitlscanner) | `RealiTLScanner`: the `realitlscanner` command, which runs the scanner with the [GeoIP database](../docs/packages/realitlscanner.md#geoip) from `Loyalsoldier-GeoIP`, `realitlscanner-scan`, which scans one range once into the persisted `results` folder, and `make_icon.py`, which writes the [icon](../docs/icons.md) |
+| [`zapret/`](zapret) | `zapret`, `zapret2`, `zapret-discord-youtube` and their components (`WinDivert`, `WinDivert-hide`, `Cygwin-Runtime`): `Sync-ZapretComponents.ps1` copies `winws.exe`, `cygwin1.dll` and WinDivert from their packages next to each `winws` ([shared components](../docs/conventions.md#components-shared-between-packages)); `make_icons.py` draws the six original [icons](../docs/icons.md) of these packages |
+| [`zapret-discord-youtube/`](zapret-discord-youtube) | `zapret-discord-youtube`: the `zapret-discord-youtube` command (`ZapretDiscordYoutube.ps1`: service manager, stop, start, update, sync, bundled) and its Scoop Apps micro-launcher |
 
 [Back to the main README](../README.md)

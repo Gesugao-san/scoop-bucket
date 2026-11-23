@@ -240,6 +240,10 @@ For getting past the [GFW](https://enwp.org/Great_Firewall) and its imitators.
 | [`3X-UI`](docs/packages/3x-ui.md) | [MHSanaei/3x-ui](https://github.com/MHSanaei/3x-ui) | Web panel for Xray-core; Xray, mtg-multi and geo files from their own packages |
 | [`Xray-core`](docs/packages/xray-core.md) | [XTLS/Xray-core](https://github.com/XTLS/Xray-core) | Proxy core: VLESS, XTLS Vision, REALITY, VMess, Trojan, Shadowsocks |
 | [`mtg-multi`](docs/packages/mtg-multi.md) | [mhsanaei/mtg-multi](https://github.com/mhsanaei/mtg-multi) | Telegram MTProto proxy with FakeTLS for many users |
+| [`zapret-discord-youtube`](docs/packages/zapret-discord-youtube.md) | [Flowseal/zapret-discord-youtube](https://github.com/Flowseal/zapret-discord-youtube) | zapret strategies for Discord, YouTube and more, with a service manager; components from their own packages |
+| [`zapret`](docs/packages/zapret.md) | [bol-van/zapret](https://github.com/bol-van/zapret) | DPI circumvention engine `winws` (fake packets, splitting) through WinDivert |
+| [`zapret2`](docs/packages/zapret2.md) | [bol-van/zapret2](https://github.com/bol-van/zapret2) | Next zapret: `winws2` with strategies in Lua |
+| [`TG-WS-Proxy`](docs/packages/tg-ws-proxy.md) | [Flowseal/tg-ws-proxy](https://github.com/Flowseal/tg-ws-proxy) | Local MTProto proxy that tunnels Telegram Desktop over WebSocket |
 
 ```powershell
 scoop install gesu/RealiTLScanner       # finds TLS targets for Xray REALITY
@@ -247,6 +251,10 @@ scoop install gesu/RealiTLScanner-GUI   # window for RealiTLScanner, .NET Deskto
 scoop install gesu/3X-UI                # Xray panel; brings Xray-core, mtg-multi, geo files
 scoop install gesu/Xray-core            # command xray; conflicts with main/xray
 scoop install gesu/mtg-multi
+scoop install -g gesu/zapret-discord-youtube   # global, elevated shell; brings zapret, WinDivert, Cygwin-Runtime
+scoop install -g gesu/zapret                   # global, elevated shell; command winws
+scoop install -g gesu/zapret2                  # global, elevated shell; command winws2
+scoop install gesu/TG-WS-Proxy
 ```
 
 #### Services
@@ -341,6 +349,8 @@ scoop install gesu/dnSpyEx
 | [`UsbDk`](docs/packages/usbdk.md) | [daynix/UsbDk](https://github.com/daynix/UsbDk) (Daynix / Red Hat, Apache-2.0) | USB filter driver, a libusb backend |
 | [`Zadig`](docs/packages/zadig.md) | [zadig.akeo.ie](https://zadig.akeo.ie) ([pbatard/libwdi](https://github.com/pbatard/libwdi), Pete Batard) | Installs generic USB drivers (WinUSB, libusb) |
 | [`DriverStore-Explorer`](docs/packages/driverstore-explorer.md) | [lostindark/DriverStoreExplorer](https://github.com/lostindark/DriverStoreExplorer) | Manages driver packages in the Windows driver store |
+| [`WinDivert`](docs/packages/windivert.md) | [reqrypt.org/windivert](https://reqrypt.org/windivert.html) ([basil00/WinDivert](https://github.com/basil00/WinDivert), LGPL-3.0 or GPL-2.0) | Packet capture and diversion driver under zapret |
+| [`WinDivert-hide`](docs/packages/windivert-hide.md) | [bol-van/zapret-win-bundle](https://github.com/bol-van/zapret-win-bundle/tree/master/windivert-hide) | WinDivert renamed to Monkey, hidden from name checks of anti-cheats |
 
 ```powershell
 scoop install gesu/Apple-Mobile-Drivers-Installer
@@ -349,6 +359,8 @@ scoop install gesu/Google-USB-Driver                # driver, elevated shell
 scoop install gesu/UsbDk                            # driver, elevated shell
 scoop install gesu/Zadig                            # asks for admin rights (UAC) on start
 scoop install gesu/DriverStore-Explorer             # runs elevated (UAC prompt)
+scoop install -g gesu/WinDivert                      # global, elevated shell
+scoop install -g gesu/WinDivert-hide                 # global; the zapret packages then use it
 ```
 
 ### Redistributables
@@ -356,9 +368,11 @@ scoop install gesu/DriverStore-Explorer             # runs elevated (UAC prompt)
 | Package | Upstream | About |
 |---|---|---|
 | [`NetFx-4`](docs/packages/netfx-4.md) | [Microsoft](https://dotnet.microsoft.com/download/dotnet-framework) (proprietary) | Newest .NET Framework 4.x runtime (4.8.1), installed only where Windows lacks it |
+| [`Cygwin-Runtime`](docs/packages/cygwin-runtime.md) | [cygwin.com](https://cygwin.com) (LGPL-3.0 or later) | `cygwin1.dll` without installing Cygwin; for zapret's `winws` |
 
 ```powershell
 scoop install -g gesu/NetFx-4   # global, elevated shell; for CKAN-NetFx on older Windows
+scoop install gesu/Cygwin-Runtime
 ```
 
 ### Databases
@@ -379,7 +393,7 @@ scoop install gesu/runetfreedom-russia-v2ray-rules-dat   # Russia, ~107 MB, 4 bu
 
 ## Documentation
 
-- [Conventions](docs/conventions.md): programs installed outside Scoop, shortcuts, running programs, paths in notes and messages, manifest names, licenses, file associations
+- [Conventions](docs/conventions.md): programs installed outside Scoop, shortcuts, running programs, shared components, paths in notes and messages, manifest names, licenses, file associations
 - [Installing from a mirror](docs/mirrors.md)
 - [Automation](docs/automation.md): workflows, update tiers, TLS check, EVE-IPH build check
 - [Icons and screenshots](docs/icons.md) for UniGetUI
