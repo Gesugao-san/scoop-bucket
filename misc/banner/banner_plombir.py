@@ -39,10 +39,10 @@ def make_cups(rng):
   for _ in range(CUPS):
     z = rng.uniform(0.4, 1.0) ** 0.8
     cups.append(dict(
-      z=z, size=62 * z + 14, wraps=1 if z < 0.7 else 2, spins=rng.choice([-1, 1]),
-      axial=int(rng.choice([-2, -1, 1, 2])), spin0=rng.uniform(0, 2 * math.pi),
+      z=z, size=(62 * z + 14) * bp.SCALE, wraps=1 if z < 0.75 else 2, spins=rng.choice([-1, 1]),
+      axial=int(rng.choice([-1, 1, -1, 1])), spin0=rng.uniform(0, 2 * math.pi),
       x0=rng.uniform(0, bp.W), y0=rng.uniform(0, bp.H + 2 * bp.PAD),
-      sway=rng.uniform(4, 14) * z, sway_n=int(rng.integers(1, 3)), sway_ph=rng.uniform(0, 2 * math.pi),
+      sway=rng.uniform(4, 14) * z * bp.SCALE, sway_n=int(rng.integers(1, 2)), sway_ph=rng.uniform(0, 2 * math.pi),
       ang0=rng.uniform(0, 2 * math.pi),
     ))
   return cups
