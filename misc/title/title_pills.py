@@ -10,14 +10,14 @@ far capsules are smaller, slower and fade into the haze, near ones are larger
 and sharp. Each capsule makes a whole number of
 passes and turns per loop, so the last frame joins the first.
 
-banner_plombir.py imports this module and adds Soviet plombir in waffle cups.
+title_plombir.py imports this module and adds Soviet plombir in waffle cups.
 
 Needs Python 3, numpy and Pillow, plus the Inter font (InterDisplay-Bold.otf
 and Inter-SemiBold.otf, https://rsms.me/inter/); gifsicle on PATH, if present,
 makes the file smaller without losing quality.
 
 Usage:
-  python misc/banner/banner_pills.py [output.gif] [--fonts DIR]
+  python misc/title/title_pills.py [output.gif] [--fonts DIR]
 """
 import argparse
 import math
@@ -240,7 +240,7 @@ def capsule_things(rng):
   return [dict(z=c["z"], render=lambda t, c=c: capsule_rgba(c, t)) for c in make_capsules(rng)]
 
 
-def main(argv=None, extra=None, default_out="banner.gif"):
+def main(argv=None, extra=None, default_out="title.gif"):
   """
   Renders and saves the banner.
 

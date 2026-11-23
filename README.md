@@ -1,4 +1,4 @@
-<h1 align="center"><img src="misc/banner/banner.gif" alt="scoop-bucket"></h1>
+<h1 align="center"><img src="misc/title/title.gif" alt="scoop-bucket"></h1>
 
 [![CI](https://github.com/Gesugao-san/scoop-bucket/actions/workflows/ci.yml/badge.svg)](https://github.com/Gesugao-san/scoop-bucket/actions/workflows/ci.yml) [![Excavator 4h](https://github.com/Gesugao-san/scoop-bucket/actions/workflows/excavator-4h.yml/badge.svg)](https://github.com/Gesugao-san/scoop-bucket/actions/workflows/excavator-4h.yml) [![Excavator 1d](https://github.com/Gesugao-san/scoop-bucket/actions/workflows/excavator-1d.yml/badge.svg)](https://github.com/Gesugao-san/scoop-bucket/actions/workflows/excavator-1d.yml) [![Excavator 1mo](https://github.com/Gesugao-san/scoop-bucket/actions/workflows/excavator-1mo.yml/badge.svg)](https://github.com/Gesugao-san/scoop-bucket/actions/workflows/excavator-1mo.yml) [![Security](https://github.com/Gesugao-san/scoop-bucket/actions/workflows/security.yml/badge.svg)](https://github.com/Gesugao-san/scoop-bucket/actions/workflows/security.yml)
 

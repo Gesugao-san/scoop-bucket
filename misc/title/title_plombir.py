@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Renders the title banner of banner_pills.py with Soviet plombir in waffle cups
+Renders the title banner of title_pills.py with Soviet plombir in waffle cups
 tumbling down among the capsules.
 
 The cup is a truncated cone with a raised diamond lattice, the plombir a
@@ -9,10 +9,10 @@ Both are bodies of revolution shaded per pixel under the same light as the
 capsules; the cup also spins around its own axis, so the lattice and the drips
 travel around it. The capsules are exactly the ones of the plain banner.
 
-Needs everything banner_pills.py needs; run it from any folder.
+Needs everything title_pills.py needs; run it from any folder.
 
 Usage:
-  python misc/banner/banner_plombir.py [output.gif] [--fonts DIR]
+  python misc/title/title_plombir.py [output.gif] [--fonts DIR]
 """
 import math
 import os
@@ -21,7 +21,7 @@ import sys
 import numpy as np
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-import banner_pills as bp  # noqa: E402
+import title_pills as bp  # noqa: E402
 
 CUPS = 7                  # how many cups fall
 ICE_DIM = 0.62            # brightness of the ice cream against its true colors
@@ -61,7 +61,7 @@ def cup_rgba(c, t):
 
   Model coordinates: u runs along the cup's axis from the rim (0) to the
   bottom (1), v across it, z toward the viewer. Returns the same
-  (x0, y0, color, alpha) patch as banner_pills.capsule_rgba.
+  (x0, y0, color, alpha) patch as title_pills.capsule_rgba.
   """
   cx, cy, ang = bp.falling(c, t)
   spin = c["spin0"] + 2 * math.pi * c["axial"] * t
@@ -139,9 +139,9 @@ def cup_rgba(c, t):
 
 
 def cup_things(rng):
-  """The cups as things to draw, for banner_pills.main."""
+  """The cups as things to draw, for title_pills.main."""
   return [dict(z=c["z"], render=lambda t, c=c: cup_rgba(c, t)) for c in make_cups(rng)]
 
 
 if __name__ == "__main__":
-  bp.main(extra=cup_things, default_out="banner-plombir.gif")
+  bp.main(extra=cup_things, default_out="title-plombir.gif")
