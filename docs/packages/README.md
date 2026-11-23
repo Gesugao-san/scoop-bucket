@@ -2,9 +2,11 @@
 
 One page per package. The [main README](../../README.md#packages) has the same list with a short description of each.
 
+- [`3X-UI`](3x-ui.md)
 - [`Apple-Mobile-Device-Support`](apple-mobile-device-support.md)
 - [`Apple-Mobile-Drivers-Installer`](apple-mobile-drivers-installer.md)
 - [`Bulk-Crap-Uninstaller`](bulk-crap-uninstaller.md)
+- [`Chocolate4U-Iran-v2ray-rules`](chocolate4u-iran-v2ray-rules.md)
 - [`CKAN-NetFx`](ckan-netfx.md)
 - [`CKAN`](ckan.md)
 - [`DarkMX`](darkmx.md)
@@ -28,8 +30,10 @@ One page per package. The [main README](../../README.md#packages) has the same l
 - [`JkDefrag`](jkdefrag.md)
 - [`King-Arthurs-Gold`](king-arthurs-gold.md)
 - [`Loyalsoldier-GeoIP`](loyalsoldier-geoip.md)
+- [`Loyalsoldier-v2ray-rules-dat`](loyalsoldier-v2ray-rules-dat.md)
 - [`MCHPRS`](mchprs.md)
 - [`Mi-Unlock`](mi-unlock.md)
+- [`mtg-multi`](mtg-multi.md)
 - [`mtk_uartboot`](mtk-uartboot.md)
 - [`MTKClient-Release`](mtkclient-release.md)
 - [`MTKClient`](mtkclient.md)
@@ -38,6 +42,7 @@ One page per package. The [main README](../../README.md#packages) has the same l
 - [`NetFx-4`](netfx-4.md)
 - [`NetTime`](nettime.md)
 - [`OCCT`](occt.md)
+- [`OpenSSL-Light`](openssl-light.md)
 - [`PlanetSide-2-LaunchPad`](planetside-2-launchpad.md)
 - [`PlanetSide-2`](planetside-2.md)
 - [`Pomme`](pomme.md)
@@ -48,6 +53,7 @@ One page per package. The [main README](../../README.md#packages) has the same l
 - [`Radmin-VPN`](radmin-vpn.md)
 - [`RealiTLScanner`](realitlscanner.md)
 - [`RealiTLScanner-GUI`](realitlscanner-gui.md)
+- [`runetfreedom-russia-v2ray-rules-dat`](runetfreedom-russia-v2ray-rules-dat.md)
 - [`Samsung-Magician`](samsung-magician.md)
 - [`SteelMC`](steelmc.md)
 - [`Tabby`](tabby.md)
@@ -59,6 +65,7 @@ One page per package. The [main README](../../README.md#packages) has the same l
 - [`Victoria`](victoria.md)
 - [`WinMX`](winmx.md)
 - [`x64dbg`](x64dbg.md)
+- [`Xray-core`](xray-core.md)
 - [`Zadig`](zadig.md)
 
 ## Not packaged

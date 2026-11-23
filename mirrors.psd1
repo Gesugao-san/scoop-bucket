@@ -99,4 +99,52 @@
       arm64       = 'https://downloads.sourceforge.net/project/minecraft-high-perform.mirror/v$version/mchprs-aarch64-pc-windows-msvc.zip'
     }
   )
+  'Xray-core' = @(
+    @{
+      name        = 'sourceforge'
+      description = "SourceForge's automatic copy of the GitHub releases (project xray-core.mirror), not run by the developers; byte-identical to GitHub for 26.11.9 (all three archives)"
+      '64bit'     = 'https://downloads.sourceforge.net/project/xray-core.mirror/$tag/Xray-windows-64.zip'
+      '32bit'     = 'https://downloads.sourceforge.net/project/xray-core.mirror/$tag/Xray-windows-32.zip'
+      arm64       = 'https://downloads.sourceforge.net/project/xray-core.mirror/$tag/Xray-windows-arm64-v8a.zip'
+    }
+  )
+  'Loyalsoldier-v2ray-rules-dat' = @(
+    @{
+      name        = 'raw'
+      description = "Upstream's release branch on raw.githubusercontent.com: the same files, but always the newest build (no version in the URL), so they match the manifest only until the next daily build and Excavator's update after it. Checked for 202611222203"
+      url         = @(
+        'https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/geoip.dat'
+        'https://raw.githubusercontent.com/Loyalsoldier/v2ray-rules-dat/release/geosite.dat'
+      )
+    }
+  )
+  'Chocolate4U-Iran-v2ray-rules' = @(
+    @{
+      name        = 'raw'
+      description = "Upstream's release branch on raw.githubusercontent.com, which upstream documents as a download location: always the newest build, so it matches the manifest only until the next daily build. Checked for 202611221249"
+      url         = @(
+        'https://raw.githubusercontent.com/Chocolate4U/Iran-v2ray-rules/release/geoip.dat'
+        'https://raw.githubusercontent.com/Chocolate4U/Iran-v2ray-rules/release/geosite.dat'
+        'https://raw.githubusercontent.com/Chocolate4U/Iran-v2ray-rules/release/geoip-lite.dat'
+        'https://raw.githubusercontent.com/Chocolate4U/Iran-v2ray-rules/release/geosite-lite.dat'
+        'https://raw.githubusercontent.com/Chocolate4U/Iran-v2ray-rules/release/geoip-services.dat'
+        'https://raw.githubusercontent.com/Chocolate4U/Iran-v2ray-rules/release/security.dat'
+        'https://raw.githubusercontent.com/Chocolate4U/Iran-v2ray-rules/release/security-ip.dat'
+        'https://raw.githubusercontent.com/Chocolate4U/Iran-v2ray-rules/release/Country.mmdb'
+        'https://raw.githubusercontent.com/Chocolate4U/Iran-v2ray-rules/release/Country-lite.mmdb'
+        'https://raw.githubusercontent.com/Chocolate4U/Iran-v2ray-rules/release/Services.mmdb'
+        'https://raw.githubusercontent.com/Chocolate4U/Iran-v2ray-rules/release/Security-ip.mmdb'
+      )
+    }
+  )
+  'runetfreedom-russia-v2ray-rules-dat' = @(
+    @{
+      name        = 'raw'
+      description = "Upstream's release branch on raw.githubusercontent.com, which upstream links as the download location: always the newest build, so it matches the manifest only until the next build, a few hours at most. Checked for 202611230154"
+      url         = @(
+        'https://raw.githubusercontent.com/runetfreedom/russia-v2ray-rules-dat/release/geoip.dat'
+        'https://raw.githubusercontent.com/runetfreedom/russia-v2ray-rules-dat/release/geosite.dat'
+      )
+    }
+  )
 }

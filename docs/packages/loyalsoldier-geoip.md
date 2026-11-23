@@ -36,7 +36,7 @@ The version is upstream's release tag, the UTC date and time of the build (`2026
 ## Using the files
 
 - **RealiTLScanner:** nothing to do; the `realitlscanner` command copies `Country.mmdb` to a folder under `%TEMP%` and runs the scanner there (see [its page](realitlscanner.md#geoip)). `$env:GESU_GEOIP_MMDB = 'Country-without-asn.mmdb'` picks another file from this package.
-- **Xray / V2Ray:** they read `geoip.dat` from their own folder or from the folder in `XRAY_LOCATION_ASSET` (`V2RAY_LOCATION_ASSET` for V2Ray). The package sets neither and copies nothing into another app: that folder must also hold `geosite.dat`, which this project does not build (it comes with Xray, or from [Loyalsoldier/v2ray-rules-dat](https://github.com/Loyalsoldier/v2ray-rules-dat), whose `geoip.dat` is built by this project too). Copy `geoip.dat` (or the subsets for `ext:` rules) next to the other asset files, or point `XRAY_LOCATION_ASSET` at a folder that has both.
+- **Xray / V2Ray:** they read `geoip.dat` from their own folder or from the folder in `XRAY_LOCATION_ASSET` (`V2RAY_LOCATION_ASSET` for V2Ray). The package sets neither and copies nothing into another app: that folder must also hold `geosite.dat`, which this project does not build (it comes with Xray, or from [`Loyalsoldier-v2ray-rules-dat`](loyalsoldier-v2ray-rules-dat.md), whose `geoip.dat` is built by this project too and holds both). Copy `geoip.dat` (or the subsets for `ext:` rules) next to the other asset files, or point `XRAY_LOCATION_ASSET` at a folder that has both.
 - **Anything else:** the folder is `~\scoop\apps\Loyalsoldier-GeoIP\current`, which always holds the installed release.
 
 ## Mirrors

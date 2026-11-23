@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- mtg-multi icon for the gesu Scoop bucket: original drawing,
+       written by scripts/mtg-multi/make_icon.py. -->
+  <defs>
+    <linearGradient id="tile" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#24415f"/>
+      <stop offset="1" stop-color="#132538"/>
+    </linearGradient>
+  </defs>
+  <rect x="24" y="24" width="464" height="464" rx="96" fill="url(#tile)"/>
+  <g stroke="#7fb8ff" stroke-width="16" stroke-linecap="round">
+    <line x1="256" y1="268" x2="256.0" y2="108.0"/>
+    <line x1="256" y1="268" x2="394.6" y2="348.0"/>
+    <line x1="256" y1="268" x2="117.4" y2="348.0"/>
+  </g>
+  <circle cx="256.0" cy="108.0" r="44" fill="#ffffff" stroke="#7fb8ff" stroke-width="10"/>
+  <circle cx="394.6" cy="348.0" r="44" fill="#ffffff" stroke="#7fb8ff" stroke-width="10"/>
+  <circle cx="117.4" cy="348.0" r="44" fill="#ffffff" stroke="#7fb8ff" stroke-width="10"/>
+  <circle cx="256" cy="268" r="82" fill="#2f8cff" stroke="#ffffff" stroke-width="12"/>
+  <circle cx="256" cy="252" r="22" fill="#ffffff"/>
+  <path d="M246,266 L238,312 H274 L266,266 Z" fill="#ffffff"/>
+</svg>

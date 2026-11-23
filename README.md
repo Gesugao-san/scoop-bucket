@@ -237,10 +237,16 @@ For getting past the [GFW](https://enwp.org/Great_Firewall) and its imitators.
 |---|---|---|
 | [`RealiTLScanner`](docs/packages/realitlscanner.md) | [XTLS/RealiTLScanner](https://github.com/XTLS/RealiTLScanner) | Finds TLS 1.3 + HTTP/2 servers to use as Xray REALITY targets |
 | [`RealiTLScanner-GUI`](docs/packages/realitlscanner-gui.md) | [EikeiDev/RealiTLScanner-GUI](https://github.com/EikeiDev/RealiTLScanner-GUI) | Windows interface for `RealiTLScanner`: live log, results table |
+| [`3X-UI`](docs/packages/3x-ui.md) | [MHSanaei/3x-ui](https://github.com/MHSanaei/3x-ui) | Web panel for Xray-core; Xray, mtg-multi and geo files from their own packages |
+| [`Xray-core`](docs/packages/xray-core.md) | [XTLS/Xray-core](https://github.com/XTLS/Xray-core) | Proxy core: VLESS, XTLS Vision, REALITY, VMess, Trojan, Shadowsocks |
+| [`mtg-multi`](docs/packages/mtg-multi.md) | [mhsanaei/mtg-multi](https://github.com/mhsanaei/mtg-multi) | Telegram MTProto proxy with FakeTLS for many users |
 
 ```powershell
 scoop install gesu/RealiTLScanner       # finds TLS targets for Xray REALITY
 scoop install gesu/RealiTLScanner-GUI   # window for RealiTLScanner, .NET Desktop Runtime
+scoop install gesu/3X-UI                # Xray panel; brings Xray-core, mtg-multi, geo files
+scoop install gesu/Xray-core            # command xray; conflicts with main/xray
+scoop install gesu/mtg-multi
 ```
 
 #### Services
@@ -274,11 +280,13 @@ scoop install gesu/Tabby
 | [`doggo`](docs/packages/doggo.md) | [mr-karan/doggo](https://github.com/mr-karan/doggo) | DNS client with readable output; DoT, DoH, DoQ, DNSCrypt |
 | [`dnslookup`](docs/packages/dnslookup.md) | [ameshkov/dnslookup](https://github.com/ameshkov/dnslookup) | One DNS query over any protocol, including DoH, DoT, DoQ, DNSCrypt |
 | [`q-DNS`](docs/packages/q-dns.md) | [natesales/q](https://github.com/natesales/q) | DNS client with DoT, DoH, DoQ, ODoH and DNSCrypt (command `qdns`) |
+| [`OpenSSL-Light`](docs/packages/openssl-light.md) | [slproweb.com](https://slproweb.com/products/Win32OpenSSL.html) (Shining Light Productions; OpenSSL, Apache-2.0) | The `openssl` command: keys, certificates, TLS checks |
 
 ```powershell
 scoop install gesu/doggo
 scoop install gesu/dnslookup
-scoop install gesu/q-DNS   # command qdns, not q
+scoop install gesu/q-DNS           # command qdns, not q
+scoop install gesu/OpenSSL-Light   # conflicts with main/openssl*
 ```
 
 ### OS maintenance
@@ -358,9 +366,15 @@ scoop install -g gesu/NetFx-4   # global, elevated shell; for CKAN-NetFx on olde
 | Package | Upstream | About |
 |---|---|---|
 | [`Loyalsoldier-GeoIP`](docs/packages/loyalsoldier-geoip.md) | [Loyalsoldier/geoip](https://github.com/Loyalsoldier/geoip) | Weekly GeoIP databases for MaxMind readers and Xray; used by `RealiTLScanner` |
+| [`Loyalsoldier-v2ray-rules-dat`](docs/packages/loyalsoldier-v2ray-rules-dat.md) | [Loyalsoldier/v2ray-rules-dat](https://github.com/Loyalsoldier/v2ray-rules-dat) | Daily geoip and geosite rules for Xray; the default of `3X-UI` |
+| [`Chocolate4U-Iran-v2ray-rules`](docs/packages/chocolate4u-iran-v2ray-rules.md) | [Chocolate4U/Iran-v2ray-rules](https://github.com/Chocolate4U/Iran-v2ray-rules) | Daily geo files for Iran, with block lists; `_IR` files of `3X-UI` |
+| [`runetfreedom-russia-v2ray-rules-dat`](docs/packages/runetfreedom-russia-v2ray-rules-dat.md) | [runetfreedom/russia-v2ray-rules-dat](https://github.com/runetfreedom/russia-v2ray-rules-dat) | Geo files of what is blocked in Russia, every 6 hours; `_RU` files of `3X-UI` |
 
 ```powershell
-scoop install gesu/Loyalsoldier-GeoIP   # GeoIP databases (.mmdb, .dat)
+scoop install gesu/Loyalsoldier-GeoIP                    # GeoIP databases (.mmdb, .dat)
+scoop install gesu/Loyalsoldier-v2ray-rules-dat          # geoip.dat, geosite.dat
+scoop install gesu/Chocolate4U-Iran-v2ray-rules          # Iran
+scoop install gesu/runetfreedom-russia-v2ray-rules-dat   # Russia, ~107 MB, 4 builds a day
 ```
 
 ## Documentation

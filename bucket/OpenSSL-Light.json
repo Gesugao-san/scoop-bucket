@@ -1,0 +1,105 @@
+{
+    "version": "4.1.0",
+    "description": "OpenSSL Light for Windows (Shining Light Productions): the openssl command and its DLLs, without the development files. For keys, certificate requests and self-signed certificates, e.g. for the 3X-UI panel.",
+    "homepage": "https://slproweb.com/products/Win32OpenSSL.html",
+    "license": {
+        "identifier": "Apache-2.0",
+        "url": "https://www.openssl.org/source/license.html"
+    },
+    "notes": [
+        "Command: openssl. Scoop Apps: 'OpenSSL Light' shows the version and an example, then waits for a key.",
+        "Sets OPENSSL_CONF in your user environment to %USERPROFILE%\\scoop\\apps\\OpenSSL-Light\\current\\bin\\cnf\\openssl.cnf;",
+        "open a new console after installing. 'scoop uninstall OpenSSL-Light' removes the variable again.",
+        "",
+        "Self-signed certificate for a local panel (one line):",
+        "  openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout localhost.key -out localhost.crt -subj /CN=localhost"
+    ],
+    "architecture": {
+        "64bit": {
+            "url": "https://slproweb.com/download/Win64OpenSSL_Light-4_1_0.exe",
+            "hash": "7d1d4022eea9b89c5c6b691b01145f2e0f69aeaf6668635c8010a5f3f1c8c25d"
+        },
+        "32bit": {
+            "url": "https://slproweb.com/download/Win32OpenSSL_Light-4_1_0.exe",
+            "hash": "c09a9f04955e1b711424ec5b0236b064ce53bd20cd8c9ca7de1c9687ec8bd850"
+        },
+        "arm64": {
+            "url": "https://slproweb.com/download/Win64ARMOpenSSL_Light-4_1_0.exe",
+            "hash": "c8c78294710f7dced49f125d5f2d9b9892789c8dbab44aa41b32de9c9793b968"
+        }
+    },
+    "depends": "innounp",
+    "pre_install": [
+        "# Every OpenSSL package in Scoop's main bucket adds the command 'openssl' and sets OPENSSL_CONF too.",
+        "$others = 'openssl', 'openssl-light', 'openssl-lts', 'openssl-lts-light' | Where-Object { installed $_ }",
+        "if ($cmd -eq 'install' -and $others) { error \"$app conflicts with $($others -join ', ') (Scoop's main bucket), installed: both add the command 'openssl' and set OPENSSL_CONF. Run 'scoop uninstall $($others -join ' ')' first. Scoop has already put $app into its app folder: run 'scoop uninstall $app' or simply install again, which cleans that up.\"; break }",
+        "",
+        "# A copy from the slproweb installer can stay: it keeps its own folder and PATH entry, but reads OPENSSL_CONF too.",
+        "$roots = 'HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall', 'HKLM:\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall', 'HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall'",
+        "$outside = Get-ChildItem $roots -ErrorAction SilentlyContinue | Get-ItemProperty -ErrorAction SilentlyContinue | Where-Object { $_.DisplayName -like 'OpenSSL*' -and $_.Publisher -like 'OpenSSL Win* Installer Team' } | Select-Object -First 1",
+        "if ($cmd -eq 'install' -and $outside) { warn \"$($outside.DisplayName) is also installed outside Scoop ($(\"$($outside.InstallLocation)\" -replace [regex]::Escape($env:USERPROFILE), '%USERPROFILE%')). Both work side by side; the first one on PATH answers to 'openssl', and the OPENSSL_CONF this package sets applies to both.\" }"
+    ],
+    "installer": {
+        "script": [
+            "Expand-InnoArchive -Path \"$dir\\$fname\"",
+            "Expand-InnoArchive -Path \"$dir\\$fname\" -DestinationPath \"$dir\\bin\" -ExtractDir '{cf}' -Removal",
+            "Rename-Item \"$dir\\bin\\SSL\" 'cnf' -Force",
+            "",
+            "# openssl.exe without arguments waits for commands, so the shortcut opens this micro-launcher instead.",
+            "$lines = @(",
+            "  '@ECHO OFF',",
+            "  ':: OpenSSL Light: shows the version and a few commands, then waits for a key.',",
+            "  ':: Written by the gesu Scoop bucket at install time.',",
+            "  'SETLOCAL',",
+            "  'SET \"OPENSSL_CONF=%~dp0bin\\cnf\\openssl.cnf\"',",
+            "  'ECHO OpenSSL Light for Windows (slproweb.com). Run it from any console as openssl.',",
+            "  'ECHO.',",
+            "  '\"%~dp0bin\\openssl.exe\" version -a',",
+            "  'ECHO.',",
+            "  'ECHO Self-signed certificate for a local panel, valid for a year (one line):',",
+            "  'ECHO   openssl req -x509 -nodes -days 365 -newkey rsa:2048',",
+            "  'ECHO     -keyout localhost.key -out localhost.crt -subj /CN=localhost',",
+            "  'ECHO Look at a certificate:     openssl x509 -in localhost.crt -noout -text',",
+            "  'ECHO Check a site''s TLS:        openssl s_client -connect example.com:443 -servername example.com',",
+            "  'ECHO Every command:             openssl help',",
+            "  'ECHO.',",
+            "  'PAUSE',",
+            "  ''",
+            ")",
+            "[IO.File]::WriteAllText(\"$dir\\OpenSSL-Light.cmd\", ($lines -join \"`r`n\") + \"`r`n\")"
+        ]
+    },
+    "bin": "bin\\openssl.exe",
+    "shortcuts": [
+        [
+            "OpenSSL-Light.cmd",
+            "OpenSSL Light"
+        ]
+    ],
+    "env_set": {
+        "OPENSSL_CONF": "$dir\\bin\\cnf\\openssl.cnf"
+    },
+    "checkver": {
+        "url": "https://raw.githubusercontent.com/slproweb/opensslhashes/master/win32_openssl_hashes.json",
+        "jsonpath": "$.files..basever",
+        "regex": "([\\d.]+)",
+        "reverse": true
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://slproweb.com/download/Win64OpenSSL_Light-$underscoreVersion.exe"
+            },
+            "32bit": {
+                "url": "https://slproweb.com/download/Win32OpenSSL_Light-$underscoreVersion.exe"
+            },
+            "arm64": {
+                "url": "https://slproweb.com/download/Win64ARMOpenSSL_Light-$underscoreVersion.exe"
+            }
+        },
+        "hash": {
+            "url": "https://raw.githubusercontent.com/slproweb/opensslhashes/master/win32_openssl_hashes.json",
+            "jsonpath": "$.files.['$basename'].sha256"
+        }
+    }
+}
