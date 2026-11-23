@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 """
 Renders the bucket's title banner: black capsules tumbling down behind the
-title, as a seamless looping GIF.
+title as if through thick syrup, as a seamless looping GIF.
 
 Every capsule is shaded per pixel as a 3D body (a cylinder with two
 hemispherical ends) under one fixed light, so highlights stay in place while
-the capsules turn. Far capsules are smaller, slower and sink into the haze;
-near ones are larger, faster and sharp. Each capsule makes a whole number of
+the capsules turn. They sink slowly and turn lazily, as in something viscous;
+far capsules are smaller, slower and fade into the haze, near ones are larger
+and sharp. Each capsule makes a whole number of
 passes and turns per loop, so the last frame joins the first.
 
 banner_plombir.py imports this module and adds Soviet plombir in waffle cups.
@@ -28,11 +29,12 @@ import sys
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
-W, H = 1000, 250          # banner size, px
-FRAMES = 100              # loop length
-DELAY = 40                # ms per frame (25 fps, 4 s loop)
+W, H = 880, 330           # banner size, px; tall enough to stay readable on a phone
+FRAMES = 200              # loop length
+DELAY = 100               # ms per frame (10 fps, 20 s loop: slow sinking needs a long loop)
 SS = 2                    # supersampling of the shaded bodies
-PAD = 90                  # bodies start and end this far outside the frame
+PAD = 100                 # bodies start and end this far outside the frame
+SCALE = 1.15              # size of the bodies against the original 1000x250 layout
 SEED = 7                  # same seed, same banner
 
 TITLE = "scoop-bucket"
@@ -86,14 +88,14 @@ def make_capsules(rng):
   caps = []
   for _ in range(34):
     z = rng.uniform(0.3, 1.0) ** 0.8          # depth: 1 is nearest
-    r = 11.0 * z + 2.0                         # radius
+    r = (11.0 * z + 2.0) * SCALE               # radius
     a = r * rng.uniform(1.5, 1.9)              # half-length of the straight part
-    wraps = 1 if z < 0.55 else (2 if z < 0.9 else 3)
-    spins = rng.choice([-2, -1, 1, 2]) if z > 0.5 else rng.choice([-1, 1])
+    wraps = 1 if z < 0.65 else 2               # passes per loop: near ones sink twice as fast
+    spins = rng.choice([-1, 1, -1, 1]) if z > 0.5 else rng.choice([-1, 1])
     caps.append(dict(
       z=z, r=r, a=a, wraps=wraps, spins=spins,
       x0=rng.uniform(0, W), y0=rng.uniform(0, H + 2 * PAD),
-      sway=rng.uniform(4, 18) * z, sway_n=int(rng.integers(1, 3)), sway_ph=rng.uniform(0, 2 * math.pi),
+      sway=rng.uniform(4, 18) * z * SCALE, sway_n=int(rng.integers(1, 2)), sway_ph=rng.uniform(0, 2 * math.pi),
       ang0=rng.uniform(0, 2 * math.pi),
       tone=(0.035, 0.075) if rng.random() < 0.5 else (0.075, 0.035),
     ))
@@ -155,10 +157,10 @@ def title_layer(fonts):
   """Title and subtitle coverage masks and the soft halo behind them, all 0..1."""
   img, subimg, shadow = (Image.new("L", (W, H), 0) for _ in range(3))
   draw, subdraw, sdraw = ImageDraw.Draw(img), ImageDraw.Draw(subimg), ImageDraw.Draw(shadow)
-  ft = ImageFont.truetype(find_font(FONT_TITLE, fonts), 84)
-  fs = ImageFont.truetype(find_font(FONT_SUB, fonts), 22)
-  tx, ty = (W - draw.textlength(TITLE, font=ft)) / 2, 62
-  sx, sy = (W - draw.textlength(SUBTITLE, font=fs)) / 2, 160
+  ft = ImageFont.truetype(find_font(FONT_TITLE, fonts), 110)
+  fs = ImageFont.truetype(find_font(FONT_SUB, fonts), 32)
+  tx, ty = (W - draw.textlength(TITLE, font=ft)) / 2, 78
+  sx, sy = (W - draw.textlength(SUBTITLE, font=fs)) / 2, 212
   draw.text((tx, ty), TITLE, font=ft, fill=255)
   sdraw.text((tx + 3, ty + 4), TITLE, font=ft, fill=255)
   subdraw.text((sx, sy), SUBTITLE, font=fs, fill=255)
@@ -197,6 +199,7 @@ def to_gif_frames(rgb_frames):
   becomes a plain grayscale GIF.
   """
   sample = np.concatenate([f.reshape(-1, 3) for f in rgb_frames[::FRAMES // 10]]).astype(np.int16)
+  sample = sample[::4]
   colored_sample = sample[(sample.max(axis=1) - sample.min(axis=1)) > 12]
   if len(colored_sample) == 0:
     return [Image.fromarray(f.mean(axis=2).round().astype(np.uint8), "L") for f in rgb_frames]

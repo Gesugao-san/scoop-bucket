@@ -22,6 +22,6 @@ python misc/banner/banner_pills.py
 python misc/banner/banner_plombir.py
 ```
 
-The output is the same on every run: positions, turns and colors come from a fixed seed, and every body makes a whole number of passes and turns per 4-second loop, so the last frame joins the first.
+The output is the same on every run: positions, turns and colors come from a fixed seed, and every body makes a whole number of passes and turns per 20-second loop, so the last frame joins the first.
 
 [Back to the main README](../README.md)
