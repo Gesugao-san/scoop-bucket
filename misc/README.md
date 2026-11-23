@@ -6,7 +6,7 @@ Odds and ends that are not part of any package.
 
 The animated title banners of the READMEs, with the scripts that render them. Each script is self-describing; see the docstring at its top.
 
-The files avoid the word *banner* in their names on purpose: ad blockers hide images whose URL contains `/banner.gif` and the like (RU AdList does, even on GitHub), so the title would vanish for many readers.
+The files avoid the word *banner* in their names on purpose: ad blockers hide images whose URL contains `/banner.gif` and the like (RU AdList does, even on GitHub), so the title would vanish for many readers. [`bin/check-adblock.py`](../bin/check-adblock.py) checks every image the bucket shows against the common lists.
 
 | File | What |
 |---|---|
