@@ -99,6 +99,6 @@ Without Windows, do steps 1 to 6 by hand as far as possible: parse the JSON, req
 
 ## 5. Finishing
 
-- Write the package page `docs/packages/<app-id>.md` (manifest, upstream, install command, then the notes; follow an existing page), add a row with a short *About* to the README's package table and its install line to the README's usage block, and add new mirrors to `mirrors.psd1` (see [Installing from a mirror](https://github.com/Gesugao-san/scoop-bucket/blob/HEAD/docs/mirrors.md)).
+- Write the package page `docs/packages/<app-id>.md` (manifest, upstream, install command, then the notes; follow an existing page), add a row with a short *About* to the table of the package's category (or subcategory, as under *Games*) in the README's *Packages* section and its install line to that category's code block (one category per package, under what it is rather than what it serves: every driver goes to *Drivers* and every database to *Databases*, whatever they are for; a new category only when no existing one fits, also added to the README's *Contents*), and add new mirrors to `mirrors.psd1` (see [Installing from a mirror](https://github.com/Gesugao-san/scoop-bucket/blob/HEAD/docs/mirrors.md)).
 - Commit according to the user's own rules; never push without their explicit consent.
 - Summarise: what was added, which choices were made, what the user should check on Windows, and whether an icon pull request is pending.
