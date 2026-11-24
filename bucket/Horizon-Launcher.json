@@ -1,5 +1,5 @@
 {
-    "version": "0.2.107",
+    "version": "0.2.108",
     "description": "Launcher for Horizon, a Rust rewrite of Minecraft: Java Edition 26.3 aiming at one-to-one vanilla parity. Installs and updates the game, builds it from your own copy of Minecraft.",
     "homepage": "https://github.com/horizon-rust/horizon",
     "license": {
@@ -23,12 +23,12 @@
     ],
     "architecture": {
         "64bit": {
-            "url": "https://github.com/horizon-rust/horizon/releases/download/launcher@0.2.107/horizon-launcher-windows-x64.zip",
-            "hash": "68bcbc1bd32a5913a43988b08a10d9ff2348ab45097a6c241a257c9610e3f465"
+            "url": "https://github.com/horizon-rust/horizon/releases/download/launcher@0.2.108/horizon-launcher-windows-x64.zip",
+            "hash": "945118c82e025526c62a82b10933dd85795e497e61c32eef53cabc87b66f4a16"
         },
         "arm64": {
-            "url": "https://github.com/horizon-rust/horizon/releases/download/launcher@0.2.107/horizon-launcher-windows-arm64.zip",
-            "hash": "0d81f7bc85030e86719b6bd6afc35754d7e470523dd744cb362c891362efc8bd"
+            "url": "https://github.com/horizon-rust/horizon/releases/download/launcher@0.2.108/horizon-launcher-windows-arm64.zip",
+            "hash": "38280faefc4ea6ba9ff0ca79b1ca79c2eb10a1b7163ac0b8d7e16e93b3ebe4f1"
         }
     },
     "pre_install": [
