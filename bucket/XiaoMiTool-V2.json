@@ -1,0 +1,66 @@
+{
+    "version": "20.7.28",
+    "description": "XiaoMiTool V2: modding tool for Xiaomi, Redmi and POCO phones: bootloader unlock, MIUI, Xiaomi.eu and custom ROM install, TWRP, Magisk root, unbrick. Abandoned upstream (last release 2020).",
+    "homepage": "https://github.com/francescotescari/XiaoMiToolV2",
+    "license": {
+        "identifier": "Apache-2.0",
+        "url": "https://github.com/francescotescari/XiaoMiToolV2/blob/HEAD/LICENSE"
+    },
+    "notes": [
+        "Upstream is abandoned: 20.7.28 beta (July 2020) is the last release. Much of the tool talks to",
+        "Xiaomi's servers (login, unlock, ROM lists) and to xiaomitool.com, so parts may no longer work,",
+        "especially on HyperOS. Xiaomi's unlock rules (waiting time, Xiaomi Community app) still apply.",
+        "",
+        "XiaoMiTool asks for administrator rights on start (UAC): it installs Android USB drivers itself.",
+        "Its adb and fastboot (in res\\tools) are custom builds for MIUI and stay off the PATH.",
+        "",
+        "Settings, logs, the saved Xiaomi session (if 'save session' is on), downloaded ROMs and their",
+        "extracted files all go to res\\tmp, which is persisted in",
+        "%USERPROFILE%\\scoop\\persist\\XiaoMiTool-V2\\res\\tmp",
+        "ROMs take several GB each: delete them there by hand, or choose another download folder in Settings.",
+        "",
+        "Decline the tool's own update offer: it would replace XiaoMiTool.jar inside the Scoop folder.",
+        "On start it sends its version and a hashed PC ID to xiaomitool.com to check for updates."
+    ],
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/francescotescari/XiaoMiToolV2/releases/download/v20.7.28/XMT2_Win_Setup_20.7.28.exe#/dl.7z",
+            "hash": "fc16a73ee55b2a601b923eabf03c28180a7345f2d4e1da7dcdc9716a03ed5aa6"
+        }
+    },
+    "pre_install": [
+        "# The NSIS installer is unpacked with 7-Zip instead of run: drop its plugins and uninstaller.",
+        "Remove-Item \"$dir\\`$PLUGINSDIR\", \"$dir\\uninst.exe\" -Force -Recurse -ErrorAction SilentlyContinue",
+        "",
+        "# A copy from upstream's installer is a separate portable folder: Scoop neither touches nor removes it,",
+        "# but it keeps its own settings and downloads, so say it is there.",
+        "if ($cmd -eq 'install') {",
+        "  $roots = 'HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall', 'HKLM:\\SOFTWARE\\WOW6432Node\\Microsoft\\Windows\\CurrentVersion\\Uninstall', 'HKCU:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Uninstall'",
+        "  $other = Get-ChildItem $roots -ErrorAction SilentlyContinue | Get-ItemProperty -ErrorAction SilentlyContinue | Where-Object { $_.DisplayName -like '*XiaoMiTool*' } | Select-Object -First 1",
+        "  if ($other) {",
+        "    $where = if ($other.InstallLocation) { $other.InstallLocation } else { $other.UninstallString }",
+        "    warn \"XiaoMiTool is also installed with upstream's installer ($($where -replace [regex]::Escape($env:USERPROFILE), '%USERPROFILE%')). The two copies do not share settings or downloads; uninstall that one in Settings > Apps if you no longer need it.\"",
+        "  }",
+        "}"
+    ],
+    "shortcuts": [
+        [
+            "XiaoMiTool.exe",
+            "XiaoMiTool V2"
+        ]
+    ],
+    "persist": [
+        "res\\tmp",
+        "res\\lang"
+    ],
+    "checkver": {
+        "github": "https://github.com/francescotescari/XiaoMiToolV2"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/francescotescari/XiaoMiToolV2/releases/download/v$version/XMT2_Win_Setup_$version.exe#/dl.7z"
+            }
+        }
+    }
+}

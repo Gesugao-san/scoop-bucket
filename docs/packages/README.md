@@ -67,6 +67,7 @@ One page per package. The [main README](../../README.md#packages) has the same l
 - [`Victoria`](victoria.md)
 - [`WinMX`](winmx.md)
 - [`x64dbg`](x64dbg.md)
+- [`XiaoMiTool-V2`](xiaomitool-v2.md)
 - [`Xray-core`](xray-core.md)
 - [`Zadig`](zadig.md)
 

@@ -1,0 +1,21 @@
+# XiaoMiTool-V2
+
+| | |
+|---|---|
+| Manifest | [`bucket/XiaoMiTool-V2.json`](../../bucket/XiaoMiTool-V2.json) |
+| Upstream | [francescotescari/XiaoMiToolV2](https://github.com/francescotescari/XiaoMiToolV2) (Francesco Tescari, Apache-2.0) |
+| Install | `scoop install gesu/XiaoMiTool-V2` |
+
+XiaoMiTool V2, a GUI modding tool for Xiaomi, Redmi and POCO phones: bootloader unlock, MIUI, Xiaomi.eu and custom ROM installation, TWRP, Magisk root and unbricking; *XiaoMiTool V2* shortcut in Scoop Apps. **Abandoned upstream**: the [README](https://github.com/francescotescari/XiaoMiToolV2/blob/HEAD/README.md#state-of-the-project) calls the project semi-abandoned (Java 1.8, no CI, tests or documentation, an architecture the author found not worth fixing) and suggests forking it; the last release is 20.7.28 beta from July 2020, the last commit on `master` is from October 2021. Much of the tool depends on Xiaomi's servers (`account.xiaomi.com`, `update.miui.com`, `unlock.update.miui.com`) and on `xiaomitool.com`, so features may have stopped working since, especially on HyperOS; Xiaomi's own unlock rules (waiting time, applying in the Xiaomi Community app) apply regardless. [`Mi-Unlock`](mi-unlock.md) is Xiaomi's official unlock tool.
+
+**Download.** The Windows release is only an NSIS installer (`XMT2_Win_Setup_<version>.exe`, Nullsoft 3.03, asks for administrator rights). It is not run: Scoop unpacks it with 7-Zip (the `#/dl.7z` suffix) and `pre_install` removes the installer's `$PLUGINSDIR` and `uninst.exe`. What remains is a portable folder: `XiaoMiTool.exe` (a Launch4j wrapper, 32-bit, `highestAvailable`, so it prompts for UAC on admin accounts), `XiaoMiTool.jar`, a bundled 64-bit Java 14 runtime with JavaFX (`bin`, `conf`, `lib`), and `res`: `res\tools` holds `adb.exe`, `fastboot.exe` and `driver.exe`, `res\driver` the Google, Qualcomm, NVIDIA and Microsoft USB drivers that the tool installs itself. Per the upstream README, its `adb` and `fastboot` are custom builds for MIUI, needed to unlock and to flash through the stock recovery; they are not put on the `PATH`. The bundled runtime is 64-bit, so the manifest has only a `64bit` architecture. Upstream publishes no hashes; the manifest's SHA-256 is of the GitHub release asset.
+
+**Data.** XiaoMiTool keeps everything it writes in `res\tmp` next to its jar ([`ResourcesManager`](https://github.com/francescotescari/XiaoMiToolV2/blob/HEAD/src/main/java/com/xiaomitool/v2/resources/ResourcesManager.java), [`SettingsUtils`](https://github.com/francescotescari/XiaoMiToolV2/blob/HEAD/src/main/java/com/xiaomitool/v2/utility/utils/SettingsUtils.java)): `settings.app` (settings, PC ID, region, language and, if *save session* is on, the Xiaomi session token in plain text), `logs`, and by default downloaded ROMs and their extracted files. `res\tmp` is persisted, as is `res\lang` (translations downloaded over the air); both are empty folders at first. ROMs take several GB each and are not cleaned up: delete them in `%USERPROFILE%\scoop\persist\XiaoMiTool-V2\res\tmp` or set another download and extraction folder in the tool's settings. `scoop uninstall -p XiaoMiTool-V2` deletes it all. A lock file lives in `%TEMP%\xiaomitool2`, outside Scoop.
+
+**Updates.** On start the tool sends its version and a hashed PC ID to `xiaomitool.com/V2/updateV2.php`. A *quick update* downloads a new `XiaoMiTool.jar` into the app folder, which the next `scoop update` would undo; a *full update* opens the browser. Decline both and use `scoop update`. `checkver` follows the latest GitHub release and autoupdate builds the installer URL from the tag (`v<version>`); new releases are not expected.
+
+**Other copies.** The regular installer leaves a separate folder that Scoop does not touch, so it is no reason to stop: `pre_install` only warns if an uninstall entry whose name contains *XiaoMiTool* exists, since that copy keeps its own settings and downloads.
+
+No mirror was found: SourceForge has no copy of the release files, and the SourceForge project `xiaomitool-v2` is an unofficial page, not run by the author. Not in Scoop's Main or Extras buckets.
+
+[All packages](../../README.md#packages)

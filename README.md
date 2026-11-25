@@ -171,12 +171,14 @@ scoop install gesu/Impactor
 | [`MTKClient`](docs/packages/mtkclient.md) | [bkerler/mtkclient](https://github.com/bkerler/mtkclient) | MediaTek flash tool, tracks upstream main |
 | [`MTKClient-Release`](docs/packages/mtkclient-release.md) | [bkerler/mtkclient](https://github.com/bkerler/mtkclient) | MediaTek flash tool, latest release |
 | [`mtk_uartboot`](docs/packages/mtk-uartboot.md) | [981213/mtk_uartboot](https://github.com/981213/mtk_uartboot) (Chuanhong Guo) | Boots MediaTek router SoCs over UART |
+| [`XiaoMiTool-V2`](docs/packages/xiaomitool-v2.md) | [francescotescari/XiaoMiToolV2](https://github.com/francescotescari/XiaoMiToolV2) (Francesco Tescari) | Xiaomi modding tool: unlock, ROMs, TWRP, root; abandoned upstream |
 
 ```powershell
 scoop install gesu/Mi-Unlock
 scoop install gesu/MTKClient           # builds with uv, needs internet
 scoop install gesu/MTKClient-Release   # latest release; install one of the two
 scoop install gesu/mtk_uartboot
+scoop install gesu/XiaoMiTool-V2       # abandoned upstream, last release 2020
 ```
 
 ### Communication
